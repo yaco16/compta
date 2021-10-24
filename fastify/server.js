@@ -1,7 +1,7 @@
-import Fastify from 'fastify';
-import routes from './routes.js';
-import dbconnector from './database.js';
-import dotenv from 'dotenv';
+const Fastify = require('fastify');
+const routes = require('./routes.js');
+const dbconnector = require('./database.js');
+const dotenv = require('dotenv');
 
 dotenv.config();
 
@@ -10,13 +10,13 @@ const app = Fastify({
 })
 
 //CORS
-app.register(import('fastify-cors'), {
+app.register(require('fastify-cors'), {
   origin: true,
   methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH'],
 });
 
 app.register(dbconnector); //doit être placé avant register(routes)
-app.register(routes, { prefix: 'v1' });
+app.register(routes, { prefix: 'api' });
 
 const start = async () => {
   try {

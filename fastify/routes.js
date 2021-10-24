@@ -7,4 +7,4 @@ const routes = async (app, options) => {
 	});
 };
 
-export default routes;
+module.exports = routes;
