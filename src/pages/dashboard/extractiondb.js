@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import getAllAccounts from '../../services/getAllAccounts';
 import RefreshPage from '../../components/RefreshPage';
 
 export default function TestDB(props) {
@@ -75,8 +76,7 @@ export default function TestDB(props) {
 }
 
 export async function getServerSideProps() {
-  const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/getallaccounts');
-  const allAccounts = await response.json();
+  const allAccounts = await getAllAccounts();
   return {
     props: { allAccounts },
   };

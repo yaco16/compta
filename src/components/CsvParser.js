@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { CSVReader } from 'react-papaparse';
 import Table from './GenerateGrid';
-// import ShowData from './ShowData';
+import convertCsvBgToInsertIntoDb from '../services/bgToDb';
 
 const buttonRef = React.createRef();
-
-const UserContext = React.createContext();
 
 export default class CSVReader1 extends Component {
   constructor(props) {
@@ -46,11 +44,31 @@ export default class CSVReader1 extends Component {
     }
   };
 
+  getData = async () => {
+    const csvConvertedData = this.state.data;
+    const test = await convertCsvBgToInsertIntoDb(csvConvertedData);
+    // console.log('test:', test);
+    const test2 = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/importbg', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json', //il faut préciser ce contenu pour que le fichier soit envoyé au bon format
+      },
+      body: JSON.stringify(test),
+    });
+    const test3 = await test2.json();
+    console.log('test3:', test3);
+
+
+
+
+  }
+
   render() {
     const csvConvertedData = this.state.data;
-    let table;
+    // let table;
     if (csvConvertedData) {
-      table = <Table data={csvConvertedData} />;
+      // table = <Table data={csvConvertedData} />; //en commentaire provisoire
+      this.getData(csvConvertedData)
     }
     return (
       <>
@@ -75,7 +93,7 @@ export default class CSVReader1 extends Component {
           )}
         </CSVReader>
         {/* affichage du tableau si aucun erreur */}
-        {table}
+        {/* {table} */}
         <style jsx>{`
           aside {
             display: flex;

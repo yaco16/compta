@@ -24,6 +24,11 @@ export default function Navbar() {
             <a>Extraction database</a>
           </Link>
         </li>
+        <li>
+          <Link href='/dashboard/import'>
+            <a>Import dans database</a>
+          </Link>
+        </li>
       </ul>
       <style jsx>{`
         #navbar_container {
@@ -39,7 +44,7 @@ export default function Navbar() {
           color: white;
           list-style-type: none;
           cursor: pointer;
-          margin-bottom: 0.2rem;
+          margin-bottom: 0.4rem;
         }
         li:hover {
           text-decoration: underline;
