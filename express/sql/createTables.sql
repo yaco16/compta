@@ -11,5 +11,5 @@ CREATE TABLE accounts (
   label text,
   debit text,
   credit int,
-  total text
+  total int
 );

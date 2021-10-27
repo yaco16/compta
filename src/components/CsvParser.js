@@ -46,15 +46,21 @@ export default class CSVReader1 extends Component {
 
   getData = async () => {
     const csvConvertedData = this.state.data;
-    const test = await convertCsvBgToInsertIntoDb(csvConvertedData);
-    // console.log('test:', test);
-    const test2 = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/importbg', {
+    // const test = await convertCsvBgToInsertIntoDb(csvConvertedData);
+
+    const obj = {}
+    csvConvertedData.map((item, i) => obj[i] = item)
+    const body2 = JSON.stringify(obj)
+    // console.log('body2:', body2);
+
+    const test2 = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + '/api/import-csv-in-tb', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json', //il faut préciser ce contenu pour que le fichier soit envoyé au bon format
       },
-      body: JSON.stringify(test),
+      body: JSON.stringify(csvConvertedData),
     });
+
     const test3 = await test2.json();
     console.log('test3:', test3);
 

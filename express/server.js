@@ -10,8 +10,7 @@ app
   origin: '*',
 }))
 
-// .use(express.json())
-// .use(express.urlencoded())
+.use(express.json())
 
 .use('/api', router)
 
