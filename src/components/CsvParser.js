@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { CSVReader } from 'react-papaparse';
 import Table from './GenerateGrid';
-import convertCsvBgToInsertIntoDb from '../services/bgToDb';
 
 const buttonRef = React.createRef();
 
@@ -48,12 +47,10 @@ export default class CSVReader1 extends Component {
     const csvConvertedData = this.state.data;
     // const test = await convertCsvBgToInsertIntoDb(csvConvertedData);
 
-    const obj = {}
-    csvConvertedData.map((item, i) => obj[i] = item)
-    const body2 = JSON.stringify(obj)
-    // console.log('body2:', body2);
+    const obj = {};
+    csvConvertedData.map((item, i) => (obj[i] = item));
 
-    const test2 = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + '/api/import-csv-in-tb', {
+    const test2 = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + '/api/upload-tb', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json', //il faut préciser ce contenu pour que le fichier soit envoyé au bon format
@@ -63,18 +60,14 @@ export default class CSVReader1 extends Component {
 
     const test3 = await test2.json();
     console.log('test3:', test3);
-
-
-
-
-  }
+  };
 
   render() {
     const csvConvertedData = this.state.data;
     // let table;
     if (csvConvertedData) {
       // table = <Table data={csvConvertedData} />; //en commentaire provisoire
-      this.getData(csvConvertedData)
+      this.getData(csvConvertedData);
     }
     return (
       <>
@@ -98,8 +91,6 @@ export default class CSVReader1 extends Component {
             </aside>
           )}
         </CSVReader>
-        {/* affichage du tableau si aucun erreur */}
-        {/* {table} */}
         <style jsx>{`
           aside {
             display: flex;

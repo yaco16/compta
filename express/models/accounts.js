@@ -9,8 +9,8 @@ class Accounts {
     return rows;
   }
 
-  static async importInTb(csv) {
-    csv.shift(); // supprime la 1re ligne de libellés
+  static async uploadTb(csv) {
+    csv.shift(); // supprime la 1re ligne avec les libellés
 
     //conversion des datas au format de la query de pg-promise
     //créer les variables cs et values
@@ -27,7 +27,7 @@ class Accounts {
       }
     });
 
-    const query = pgp.helpers.insert(values, cs);
+    const query = pgp.helpers.insert(values, cs) + 'RETURNING *';
 
     db.task('upload TB', async (t) => {
       const deleteAccounts = await t.any('DELETE FROM accounts');//on commence par effacer le contenu de la table
