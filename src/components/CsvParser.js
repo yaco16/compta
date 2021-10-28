@@ -1,13 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, useContext, createContext } from 'react';
 import { CSVReader } from 'react-papaparse';
 import Table from './GenerateGrid';
+// import FileType, { uploadContext } from './upload/FileType';
 
 const buttonRef = React.createRef();
+// export const uploadContext = createContext();
 
 export default class CSVReader1 extends Component {
   constructor(props) {
     super(props);
     this.state = { data: '' };
+    this.upload = {};
   }
   handleOpenDialog = (e) => {
     // Note that the ref is set async, so it might be null at some point
@@ -16,12 +19,14 @@ export default class CSVReader1 extends Component {
     }
   };
 
-  handleOnFileLoad = (csvConvertedData) => {
-    if (csvConvertedData) {
-      this.setState({ data: csvConvertedData });
-    } else {
-      throw new Error();
-    }
+  registerUser = (event) => {
+    event.preventDefault();
+    this.upload.fileType = event.target.file.value;
+    console.log(this.upload);
+  };
+
+  handleOnFileLoad = (csvConverted) => {
+    this.upload.csv = csvConverted;
   };
 
   handleOnError = (err, file, inputElem, reason) => {
@@ -59,14 +64,16 @@ export default class CSVReader1 extends Component {
   };
 
   render() {
-    const csvConvertedData = this.state.data;
+    // const csvConvertedData = this.state.data;
     // let table;
-    if (csvConvertedData) {
-      // table = <Table data={csvConvertedData} />; //en commentaire provisoire
-      this.getData(csvConvertedData);
-    }
+    // if (csvConvertedData) {
+    // table = <Table data={csvConvertedData} />; //en commentaire provisoire
+    // this.getData(csvConvertedData);
+    // }
+
     return (
       <>
+        <legend>Sélectionner le type de fichier à importer :</legend>
         <CSVReader
           ref={buttonRef}
           onFileLoad={this.handleOnFileLoad}
@@ -76,17 +83,30 @@ export default class CSVReader1 extends Component {
           onRemoveFile={this.handleOnRemoveFile}
         >
           {({ file }) => (
-            <aside>
-              <button className='button_browse' type='button' onClick={this.handleOpenDialog}>
-                Choisir un fichier
-              </button>
-              <div className='fileName'>{file && file.name}</div>
-              <button className='button_remove' onClick={this.handleRemoveFile}>
-                Supprimer
-              </button>
-            </aside>
+            <>
+              <aside>
+                <button className='button_browse' type='button' onClick={this.handleOpenDialog}>
+                  Choisir le fichier
+                </button>
+                <div className='fileName'>{file && file.name}</div>
+                <button className='button_remove' onClick={this.handleRemoveFile}>
+                  Supprimer
+                </button>
+              </aside>
+            </>
           )}
         </CSVReader>
+        <form onSubmit={this.registerUser}>
+          <div>
+            <input type='radio' name='file' value='tb' id='' />
+            <label htmlFor='tb'>Balance générale (csv)</label>
+          </div>
+          <div>
+            <input type='radio' name='file' value='clients-gl' id='' />
+            <label htmlFor='clients-gl'>GL clients (csv)</label>
+          </div>
+          <button>Envoyer</button>
+        </form>
         <style jsx>{`
           aside {
             display: flex;
