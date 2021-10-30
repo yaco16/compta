@@ -1,6 +1,12 @@
-export default function Home({test}) {
-  console.log('test:', test);
-  return <h1>Homepage : {test}</h1>;
+import Contenu from '../components/Contenu';
+
+export default function Home() {
+  return (
+    <div>
+      <h1>Homepage :</h1>
+      <Contenu />
+    </div>
+  );
 }
 
 // export async function getServerSideProps() {

@@ -1,54 +1,62 @@
-import React, { Component, useContext, createContext } from 'react';
+import React, { useState, createRef } from 'react';
+import { useRouter } from 'next/router';
+
 import { CSVReader } from 'react-papaparse';
 import Table from './GenerateGrid';
-// import FileType, { uploadContext } from './upload/FileType';
 
-const buttonRef = React.createRef();
-// export const uploadContext = createContext();
+const buttonRef = createRef();
 
-export default class CSVReader1 extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { data: '' };
-    this.upload = {};
-  }
-  handleOpenDialog = (e) => {
+export default function CSVReader1() {
+  const router = useRouter();
+  const upload = {};
+
+  const handleOpenDialog = (e) => {
     // Note that the ref is set async, so it might be null at some point
     if (buttonRef.current) {
       buttonRef.current.open(e);
     }
   };
 
-  registerUser = (event) => {
+  const handleOnFileLoad = (csvConverted) => {
+    upload.csv = csvConverted;
+  };
+
+  const registerUser = async (event) => {
     event.preventDefault();
-    this.upload.fileType = event.target.file.value;
-    console.log(this.upload);
+    upload.fileType = event.target.file.value;
+    showResults(upload);
   };
 
-  handleOnFileLoad = (csvConverted) => {
-    this.upload.csv = csvConverted;
+  const showResults = function (upload) {
+    console.log('upload.csv:', upload.csv);
+    console.log('upload.fileType:', upload.fileType);
+          {/* {router.push({
+        pathname: '/dashboard/upload-result',
+        query: '',
+      })} */}
+
   };
 
-  handleOnError = (err, file, inputElem, reason) => {
+  const handleOnError = (err, file, inputElem, reason) => {
     console.log('---------------------------');
     console.log(err);
     console.log('---------------------------');
   };
 
-  handleOnRemoveFile = (data) => {
+  const handleOnRemoveFile = (data) => {
     console.log('---------------------------');
     console.log(data);
     console.log('---------------------------');
   };
 
-  handleRemoveFile = (e) => {
+  const handleRemoveFile = (e) => {
     // Note that the ref is set async, so it might be null at some point
     if (buttonRef.current) {
       buttonRef.current.removeFile(e);
     }
   };
 
-  getData = async () => {
+  const getData = async () => {
     const csvConverted = this.state.data;
 
     const request = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + '/api/upload-tb', {
@@ -63,89 +71,84 @@ export default class CSVReader1 extends Component {
     console.log('test3:', response);
   };
 
-  render() {
-    // const csvConvertedData = this.state.data;
-    // let table;
-    // if (csvConvertedData) {
-    // table = <Table data={csvConvertedData} />; //en commentaire provisoire
-    // this.getData(csvConvertedData);
-    // }
+  // const csvConvertedData = this.state.data;
+  // let table;
+  // if (csvConvertedData) {
+  // table = <Table data={csvConvertedData} />; //en commentaire provisoire
+  // this.getData(csvConvertedData);
+  // }
 
-    return (
-      <>
-        <legend>Sélectionner le type de fichier à importer :</legend>
-        <CSVReader
-          ref={buttonRef}
-          onFileLoad={this.handleOnFileLoad}
-          onError={this.handleOnError}
-          noClick
-          noDrag
-          onRemoveFile={this.handleOnRemoveFile}
-        >
-          {({ file }) => (
-            <>
-              <aside>
-                <button className='button_browse' type='button' onClick={this.handleOpenDialog}>
-                  Choisir le fichier
-                </button>
-                <div className='fileName'>{file && file.name}</div>
-                <button className='button_remove' onClick={this.handleRemoveFile}>
-                  Supprimer
-                </button>
-              </aside>
-            </>
-          )}
-        </CSVReader>
-        <form onSubmit={this.registerUser}>
-          <div>
-            <input type='radio' name='file' value='tb' id='' />
-            <label htmlFor='tb'>Balance générale (csv)</label>
-          </div>
-          <div>
-            <input type='radio' name='file' value='clients-gl' id='' />
-            <label htmlFor='clients-gl'>GL clients (csv)</label>
-          </div>
-          <button>Envoyer</button>
-        </form>
-        <style jsx>{`
-          aside {
-            display: flex;
-            flex-direction: row;
-            margin-bottom: 10;
-          }
+  const upload1 = {
+    csv: 'toto',
+    fileType: 'tata'
+  };
+  return (
+    <>
+      <legend>Sélectionner le type de fichier à importer :</legend>
+      <CSVReader ref={buttonRef} onFileLoad={handleOnFileLoad} onError={handleOnError} noClick noDrag onRemoveFile={handleOnRemoveFile}>
+        {({ file }) => (
+          <>
+            <aside>
+              <button className='button_browse' type='button' onClick={handleOpenDialog}>
+                Choisir le fichier
+              </button>
+              <div className='fileName'>{file && file.name}</div>
+              <button className='button_remove' onClick={handleRemoveFile}>
+                Supprimer
+              </button>
+            </aside>
+          </>
+        )}
+      </CSVReader>
+      <form onSubmit={registerUser}>
+        <div>
+          <input type='radio' name='file' value='tb' id='' />
+          <label htmlFor='tb'>Balance générale (csv)</label>
+        </div>
+        <div>
+          <input type='radio' name='file' value='clients-gl' id='' />
+          <label htmlFor='clients-gl'>GL clients (csv)</label>
+        </div>
+        <button>Envoyer</button>
+      </form>
+      <style jsx>{`
+        aside {
+          display: flex;
+          flex-direction: row;
+          margin-bottom: 10;
+        }
 
-          .button_browse {
-            width: 10%;
-            background-color: #4b91c9;
-            color: white;
-            border-radius: 0;
-            margin-left: 0;
-            margin-right: 0;
-            padding-left: 0;
-            padding-right: 0;
-          }
+        .button_browse {
+          width: 10%;
+          background-color: #4b91c9;
+          color: white;
+          border-radius: 0;
+          margin-left: 0;
+          margin-right: 0;
+          padding-left: 0;
+          padding-right: 0;
+        }
 
-          .fileName {
-            width: 20%;
-            border-width: 1;
-            border-style: solid;
-            border-color: rgb(172, 164, 164);
-            height: 45;
-            line-height: 2.5;
-            margin-top: 5;
-            margin-bottom: 5;
-            padding-left: 13;
-            padding-top: 3;
-          }
+        .fileName {
+          width: 20%;
+          border-width: 1;
+          border-style: solid;
+          border-color: rgb(172, 164, 164);
+          height: 45;
+          line-height: 2.5;
+          margin-top: 5;
+          margin-bottom: 5;
+          padding-left: 13;
+          padding-top: 3;
+        }
 
-          .button_remove {
-            background-color: #dd2222;
-            color: white;
-            border-radius: 0;
-            margin: 0 0 20 20;
-          }
-        `}</style>
-      </>
-    );
-  }
+        .button_remove {
+          background-color: #dd2222;
+          color: white;
+          border-radius: 0;
+          margin: 0 0 20 20;
+        }
+      `}</style>
+    </>
+  );
 }

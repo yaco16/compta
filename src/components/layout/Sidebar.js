@@ -1,8 +1,12 @@
 import Link from 'next/link';
+import { useContext } from 'react';
+import { ThemeContext } from '../../context/themeContext';
 
 export default function Navbar() {
+  const { theme } = useContext(ThemeContext);
+
   return (
-    <div id='navbar_container'>
+    <div className={theme ? 'navbar_container light' : 'navbar_container dark'}>
       <ul>
         <li>
           <Link href='/'>
@@ -25,19 +29,27 @@ export default function Navbar() {
           </Link>
         </li>
         <li>
-          <Link href='/dashboard/import'>
-            <a>Import dans database</a>
+          <Link href='/dashboard/upload'>
+            <a>Upload files</a>
           </Link>
         </li>
       </ul>
       <style jsx>{`
-        #navbar_container {
+        .navbar_container {
           padding: 0.5rem;
-          background-color: grey;
-          width: 15%;
           position: absolute;
           top: 0;
           height: 100vh;
+        }
+
+        .light {
+          color: #333;
+          background: grey;
+        }
+
+        .dark {
+          color: #f1f1f1;
+          background: #333;
         }
 
         li {
