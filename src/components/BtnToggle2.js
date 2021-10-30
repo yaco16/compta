@@ -9,8 +9,12 @@ export default function BtnToggle() {
     <div className='container'>
       <input type='checkbox' className='checkbox' id='chk' onClick={toggleTheme} />
       <label className='label' htmlFor='chk'>
-        <FontAwesomeIcon icon={faSun} color='#f1c40f' />
-        <FontAwesomeIcon icon={faMoon} color='#f39c12' />
+        <span className='svg'>
+          <FontAwesomeIcon icon={faSun} />
+        </span>
+        <span className='svg'>
+          <FontAwesomeIcon icon={faMoon} />
+        </span>
 
         {/* <FontAwesomeIcon icon={faMoon} className='fa-moon'/> */}
         <div className='ball'></div>
@@ -44,7 +48,7 @@ export default function BtnToggle() {
           position: relative;
           height: 26px;
           width: 50px;
-          transform: scale(1.5);
+          transform: scale(0.9); //taille du toggle
         }
 
         .label .ball {
@@ -61,6 +65,11 @@ export default function BtnToggle() {
 
         .checkbox:checked + .label .ball {
           transform: translateX(24px);
+          background-color: rgb(61, 228, 61);
+        }
+        .svg {
+          font-size: 1rem;
+          color: #f1c40f;
         }
       `}</style>
     </div>
