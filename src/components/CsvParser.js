@@ -1,14 +1,15 @@
-import React, { useState, createRef } from 'react';
+import React, { useState, createRef, useContext } from 'react';
 import { useRouter } from 'next/router';
-
 import { CSVReader } from 'react-papaparse';
+
 import Table from './GenerateGrid';
+import { UploadContext } from '../context/uploadContext';
 
 const buttonRef = createRef();
 
 export default function CSVReader1() {
   const router = useRouter();
-  const upload = {};
+  const { upload, updateUpload } = useContext(UploadContext);
 
   const handleOpenDialog = (e) => {
     // Note that the ref is set async, so it might be null at some point
@@ -24,17 +25,16 @@ export default function CSVReader1() {
   const registerUser = async (event) => {
     event.preventDefault();
     upload.fileType = event.target.file.value;
-    showResults(upload);
+    updUploadContext(upload);
   };
 
-  const showResults = function (upload) {
-    console.log('upload.csv:', upload.csv);
-    console.log('upload.fileType:', upload.fileType);
-          {/* {router.push({
-        pathname: '/dashboard/upload-result',
-        query: '',
-      })} */}
+  const updUploadContext = function (data) {
+    updateUpload(data);
+    openPageResults();
+  };
 
+  const openPageResults = function () {
+    router.push('/dashboard/upload-result');
   };
 
   const handleOnError = (err, file, inputElem, reason) => {
@@ -71,17 +71,6 @@ export default function CSVReader1() {
     console.log('test3:', response);
   };
 
-  // const csvConvertedData = this.state.data;
-  // let table;
-  // if (csvConvertedData) {
-  // table = <Table data={csvConvertedData} />; //en commentaire provisoire
-  // this.getData(csvConvertedData);
-  // }
-
-  const upload1 = {
-    csv: 'toto',
-    fileType: 'tata'
-  };
   return (
     <>
       <legend>Sélectionner le type de fichier à importer :</legend>
@@ -112,6 +101,9 @@ export default function CSVReader1() {
         <button>Envoyer</button>
       </form>
       <style jsx>{`
+        body {
+          height: 100vh;
+        }
         aside {
           display: flex;
           flex-direction: row;

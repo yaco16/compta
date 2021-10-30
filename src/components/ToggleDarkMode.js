@@ -3,7 +3,7 @@ import { ThemeContext } from '../context/themeContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 
-export default function BtnToggle() {
+export default function ToggleDarkMode() {
   const { toggleTheme } = useContext(ThemeContext);
   return (
     <div className='container'>
@@ -21,10 +21,6 @@ export default function BtnToggle() {
       </label>
 
       <style jsx>{`
-        * {
-          box-sizing: border-box;
-        }
-
         .container {
           margin-top: 0.3rem;
           margin-bottom: 1rem;
@@ -67,6 +63,7 @@ export default function BtnToggle() {
           transform: translateX(24px);
           background-color: rgb(61, 228, 61);
         }
+
         .svg {
           font-size: 1rem;
           color: #f1c40f;

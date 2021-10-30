@@ -1,14 +1,14 @@
 import Link from 'next/link';
 import { useContext } from 'react';
 import { ThemeContext } from '../../context/themeContext';
-import BtnToggle from '../BtnToggle2';
+import ToggleDarkMode from '../ToggleDarkMode';
 
 export default function Navbar() {
   const { theme } = useContext(ThemeContext);
 
   return (
     <div className={theme ? 'navbar_container light' : 'navbar_container dark'}>
-    <BtnToggle />
+    <ToggleDarkMode />
       <ul>
         <li>
           <Link href='/'>

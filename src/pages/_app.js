@@ -2,14 +2,16 @@ import '../styles/reset.css';
 import '../styles/globals.css';
 import Layout from '../components/layout/Layout';
 import ThemeContextProvider from '../context/themeContext';
-
+import UploadContextProvider, { UploadContext } from '../context/uploadContext';
 
 function MyApp({ Component, pageProps }) {
   return (
     <ThemeContextProvider>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <UploadContextProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </UploadContextProvider>
     </ThemeContextProvider>
   );
 }
