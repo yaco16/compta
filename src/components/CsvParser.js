@@ -22,7 +22,7 @@ export default function CSVReader1() {
     upload.csv = csvConverted;
   };
 
-  const registerUser = async (event) => {
+  const getFormEntries = async (event) => {
     event.preventDefault();
     upload.fileType = event.target.file.value;
     updUploadContext(upload);
@@ -89,7 +89,7 @@ export default function CSVReader1() {
           </>
         )}
       </CSVReader>
-      <form onSubmit={registerUser}>
+      <form onSubmit={getFormEntries}>
         <div>
           <input type='radio' name='file' value='tb' id='' />
           <label htmlFor='tb'>Balance générale (csv)</label>
@@ -114,6 +114,7 @@ export default function CSVReader1() {
           width: 10%;
           background-color: #4b91c9;
           color: white;
+          border: none;
           border-radius: 0;
           margin-left: 0;
           margin-right: 0;
@@ -137,6 +138,7 @@ export default function CSVReader1() {
         .button_remove {
           background-color: #dd2222;
           color: white;
+          border: none;
           border-radius: 0;
           margin: 0 0 20 20;
         }

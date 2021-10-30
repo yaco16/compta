@@ -1,4 +1,5 @@
 export default function GenerateGrid(data) {
+  console.log('data:', data);
   return (
     <>
       <table>
