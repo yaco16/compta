@@ -45,13 +45,11 @@ export default function Navbar() {
         }
 
         .light {
-          color: #333;
-          background: grey;
+          background-color: grey;
         }
 
-        .dark {
-          color: #f1f1f1;
-          background: #333;
+        .dark  {
+          border-right: 1px solid white;
         }
 
         li {

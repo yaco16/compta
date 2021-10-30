@@ -1,13 +1,16 @@
+import {useContext} from 'react';
 import Navbar from './Sidebar';
+import {ThemeContext} from '../../context/themeContext';
+
 export default function Layout({ children }) {
+const {theme} = useContext(ThemeContext);
   return (
-    <>
+    <div className={theme ? 'light' : 'dark'}>
       <Navbar />
       <main>{children}</main>
       <style jsx global>{`
         main {
           margin-left: 16%;
-          margin-top: 0.5rem;
         }
 
         h1 {
@@ -17,6 +20,6 @@ export default function Layout({ children }) {
           padding: 0.5rem;
         }
       `}</style>
-    </>
+    </div>
   );
 }

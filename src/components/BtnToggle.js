@@ -26,14 +26,14 @@ export default function BtnToggle() {
           transition: all 0.2s ease-in-out;
         }
 
-        .light {
-          background: #333;
-          color: #f1f1f1;
+        .dark {
+          color: #333;
+          background: #f1f1f1;
         }
 
-        .dark {
-          background: #f1f1f1;
-          color: #333;
+        .light {
+          color: #f1f1f1;
+          background: #333;
         }
       `}</style>
     </div>

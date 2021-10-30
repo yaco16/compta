@@ -1,11 +1,9 @@
 import React, { useContext } from 'react';
-import { ThemeContext } from '../context/themeContext.js';
 
 export default function Contenu() {
-  const { theme } = useContext(ThemeContext);
-  
+
   return (
-    <div className={theme ? 'contenu light' : 'contenu dark'}>
+    <div className='contenu'>
       <h1>titre</h1>
       <div>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae corporis ducimus quasi nostrum magnam ratione, molestias ipsam, id et
@@ -31,18 +29,9 @@ export default function Contenu() {
           text-align: justify;
           padding: 20px 4vw;
           height: 100vh;
-          transition: all 0.2s ease-in-out;
         }
 
-        .dark {
-          color: #f1f1f1;
-          background: #333;
-        }
 
-        .light {
-          color: #333;
-          background: #f1f1f1;
-        }
       `}</style>
     </div>
   );
