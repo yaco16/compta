@@ -4,13 +4,17 @@ import { ThemeContext } from '../context/themeContext';
 export default function BtnToggle() {
   const { toggleTheme, theme } = useContext(ThemeContext);
   return (
-    <div>
+    <div className='container'>
       <div onClick={toggleTheme} className={theme ? 'btn-toggle light' : 'btn-toggle dark'}>
-      {theme ? 'Dark' : 'Light'}</div>
+        {theme ? 'Dark' : 'Light'}
+      </div>
       <style jsx>{`
+        .container {
+          margin-top: 2rem;
+          display: flex;
+          justify-content: center;
+        }
         .btn-toggle {
-          top: 150px;
-          right: 50px;
           width: 50px;
           height: 50px;
           border: 1px solid #333;
@@ -24,12 +28,12 @@ export default function BtnToggle() {
 
         .light {
           background: #333;
-          color: #f1f1f1
+          color: #f1f1f1;
         }
 
         .dark {
           background: #f1f1f1;
-          color: #333
+          color: #333;
         }
       `}</style>
     </div>

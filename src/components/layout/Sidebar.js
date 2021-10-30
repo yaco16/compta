@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useContext } from 'react';
 import { ThemeContext } from '../../context/themeContext';
+import BtnToggle from '../BtnToggle';
 
 export default function Navbar() {
   const { theme } = useContext(ThemeContext);
@@ -34,6 +35,7 @@ export default function Navbar() {
           </Link>
         </li>
       </ul>
+      <BtnToggle />
       <style jsx>{`
         .navbar_container {
           padding: 0.5rem;

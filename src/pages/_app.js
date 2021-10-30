@@ -8,7 +8,6 @@ function MyApp({ Component, pageProps }) {
   return (
     <ThemeContextProvider>
       <Layout>
-        <BtnToggle />
         <Component {...pageProps} />
       </Layout>
     </ThemeContextProvider>
