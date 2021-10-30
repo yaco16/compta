@@ -1,23 +1,17 @@
 import '../styles/reset.css';
 import '../styles/globals.css';
 import Layout from '../components/layout/Layout';
-import { ThemeContext } from '../context/themeContext';
-import { useState } from 'react';
+import ThemeContextProvider from '../context/themeContext';
 import BtnToggle from '../components/BtnToggle';
 
 function MyApp({ Component, pageProps }) {
-  const [theme, setTheme] = useState(true);
-  const toggleTheme = () => {
-    setTheme(!theme);
-  };
-
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContextProvider>
       <Layout>
         <BtnToggle />
         <Component {...pageProps} />
       </Layout>
-    </ThemeContext.Provider>
+    </ThemeContextProvider>
   );
 }
 
