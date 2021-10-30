@@ -13,6 +13,7 @@ export default function BtnToggle() {
           margin-top: 2rem;
           display: flex;
           justify-content: center;
+
         }
         .btn-toggle {
           width: 50px;
