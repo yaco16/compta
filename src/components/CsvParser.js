@@ -17,43 +17,6 @@ export default function CSVReader1() {
     }
   };
 
-  const handleOnFileLoad = (csvConverted) => {
-    upload.csv = csvConverted;
-  };
-
-  const getFormEntries = async (event) => {
-    event.preventDefault();
-    upload.fileType = event.target.file.value; //on affecte le type de fichier dans upload
-
-    event.target.action.value === 'db' ? (upload.importInDb = true) : (upload.importInDb = false); //si on choisit l'import en db, on affecte true dans import
-
-    updUploadContext(upload);
-  };
-
-  const updUploadContext = function (upload) {
-    updateUpload(upload); //MAJ du context
-    chooseAction(upload);
-  };
-
-  const chooseAction = function (upload) {
-    console.log('upload:', upload);
-    switch (upload.importInDb) {
-      case true:
-        console.log('faire qqch');
-        break;
-      case false:
-        console.log('ici')
-        openPageResults();
-        break;
-      default:
-        break;
-    }
-  };
-
-  const openPageResults = function () {
-    router.push('/dashboard/upload-result');
-  };
-
   const handleOnError = (err, file, inputElem, reason) => {
     console.log('---------------------------');
     console.log(err);
@@ -73,15 +36,50 @@ export default function CSVReader1() {
     }
   };
 
-  const getData = async () => {
-    const csvConverted = this.state.data;
+  const handleOnFileLoad = (csvConverted) => {
+    upload.csv = csvConverted;
+  };
+
+  const getFormEntries = async (event) => {
+    event.preventDefault();
+    upload.fileType = event.target.file.value; //on affecte le type de fichier dans upload
+
+    event.target.action.value === 'db' ? (upload.importInDb = true) : (upload.importInDb = false); //si on choisit l'import en db, on affecte true dans import
+
+    updUploadContext(upload);
+  };
+
+  const updUploadContext = function (upload) {
+    updateUpload(upload); //MAJ du context
+    chooseAction(upload);
+  };
+
+  const chooseAction = function (upload) {
+    switch (upload.importInDb) {
+      case true:
+        importInDb(upload);
+                break;
+      case false:
+        openPageResults();
+        break;
+      default:
+        break;
+    }
+  };
+
+  const openPageResults = function () {
+    router.push('/dashboard/upload-result');
+  };
+
+  const importInDb = async (upload) => {
+    // const csvConverted = this.state.data;
 
     const request = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + '/api/upload-tb', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json', //il faut préciser ce contenu pour que le fichier soit envoyé au bon format
       },
-      body: JSON.stringify(csvConverted),
+      body: JSON.stringify(upload.csv),
     });
 
     const response = await request.json();
