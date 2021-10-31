@@ -46,11 +46,6 @@ export default function CSVReader1() {
 
     event.target.action.value === 'db' ? (upload.importInDb = true) : (upload.importInDb = false); //si on choisit l'import en db, on affecte true dans import
 
-    updUploadContext(upload);
-  };
-
-  const updUploadContext = function (upload) {
-    updateUpload(upload); //MAJ du context
     chooseAction(upload);
   };
 
@@ -58,8 +53,9 @@ export default function CSVReader1() {
     switch (upload.importInDb) {
       case true:
         importInDb(upload);
-                break;
+        break;
       case false:
+        updUploadContext(upload);
         openPageResults();
         break;
       default:
@@ -67,6 +63,9 @@ export default function CSVReader1() {
     }
   };
 
+  const updUploadContext = function (upload) {
+    updateUpload(upload); //MAJ du context
+  };
   const openPageResults = function () {
     router.push('/dashboard/upload-result');
   };
