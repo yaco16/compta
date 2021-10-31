@@ -15,12 +15,3 @@ a {
   box-sizing: border-box;
 }
 
-.dark {
-  color: #f1f1f1;
-  background: #333;
-}
-
-.light {
-  color: #333;
-  background: #f1f1f1;
-}

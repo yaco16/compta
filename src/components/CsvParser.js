@@ -1,9 +1,8 @@
-import React, { useState, createRef, useContext } from 'react';
+import React, { createRef, useContext } from 'react';
 import { useRouter } from 'next/router';
 import { CSVReader } from 'react-papaparse';
 
-import Table from './GenerateGrid';
-import { UploadContext } from '../context/uploadContext';
+import UploadContextProvider, { UploadContext } from '../context/uploadContext';
 
 const buttonRef = createRef();
 
@@ -24,13 +23,31 @@ export default function CSVReader1() {
 
   const getFormEntries = async (event) => {
     event.preventDefault();
-    upload.fileType = event.target.file.value;
+    upload.fileType = event.target.file.value; //on affecte le type de fichier dans upload
+
+    event.target.action.value === 'db' ? (upload.importInDb = true) : (upload.importInDb = false); //si on choisit l'import en db, on affecte true dans import
+
     updUploadContext(upload);
   };
 
-  const updUploadContext = function (data) {
-    updateUpload(data);
-    openPageResults();
+  const updUploadContext = function (upload) {
+    updateUpload(upload); //MAJ du context
+    chooseAction(upload);
+  };
+
+  const chooseAction = function (upload) {
+    console.log('upload:', upload);
+    switch (upload.importInDb) {
+      case true:
+        console.log('faire qqch');
+        break;
+      case false:
+        console.log('ici')
+        openPageResults();
+        break;
+      default:
+        break;
+    }
   };
 
   const openPageResults = function () {
@@ -73,74 +90,110 @@ export default function CSVReader1() {
 
   return (
     <>
-      <legend>Sélectionner le type de fichier à importer :</legend>
-      <CSVReader ref={buttonRef} onFileLoad={handleOnFileLoad} onError={handleOnError} noClick noDrag onRemoveFile={handleOnRemoveFile}>
-        {({ file }) => (
-          <>
-            <aside>
-              <button className='button_browse' type='button' onClick={handleOpenDialog}>
-                Choisir le fichier
-              </button>
-              <div className='fileName'>{file && file.name}</div>
-              <button className='button_remove' onClick={handleRemoveFile}>
-                Supprimer
-              </button>
-            </aside>
-          </>
-        )}
-      </CSVReader>
-      <form onSubmit={getFormEntries}>
-        <div>
-          <input type='radio' name='file' value='tb' id='' />
-          <label htmlFor='tb'>Balance générale (csv)</label>
+      <div className='container'>
+        <div className='chooseFile'>
+          <div>Sélectionner le fichier à importer :</div>
+          <CSVReader ref={buttonRef} onFileLoad={handleOnFileLoad} onError={handleOnError} noClick noDrag onRemoveFile={handleOnRemoveFile}>
+            {({ file }) => (
+              <>
+                <button className='button_browse' type='button' onClick={handleOpenDialog}>
+                  Choisir le fichier
+                </button>
+                <div>Fichier sélectionné : </div>
+                <div className='fileName'>{file && file.name}</div>
+                <button className='button_remove' onClick={handleRemoveFile}>
+                  Supprimer
+                </button>
+              </>
+            )}
+          </CSVReader>
         </div>
         <div>
-          <input type='radio' name='file' value='clients-gl' id='' />
-          <label htmlFor='clients-gl'>GL clients (csv)</label>
+          <div className='subtitle'>Type de fichier :</div>
+          <form onSubmit={getFormEntries}>
+            <div>
+              <input type='radio' name='file' value='tb' id='tb' />
+              <label htmlFor='tb'>Balance générale (csv)</label>
+            </div>
+            <div>
+              <input type='radio' name='file' value='clients-gl' id='clients-gl' />
+              <label htmlFor='clients-gl'>GL clients (csv)</label>
+            </div>
+            <br />
+            <br />
+            <div className='subtitle'>Type de fichier :</div>
+            <div>
+              <div>
+                <input type='radio' id='tab' name='action' value='tab'></input>
+                <label htmlFor='tab'> Ouvrir dans un nouvel onglet</label>
+              </div>
+              <div>
+                <input type='radio' id='db' name='action' value='db'></input>
+                <label htmlFor='db'> Importer en base de données</label>
+              </div>
+            </div>
+            <div className='container-sendForm'>
+              <button className='submitBtn' name='tab'>
+                Envoyer
+              </button>
+            </div>
+          </form>
         </div>
-        <button>Envoyer</button>
-      </form>
+      </div>
       <style jsx>{`
-        body {
-          height: 100vh;
-        }
-        aside {
+        .container {
           display: flex;
-          flex-direction: row;
-          margin-bottom: 10;
+          justify-content: space-around;
+        }
+        .button_browse,
+        .fileName,
+        .button_remove {
+          border: none;
+          margin: 1rem 0 1rem 1rem;
+        }
+
+        .button_browse,
+        .button_remove {
+          padding: 0.5rem;
+          cursor: pointer;
         }
 
         .button_browse {
-          width: 10%;
           background-color: #4b91c9;
           color: white;
-          border: none;
-          border-radius: 0;
-          margin-left: 0;
-          margin-right: 0;
-          padding-left: 0;
-          padding-right: 0;
-        }
-
-        .fileName {
-          width: 20%;
-          border-width: 1;
-          border-style: solid;
-          border-color: rgb(172, 164, 164);
-          height: 45;
-          line-height: 2.5;
-          margin-top: 5;
-          margin-bottom: 5;
-          padding-left: 13;
-          padding-top: 3;
         }
 
         .button_remove {
           background-color: #dd2222;
           color: white;
+        }
+
+        label {
+          margin-bottom: 0.5rem;
+          font-size: 0.9rem;
+        }
+
+        .subtitle {
+          font-weight: bold;
+          margin-bottom: 0.3rem;
+        }
+
+        .container-sendForm {
+          display: flex;
+          justify-content: center;
+        }
+
+        .submitBtn {
+          display: block;
+          color: white;
+          font-size: 1rem;
+          background-color: rgb(34, 194, 34);
           border: none;
-          border-radius: 0;
-          margin: 0 0 20 20;
+          border-radius: 15px;
+          padding: 0.5rem;
+          margin-bottom: 0.5rem;
+          margin-top: 1rem;
+          cursor: pointer;
         }
       `}</style>
     </>

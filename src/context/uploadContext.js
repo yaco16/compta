@@ -5,6 +5,7 @@ export const UploadContext = createContext();
 const defaultUpload = {
   csv: '',
   fileType: '',
+  importInDb: false
 };
 
 
