@@ -1,9 +1,8 @@
 export default function GenerateGrid(data) {
-  console.log('dataGrid:', data);
   return (
     <>
       <table>
-        <thead>
+        {/* <thead>
           <tr>
             {data.data[0].data.map(
               (
@@ -14,19 +13,17 @@ export default function GenerateGrid(data) {
               )
             )}
           </tr>
-        </thead>
+        </thead> */}
         <tbody>
-          {data.data.slice(1).map(
-            (
-              item,
-              i //on slice = on supprime la 1re ligne pour éviter qu'elle soit en doublon avec les en-têtes
-            ) => (
-              <tr key={i}>
-                {item.data.map((item2, i2) => (
-                  <td key={i2}>{item2}</td>
-                ))}
-              </tr>
-            )
+          {data.value.map((item, i) =>(
+            <tr key={i}>
+            <td>{item.number}</td>
+            <td>{item.label}</td>
+            <td>{item.debit}</td>
+            <td>{item.credit}</td>
+            <td>{item.total}</td>
+            </tr>
+          )
           )}
         </tbody>
       </table>

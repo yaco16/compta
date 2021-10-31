@@ -1,19 +1,19 @@
 import React from 'react';
-import CSVReader1 from '../../components/CsvParser';
+import Table from '../../components/GenerateGrid2';
 
-export default function TrialBalance({data}) {
+export default function TrialBalance({result}) {
   return(
     <div>
     <h1>Balance générale</h1>
-    <CSVReader1 />
+    <Table value={result}/>
   </div>
   )
 }
 
-// export async function getServerSideProps() {
-//   const data = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/turnover'); //serverless
-//   const chartData = await data.json();
-//   return {
-//     props: { chartData },
-//   };
-// }
+export async function getServerSideProps() {
+  const data = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + '/api/get-all-accounts');
+  const result = await data.json();
+  return {
+    props: { result }
+  };
+}

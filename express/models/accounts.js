@@ -5,7 +5,7 @@ const db = require('../lib/database');
 
 class Accounts {
   static async getAllAccounts() {
-    const { rows } = await db.query(`SELECT * FROM accounts`);
+    const rows = await db.any(`SELECT * FROM accounts`);
     return rows;
   }
 
