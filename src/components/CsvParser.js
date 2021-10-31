@@ -1,12 +1,17 @@
-import React, { createRef, useContext } from 'react';
+import React, { createRef, useContext, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { CSVReader } from 'react-papaparse';
 
-import UploadContextProvider, { UploadContext } from '../context/uploadContext';
+import { UploadContext } from '../context/uploadContext';
+import toast from './Toast'
 
 const buttonRef = createRef();
 
 export default function CSVReader1() {
+  const notify = useCallback((type, message) => {
+    toast({ type, message });
+  }, []);
+
   const router = useRouter();
   const { upload, updateUpload } = useContext(UploadContext);
 
@@ -71,8 +76,6 @@ export default function CSVReader1() {
   };
 
   const importInDb = async (upload) => {
-    // const csvConverted = this.state.data;
-
     const request = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + '/api/upload-tb', {
       method: 'POST',
       headers: {
@@ -83,6 +86,11 @@ export default function CSVReader1() {
 
     const response = await request.json();
     console.log('test3:', response);
+    if (response.message === 'success') {
+      notify("success", "Import effectué!")
+    } else {
+      notify("error", "Echec!")
+    }
   };
 
   return (
