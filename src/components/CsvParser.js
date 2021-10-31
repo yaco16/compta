@@ -85,11 +85,10 @@ export default function CSVReader1() {
     });
 
     const response = await request.json();
-    console.log('test3:', response);
     if (response.message === 'success') {
-      notify("success", "Import effectué!")
+      notify("success", `Succès : ${response.data} lignes insérées`)
     } else {
-      notify("error", "Echec!")
+      notify("error", "Echec !")
     }
   };
 
