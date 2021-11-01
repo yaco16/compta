@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import Navbar from './Sidebar2';
+import Navbar from './Sidebar';
 import { ThemeContext } from '../../context/themeContext';
 
 export default function Layout({ children }) {
@@ -11,7 +11,6 @@ export default function Layout({ children }) {
       <style jsx global>{`
         main {
           margin-left: 16%;
-
         }
 
         h1 {

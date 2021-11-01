@@ -1,71 +1,118 @@
+/* eslint-disable react/no-unescaped-entities */
+import { useState } from 'react';
 import Link from 'next/link';
-import { useContext } from 'react';
-import { ThemeContext } from '../../context/themeContext';
+import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader, SidebarFooter, SidebarContent } from 'react-pro-sidebar';
+
 import ToggleDarkMode from '../ToggleDarkMode';
 
+import { FaGithub, FaCaretLeft, FaCaretRight } from 'react-icons/fa';
+import { FiLogOut, FiHome, FiDollarSign, FiUpload } from 'react-icons/fi';
+
 export default function Navbar() {
-  const { theme } = useContext(ThemeContext);
+  const [menuCollapse, setMenuCollapse] = useState(false);
+  const menuIconClick = () => {
+    menuCollapse ? setMenuCollapse(false) : setMenuCollapse(true);
+  };
 
   return (
-    <div className={theme ? 'navbar_container light' : 'navbar_container dark'}>
-    <ToggleDarkMode />
-      <ul>
-        <li>
-          <Link href='/'>
-            <a>Home</a>
-          </Link>
-        </li>
-        <li>
-          <Link href='/dashboard/turnover'>
-            <a>Chiffre d&#39;affaires</a>
-          </Link>
-        </li>
-        <li>
-          <Link href='/dashboard/trialbalance'>
-            <a>Balance générale</a>
-          </Link>
-        </li>
-        <li>
-          <Link href='/dashboard/extractiondb'>
-            <a>Extraction database</a>
-          </Link>
-        </li>
-        <li>
-          <Link href='/dashboard/upload'>
-            <a>Upload files</a>
-          </Link>
-        </li>
-      </ul>
-      <style jsx>{`
-        .navbar_container {
-          padding: 0.5rem;
-          position: fixed;
-          top: 15%;
-          border-top-right-radius: 15px;
-          border-bottom-right-radius: 15px;
-        }
+    <>
+      <div className='container'>
+        <ProSidebar collapsed={menuCollapse}>
+          <SidebarHeader>
+            <div className='header-container'>
+              <ToggleDarkMode />
+              <div className='closeMenu-container'>
+                <div className='closeMenu' onClick={menuIconClick}>
+                  {menuCollapse ? <FaCaretRight /> : <FaCaretLeft />}
+                </div>
+              </div>
+            </div>
 
-        .light {
-          background-color: grey;
-        }
+            <Menu iconShape='square'>
+              <MenuItem icon={<FiLogOut />}>Déconnexion</MenuItem>
+            </Menu>
+          </SidebarHeader>
 
-        .dark  {
-          border: 1px solid white;
-          background-color: rgb(56, 56, 56);
-        }
+          <SidebarContent>
+            <Menu iconShape='square'>
+              <MenuItem active={true} icon={<FiHome />}>
+                <Link href='/'>
+                  <a>Accueil</a>
+                </Link>
+              </MenuItem>
 
-        li {
-          color: white;
-          list-style-type: none;
-          cursor: pointer;
-          margin-bottom: 0.4rem;
-        }
-        li:hover {
-          text-decoration: underline;
-          text-underline-position: under;
+              <SubMenu title='Stats' icon={<FiDollarSign />}>
+                <MenuItem>
+                  <Link href='/dashboard/turnover'>
+                    <a>Chiffre d'affaires</a>
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link href='/dashboard/trialbalance'>
+                    <a>Balance générale</a>
+                  </Link>
+                </MenuItem>
+              </SubMenu>
 
-        }
-      `}</style>
-    </div>
+              <MenuItem active={true} icon={<FiUpload />}>
+                <Link href='/dashboard/upload'>
+                  <a>Import</a>
+                </Link>
+              </MenuItem>
+            </Menu>
+          </SidebarContent>
+
+          <SidebarFooter>
+            <div>
+              <Link href='https://github.com/yaco16/compta'>
+                <a>
+                  <div className='github'>
+                    <FaGithub />
+                    {menuCollapse ? <></> : <span>GitHub</span>}
+                  </div>
+                </a>
+              </Link>
+            </div>
+          </SidebarFooter>
+        </ProSidebar>
+        <style jsx>{`
+          .container {
+            position: fixed;
+            top: 15%;
+            background-color: #0c1e35;
+          }
+
+          .header-container {
+            display: flex;
+          }
+
+          .closeMenu-container {
+            position: absolute;
+            top: 10px;
+            right: 1px;
+          }
+
+          .github {
+            width: 80%;
+            color: #8b8a88;
+            display: flex;
+            justify-content: center;
+            background-color: #18293f;
+            font-size: 0.8rem;
+            border-radius: 15px;
+            padding: 0.6rem;
+            margin: 0.8rem auto 0.8rem auto;
+          }
+
+          .github span {
+            margin-left: 0.2rem;
+          }
+
+          .github:hover {
+            color: #d8d8d8;
+          }
+        `}</style>
+      </div>
+    </>
   );
 }
