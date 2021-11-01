@@ -4,6 +4,7 @@ import Table from '../../components/GenerateGrid'
 
 export default function Result() {
   const {upload} = useContext(UploadContext);
+  console.log('upload:', upload);
 
   let title;
   switch (upload.fileType) {
@@ -19,7 +20,7 @@ export default function Result() {
 
   return (
     <div>
-      <h1>Résultat : {title}</h1>
+      <h1>Résultat : {title} au {upload.date}</h1>
       <Table data={upload.csv} />    </div>
   );
 }

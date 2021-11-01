@@ -63,7 +63,13 @@ export default function UploadFile() {
       event.target.action.value === 'db' ? (upload.importInDb = true) : (upload.importInDb = false); //si on choisit l'import en db, on affecte true dans import
     }
 
-    //si les 3 conditions sont remplies, on envoie le fichier
+    //transformation de la date en format français
+    const date = event.target.date.value;
+    const dateFr = date.split('-').reverse().join('/');
+    upload.date = dateFr;
+    console.log('event.target.date.value:', upload.date);
+
+    //si les 3 1res conditions sont remplies, on envoie le fichier
     if (event.target.file.value && event.target.action.value && upload.csv) {
       chooseAction(upload);
     }
@@ -153,16 +159,19 @@ export default function UploadFile() {
                   <input type='radio' id='tab' name='action' value='tab'></input>
                   <label htmlFor='tab'> Ouvrir dans un nouvel onglet</label>
                 </div>
+
                 <div>
                   <input type='radio' id='db' name='action' value='db'></input>
                   <label htmlFor='db'> Importer en base de données</label>
                 </div>
               </div>
             </div>
+
             <div className='subtitle-container'>
               <div className='form-subtitle'>Date du document :</div>
               <input type='date' name='date' id='form-date' />
             </div>
+
             <div className='container-sendForm'>
               <button className='submitBtn' name='tab'>
                 Envoyer
