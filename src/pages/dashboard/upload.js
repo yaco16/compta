@@ -133,28 +133,35 @@ export default function UploadFile() {
           </CSVReader>
         </div>
         <div>
-          <div className='subtitle'>Type de fichier :</div>
           <form onSubmit={getFormEntries}>
-            <div>
-              <input type='radio' name='file' value='tb' id='tb' />
-              <label htmlFor='tb'>Balance générale (csv)</label>
-            </div>
-            <div>
-              <input type='radio' name='file' value='clients-gl' id='clients-gl' />
-              <label htmlFor='clients-gl'>GL clients (csv)</label>
-            </div>
-            <br />
-            <br />
-            <div className='subtitle'>Action à effectuer :</div>
-            <div>
+            <div className='subtitle-container'>
+              <div className='form-subtitle'>Type de fichier :</div>
               <div>
-                <input type='radio' id='tab' name='action' value='tab'></input>
-                <label htmlFor='tab'> Ouvrir dans un nouvel onglet</label>
+                <input type='radio' name='file' value='tb' id='tb' />
+                <label htmlFor='tb'>Balance générale (csv)</label>
               </div>
               <div>
-                <input type='radio' id='db' name='action' value='db'></input>
-                <label htmlFor='db'> Importer en base de données</label>
+                <input type='radio' name='file' value='clients-gl' id='clients-gl' />
+                <label htmlFor='clients-gl'>GL clients (csv)</label>
               </div>
+            </div>
+
+            <div className='subtitle-container'>
+              <div className='form-subtitle'>Action à effectuer :</div>
+              <div>
+                <div>
+                  <input type='radio' id='tab' name='action' value='tab'></input>
+                  <label htmlFor='tab'> Ouvrir dans un nouvel onglet</label>
+                </div>
+                <div>
+                  <input type='radio' id='db' name='action' value='db'></input>
+                  <label htmlFor='db'> Importer en base de données</label>
+                </div>
+              </div>
+            </div>
+            <div className='subtitle-container'>
+              <div className='form-subtitle'>Date du document :</div>
+              <input type='date' name='date' id='form-date' />
             </div>
             <div className='container-sendForm'>
               <button className='submitBtn' name='tab'>
@@ -170,7 +177,6 @@ export default function UploadFile() {
           justify-content: space-around;
           padding-left: 4rem;
           padding-right: 4rem;
-
         }
         .button_browse,
         .fileName,
@@ -204,7 +210,10 @@ export default function UploadFile() {
           font-size: 0.9rem;
         }
 
-        .subtitle {
+        .subtitle-container {
+          margin-bottom: 1rem;
+        }
+        .form-subtitle {
           font-weight: bold;
           margin-bottom: 0.3rem;
         }
