@@ -41,7 +41,6 @@ export default function Navbar() {
           padding: 0.5rem;
           position: absolute;
           top: 0;
-          height: 100vh;
         }
 
         .light {

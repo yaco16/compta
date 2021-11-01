@@ -9,12 +9,9 @@ export default function Layout({ children }) {
       <Navbar />
       <main>{children}</main>
       <style jsx global>{`
-
-      body {
-        height: 100%;
-      }
         main {
           margin-left: 16%;
+
         }
 
         h1 {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import getAllAccounts from '../../services/getAllAccounts';
+import {getAllAccounts} from '../../services/queries';
 import RefreshPage from '../../components/RefreshPage';
 
 export default function TestDB(props) {
