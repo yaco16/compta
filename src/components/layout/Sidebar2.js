@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { useState } from 'react';
 import Link from 'next/link';
 import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader, SidebarFooter, SidebarContent } from 'react-pro-sidebar';
@@ -5,7 +6,7 @@ import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader, SidebarFooter, Side
 import ToggleDarkMode from '../ToggleDarkMode';
 
 import { FaGithub, FaCaretLeft, FaCaretRight } from 'react-icons/fa';
-import {FiLogOut, FiHome, FiDollarSign, FiUpload } from 'react-icons/fi';
+import { FiLogOut, FiHome, FiDollarSign, FiUpload } from 'react-icons/fi';
 
 export default function Navbar() {
   const [menuCollapse, setMenuCollapse] = useState(false);
@@ -40,16 +41,16 @@ export default function Navbar() {
                 </Link>
               </MenuItem>
 
-              <SubMenu title="Stats" icon={<FiDollarSign />}>
+              <SubMenu title='Stats' icon={<FiDollarSign />}>
                 <MenuItem>
-                <Link href='/dashboard/turnover'>
-                  <a>Chiffre d'affaires</a>
-                </Link>
+                  <Link href='/dashboard/turnover'>
+                    <a>Chiffre d'affaires</a>
+                  </Link>
                 </MenuItem>
                 <MenuItem>
-                <Link href='/dashboard/trialbalance'>
-                  <a>Balance générale</a>
-                </Link>
+                  <Link href='/dashboard/trialbalance'>
+                    <a>Balance générale</a>
+                  </Link>
                 </MenuItem>
               </SubMenu>
 
@@ -67,10 +68,7 @@ export default function Navbar() {
                 <a>
                   <div className='github'>
                     <FaGithub />
-
-                    {menuCollapse ? <></> : <span>View Source</span>}
-
-
+                    {menuCollapse ? <></> : <span>GitHub</span>}
                   </div>
                 </a>
               </Link>

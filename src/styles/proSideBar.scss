@@ -1,11 +1,18 @@
-$sidebar-bg-color: #0C1E35 !default;
-$sidebar-color: #adadad !default;
+// création des variables de couleur
+$mainColor: #0C1E35;
+$secondColor: #18293F;
+$text-color: #adadad;
+$text-color-hover: #d8d8d8;
+
+//variables par défaut de proSideBar
+$sidebar-bg-color: $mainColor !default;
+$sidebar-color: $text-color !default;
 $sidebar-width: 200px !default;
 $sidebar-collapsed-width: 70px !default;
-$highlight-color: #d8d8d8 !default;
-$submenu-bg-color: #18293F !default;
-$submenu-bg-color-collapsed: #18293F !default;
-$icon-bg-color: #18293F !default;
+$highlight-color: $text-color-hover !default;
+$submenu-bg-color: $secondColor !default;
+$submenu-bg-color-collapsed: $secondColor !default;
+$icon-bg-color: $secondColor !default;
 $icon-size: 35px !default;
 $submenu-indent: 24px !default;
 $breakpoint-xs: 480px !default;
@@ -15,4 +22,5 @@ $breakpoint-lg: 992px !default;
 $breakpoint-xl: 1200px !default;
 $breakpoint-xxl: 1600px !default;
 
+//ajouter le css par défaut à la fin
 @import '~react-pro-sidebar/dist/scss/styles.scss';
