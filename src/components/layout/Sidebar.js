@@ -39,8 +39,10 @@ export default function Navbar() {
       <style jsx>{`
         .navbar_container {
           padding: 0.5rem;
-          position: absolute;
-          top: 0;
+          position: fixed;
+          top: 15%;
+          border-top-right-radius: 15px;
+          border-bottom-right-radius: 15px;
         }
 
         .light {
@@ -48,7 +50,8 @@ export default function Navbar() {
         }
 
         .dark  {
-          border-right: 1px solid white;
+          border: 1px solid white;
+          background-color: rgb(56, 56, 56);
         }
 
         li {

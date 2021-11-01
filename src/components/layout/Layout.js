@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import Navbar from './Sidebar';
+import Navbar from './Sidebar2';
 import { ThemeContext } from '../../context/themeContext';
 
 export default function Layout({ children }) {
