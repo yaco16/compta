@@ -1,21 +1,11 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import ToggleDarkMode from '../ToggleDarkMode';
-
 import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader, SidebarFooter, SidebarContent } from 'react-pro-sidebar';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSun } from '@fortawesome/free-solid-svg-icons';
+import ToggleDarkMode from '../ToggleDarkMode';
 
-import { FaList, FaRegHeart } from 'react-icons/fa';
-import { FaGithub } from 'react-icons/fa';
-import { FiHome, FiLogOut, FiArrowLeftCircle, FiArrowRightCircle } from 'react-icons/fi';
-import { RiPencilLine } from 'react-icons/ri';
-import { BiCog } from 'react-icons/bi';
-import { SiApacheairflow } from 'react-icons/si';
-import { GiAbstract050 } from 'react-icons/gi';
-
-import 'react-pro-sidebar/dist/css/styles.css';
+import { FaGithub, FaCaretLeft, FaCaretRight } from 'react-icons/fa';
+import {FiLogOut, FiHome, FiDollarSign, FiUpload } from 'react-icons/fi';
 
 export default function Navbar() {
   const [menuCollapse, setMenuCollapse] = useState(false);
@@ -25,13 +15,18 @@ export default function Navbar() {
 
   return (
     <>
-      <div>
-        <ProSidebar collapsed={menuCollapse} width={200} className='container'>
+      <div className='container'>
+        <ProSidebar collapsed={menuCollapse}>
           <SidebarHeader>
-            <ToggleDarkMode />
-            <div className='closeMenu' onClick={menuIconClick}>
-              {menuCollapse ? <FiArrowRightCircle /> : <FiArrowLeftCircle />}
+            <div className='header-container'>
+              <ToggleDarkMode />
+              <div className='closeMenu-container'>
+                <div className='closeMenu' onClick={menuIconClick}>
+                  {menuCollapse ? <FaCaretRight /> : <FaCaretLeft />}
+                </div>
+              </div>
             </div>
+
             <Menu iconShape='square'>
               <MenuItem icon={<FiLogOut />}>Déconnexion</MenuItem>
             </Menu>
@@ -39,35 +34,46 @@ export default function Navbar() {
 
           <SidebarContent>
             <Menu iconShape='square'>
-
               <MenuItem active={true} icon={<FiHome />}>
                 <Link href='/'>
                   <a>Accueil</a>
                 </Link>
               </MenuItem>
 
-              <SubMenu title='Category' icon={<FaList />}>
-                <MenuItem>Component 1</MenuItem>
-                <MenuItem>Component 2</MenuItem>
+              <SubMenu title="Stats" icon={<FiDollarSign />}>
+                <MenuItem>
+                <Link href='/dashboard/turnover'>
+                  <a>Chiffre d'affaires</a>
+                </Link>
+                </MenuItem>
+                <MenuItem>
+                <Link href='/dashboard/trialbalance'>
+                  <a>Balance générale</a>
+                </Link>
+                </MenuItem>
               </SubMenu>
 
-              <MenuItem active={true} icon={<FiHome />}>
+              <MenuItem active={true} icon={<FiUpload />}>
                 <Link href='/dashboard/upload'>
                   <a>Import</a>
                 </Link>
               </MenuItem>
-
             </Menu>
           </SidebarContent>
 
           <SidebarFooter>
             <div>
-              <div className='github'>
-                <FaGithub />
-                <Link href='https://github.com/yaco16/compta'>
-                  <a>View Source</a>
-                </Link>
-              </div>
+              <Link href='https://github.com/yaco16/compta'>
+                <a>
+                  <div className='github'>
+                    <FaGithub />
+
+                    {menuCollapse ? <></> : <span>View Source</span>}
+
+
+                  </div>
+                </a>
+              </Link>
             </div>
           </SidebarFooter>
         </ProSidebar>
@@ -78,13 +84,19 @@ export default function Navbar() {
             background-color: #0c1e35;
           }
 
-          .closeMenu {
-            position: fixed;
-            left: 0;
+          .header-container {
+            display: flex;
+          }
+
+          .closeMenu-container {
+            position: absolute;
+            top: 10px;
+            right: 1px;
           }
 
           .github {
             width: 80%;
+            color: #8b8a88;
             display: flex;
             justify-content: center;
             background-color: #18293f;
@@ -94,8 +106,12 @@ export default function Navbar() {
             margin: 0.8rem auto 0.8rem auto;
           }
 
-          .github a {
+          .github span {
             margin-left: 0.2rem;
+          }
+
+          .github:hover {
+            color: #d8d8d8;
           }
         `}</style>
       </div>

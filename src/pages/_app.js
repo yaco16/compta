@@ -1,5 +1,6 @@
 import '../styles/reset.css';
 import '../styles/globals.css';
+import '../styles/proSideBar.scss';
 import "react-toastify/dist/ReactToastify.css";
 import Layout from '../components/layout/Layout';
 import ThemeContextProvider from '../context/themeContext';
