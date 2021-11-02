@@ -4,7 +4,7 @@ import { CSVReader } from 'react-papaparse';
 
 import { UploadContext } from '../../context/uploadContext';
 import toast from '../../components/Toast';
-import { importInDb } from '../../services/queries';
+import { importTrialBalance, importSalesJournal } from '../../services/queries';
 
 const buttonRef = createRef();
 
@@ -83,7 +83,8 @@ export default function UploadFile() {
   const chooseAction = function (upload) {
     switch (upload.importInDb) {
       case true:
-        uploadToDb(upload);
+        // importTrialBalance(upload);
+        importSalesJournal(upload);
         break;
       case false:
         updUploadContext(upload);
@@ -102,7 +103,8 @@ export default function UploadFile() {
 
   // ouverture du csv dans un nouvel onglet
   const openPageResults = function () {
-    router.push('/dashboard/upload-result');
+    // router.push('/dashboard/upload-result');
+    convert(upload)
   };
 
   //import en DB
