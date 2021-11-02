@@ -187,7 +187,7 @@ export default function UploadFile() {
 
             <div className='subtitle-container'>
               <div className='form-subtitle'>Date du document :</div>
-              <input type='date' name='date' id='form-date' value={today}/>
+              <input type='date' name='date' id='form-date' defaultValue={today}/>
             </div>
 
             <div className='container-sendForm'>
