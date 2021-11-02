@@ -6,9 +6,28 @@ module.exports = {
     res.status(200).json(allAccounts);
   },
 
-  uploadTb: async (req, res) => {
+  uploadTrialBalance: async (req, res) => {
     try {
-      const response = await Accounts.uploadTb(req.body);
+      const response = await Accounts.uploadTrialBalance(req.body);
+
+      if (response === 'error') {
+        console.log('upload failed')
+        res.status(400).json({ message: 'error' });
+      }
+      if (response > 0) {
+        console.log('upload OK');
+        res.status(200).json({ message: 'success', data: response });
+      }
+
+    } catch (error) {
+      console.log(error)
+      res.status(400).json({ message: 'error' });
+    }
+  },
+
+  uploadSalesJournal: async (req, res) => {
+    try {
+      const response = await Accounts.uploadSalesJournal(req.body);
 
       if (response === 'error') {
         console.log('upload failed')
