@@ -84,7 +84,7 @@ export default function UploadFile() {
     switch (upload.importInDb) {
       case true:
         // importTrialBalance(upload);
-        importSalesJournal(upload);
+        uploadToDb(upload);
         break;
       case false:
         updUploadContext(upload);
@@ -103,13 +103,22 @@ export default function UploadFile() {
 
   // ouverture du csv dans un nouvel onglet
   const openPageResults = function () {
-    // router.push('/dashboard/upload-result');
-    convert(upload)
+    router.push('/dashboard/upload-result');
   };
 
   //import en DB
+  let request;
   const uploadToDb = async function (upload) {
-    const request = await importInDb(upload);
+    switch(upload.fileType) {
+      case 'trial-balance':
+        request = await importTrialBalance(upload);
+      break;
+      case 'sales-journal':
+        request = await importSalesJournal(upload);
+      break;
+      default:
+        break;
+    }
     const response = await request.json();
     if (response.message === 'success') {
       notify('success', `Succès : ${response.data} lignes insérées`);
@@ -148,12 +157,12 @@ export default function UploadFile() {
             <div className='subtitle-container'>
               <div className='form-subtitle'>Type de fichier :</div>
               <div>
-                <input type='radio' name='file' value='tb' id='tb' />
-                <label htmlFor='tb'>Balance générale (csv)</label>
+                <input type='radio' name='file' value='trial-balance' id='' />
+                <label htmlFor='trial-balance'>Balance générale (csv)</label>
               </div>
               <div>
-                <input type='radio' name='file' value='clients-gl' id='clients-gl' />
-                <label htmlFor='clients-gl'>GL clients (csv)</label>
+                <input type='radio' name='file' value='sales-journal' id='' />
+                <label htmlFor='sales-journal'>Journal des ventes (csv)</label>
               </div>
             </div>
 

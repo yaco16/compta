@@ -4,14 +4,13 @@ import Table from '../../components/GenerateGrid'
 
 export default function Result() {
   const {upload} = useContext(UploadContext);
-  console.log('upload:', upload);
 
   let title;
   switch (upload.fileType) {
-    case 'tb':
+    case 'trial-balance':
     title = 'Balance';
       break;
-    case `clients-gl`:
+    case `sales-journal`:
       title = 'Grand-livre clients';
 
     default:

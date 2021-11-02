@@ -15,7 +15,7 @@ class Accounts {
     }
   }
 
-  static async uploadTb(csv) {
+  static async uploadTrialBalance(csv) {
     try {
       await csv.shift(); // supprime la 1re ligne avec les libellés
 
