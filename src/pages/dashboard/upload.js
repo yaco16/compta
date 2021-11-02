@@ -12,6 +12,9 @@ export default function UploadFile() {
   const router = useRouter();
   const { upload, updateUpload } = useContext(UploadContext);
 
+  //création de la date du jour pour remplir l'input date
+  const today = new Date().toLocaleDateString().split('/').reverse().join('-').toString();
+
   //gestion des messages Toast
   const notify = useCallback((type, message) => {
     toast({ type, message });
@@ -67,9 +70,9 @@ export default function UploadFile() {
     const date = event.target.date.value;
     const dateFr = date.split('-').reverse().join('/');
     upload.date = dateFr;
-    console.log('event.target.date.value:', upload.date);
 
     //si les 3 1res conditions sont remplies, on envoie le fichier
+    //la date reste facultative
     if (event.target.file.value && event.target.action.value && upload.csv) {
       chooseAction(upload);
     }
@@ -169,7 +172,7 @@ export default function UploadFile() {
 
             <div className='subtitle-container'>
               <div className='form-subtitle'>Date du document :</div>
-              <input type='date' name='date' id='form-date' />
+              <input type='date' name='date' id='form-date' value={today}/>
             </div>
 
             <div className='container-sendForm'>
