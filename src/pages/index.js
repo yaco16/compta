@@ -1,18 +1,30 @@
 import Contenu from '../components/Contenu';
 
-import { useState } from "react";
+import { useState } from 'react';
 import Spinner from '../components/Spinner'
 
 export default function Home() {
-  let [loading, setLoading] = useState(true);
-  let [color, setColor] = useState("#ffffff");
+  const [loading, setLoading] = useState(false);
+
+  const fetchData = async() => {
+    setLoading(true);
+    await fetch('/').then(() => {})
+setTimeout(() => {
+  setLoading(false)
+}, 5000);
+
+
+  }
+
   return (
-    <div>
-      <h1>Homepage :</h1>
-      {/* <Contenu /> */}
-      <Spinner />
-    </div>
-  );
+  <div>
+
+  <button onClick={fetchData}></button>
+    {loading? <Spinner />  : <div>Fetch data</div>}
+  </div>
+  )
+
+
 }
 
 // export async function getServerSideProps() {

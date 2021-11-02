@@ -1,16 +1,23 @@
-import React, { createRef, useContext, useCallback } from 'react';
+import React, { createRef, useContext, useCallback, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { CSVReader } from 'react-papaparse';
 
 import { UploadContext } from '../../context/uploadContext';
 import toast from '../../components/Toast';
-import { importInDb, importTrialBalance, importSalesJournal } from '../../services/queries';
+import { importInDb } from '../../services/queries';
+
+import Spinner from '../../components/Spinner';
+
 
 const buttonRef = createRef();
 
 export default function UploadFile() {
+  // useEffect()
+
   const router = useRouter();
   const { upload, updateUpload } = useContext(UploadContext);
+  const [loading, setLoading] = useState(false);
+
 
   //création de la date du jour pour remplir l'input date
   const today = new Date().toLocaleDateString().split('/').reverse().join('-').toString();
@@ -83,10 +90,12 @@ export default function UploadFile() {
   const chooseAction = function (upload) {
     switch (upload.importInDb) {
       case true:
-        // importTrialBalance(upload);
         uploadToDb(upload);
         break;
       case false:
+        //le contexte est MAJ uniquement si on ouvre un nouvel onglet
+        // => inutile de MAJ le contexte si on importe en DB
+        upload.loading = true;
         updUploadContext(upload);
         openPageResults();
         break;
@@ -95,8 +104,6 @@ export default function UploadFile() {
     }
   };
 
-  //le contexte est MAJ uniquement si on ouvre un nouvel onglet
-  // => inutile de MAJ le contexte si on importe en DB
   const updUploadContext = function (upload) {
     updateUpload(upload); //MAJ du context
   };
@@ -108,22 +115,11 @@ export default function UploadFile() {
 
   //import en DB : sélection de la query
   const uploadToDb = async function (upload) {
-    console.log('dans uploadToDb');
-    // let request;
-    // switch(upload.fileType) {
-    //   case 'trial-balance':
-    //     request = await importTrialBalance(upload);
-    //   break;
-    //   case 'sales-journal':
-    //     request = await importSalesJournal(upload);
-    //   break;
-    //   default:
-    //     break;
-    // }
-
+    setLoading(true);
     const request = await importInDb(upload)
-
     const response = await request.json();
+    setLoading(false);
+
     if (response.message === 'success') {
       notify('success', `Succès : ${response.data} lignes insérées`);
     } else {
@@ -161,11 +157,11 @@ export default function UploadFile() {
             <div className='subtitle-container'>
               <div className='form-subtitle'>Type de fichier :</div>
               <div>
-                <input type='radio' name='file' value='trial-balance' id='' />
+                <input type='radio' name='file' value='trial-balance' id='trial-balance' />
                 <label htmlFor='trial-balance'>Balance générale (csv)</label>
               </div>
               <div>
-                <input type='radio' name='file' value='sales-journal' id='' />
+                <input type='radio' name='file' value='sales-journal' id='sales-journal' />
                 <label htmlFor='sales-journal'>Journal des ventes (csv)</label>
               </div>
             </div>
@@ -198,6 +194,7 @@ export default function UploadFile() {
           </form>
         </div>
       </div>
+        {loading? <Spinner /> : null}
       <style jsx>{`
         .container {
           display: flex;
