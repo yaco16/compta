@@ -1,20 +1,10 @@
 //Dans ce fichier, on va regrouper toutes les requêtes faites à la base de données
 
-//import de la BG en DB
-export async function importTrialBalance(upload) {
-  const request = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + '/api/upload-tb', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json', //il faut préciser ce contenu pour que le fichier soit envoyé au bon format
-    },
-    body: JSON.stringify(upload.csv),
-  });
-  return request;
-};
-
-//import de la BG en DB
-export async function importSalesJournal(upload) {
-  const request = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + '/api/upload-sales-journal', {
+//import BG, journal en DB
+//route dynamique en fonction du type de fichier
+export async function importInDb(upload) {
+  const routeSuffix = upload.fileType;
+  const request = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'upload-'+ routeSuffix, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json', //il faut préciser ce contenu pour que le fichier soit envoyé au bon format

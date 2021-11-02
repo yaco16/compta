@@ -4,7 +4,7 @@ import { CSVReader } from 'react-papaparse';
 
 import { UploadContext } from '../../context/uploadContext';
 import toast from '../../components/Toast';
-import { importTrialBalance, importSalesJournal } from '../../services/queries';
+import { importInDb, importTrialBalance, importSalesJournal } from '../../services/queries';
 
 const buttonRef = createRef();
 
@@ -106,19 +106,23 @@ export default function UploadFile() {
     router.push('/dashboard/upload-result');
   };
 
-  //import en DB
-  let request;
+  //import en DB : sélection de la query
   const uploadToDb = async function (upload) {
-    switch(upload.fileType) {
-      case 'trial-balance':
-        request = await importTrialBalance(upload);
-      break;
-      case 'sales-journal':
-        request = await importSalesJournal(upload);
-      break;
-      default:
-        break;
-    }
+    console.log('dans uploadToDb');
+    // let request;
+    // switch(upload.fileType) {
+    //   case 'trial-balance':
+    //     request = await importTrialBalance(upload);
+    //   break;
+    //   case 'sales-journal':
+    //     request = await importSalesJournal(upload);
+    //   break;
+    //   default:
+    //     break;
+    // }
+
+    const request = await importInDb(upload)
+
     const response = await request.json();
     if (response.message === 'success') {
       notify('success', `Succès : ${response.data} lignes insérées`);
