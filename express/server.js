@@ -10,7 +10,9 @@ app
   origin: '*',
 }))
 
-.use(express.json())
+// .use(express.json())
+.use(express.json({limit: '25mb'}))
+
 
 .use('/api', router)
 
