@@ -1,6 +1,7 @@
 import { Bar } from 'react-chartjs-2';
 
 export default function GenerateChart({ chartData }) {
+  console.log('chartData:', chartData);
   return (
     <div id='bar'>
       <Bar
@@ -11,7 +12,7 @@ export default function GenerateChart({ chartData }) {
             title: {
               display: true,
               position: 'bottom',
-              text: 'Cryptocurrency prices',
+              text: '', //titre
             },
             legend: {
               display: true,

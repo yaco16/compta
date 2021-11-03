@@ -23,7 +23,7 @@ export default function TurnOver({ chartData }) {
 }
 
 export async function getServerSideProps() {
-  const data = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/turnover'); //serverless
+  const data = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'get-monthly-turnover'); //serverless
   const chartData = await data.json();
   return {
     props: { chartData },
