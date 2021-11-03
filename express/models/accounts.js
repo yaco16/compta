@@ -64,6 +64,7 @@ class Accounts {
 
     const cs = new pgp.helpers.ColumnSet(['journal', 'date', 'number', 'label', 'debit', 'lettering', 'credit'], { table: 'accounts' });
 
+    //comme il est impossible d'effectuer les méthodes propres aux strings sur le tableau suivant, on crée un fichier temporaire
     let tempValues = [];
     csv.forEach((item) => {
       if (item.data[3] !== '') {
@@ -80,16 +81,19 @@ class Accounts {
     });
     tempValues.pop(); //supprimer la dernière ligne vide
 
+    //copie du fichier temp dans un nouveau fichier dans lequle on va déverser les données mises à jour
     let values = [...tempValues];
 
+    //on ne modifie que les données nécessaires
     values.forEach((item) => {
-      item.date = item.date.split('/').reverse().join('/').toString();
-      item.debit = parseFloat(item.debit.replace(',', '.'));
-      item.credit = parseFloat(item.credit.replace(',', '.'));
-      item.lettering.startsWith(' ')? item.lettering = item.lettering.replace(' ', '') : item.lettering = item.lettering;
-      item.label.startsWith(' ')? item.label = item.label.replace('  ', '') : item.label = item.label;
+      item.date = item.date.split('/').reverse().join('/').toString(); //conversion en format étranger pour respecter la contrainte Date
+      item.debit = parseFloat(item.debit.replace(',', '.')); //125,13 => 125.13
+      item.credit = parseFloat(item.credit.replace(',', '.')); //idem
+      item.lettering.startsWith(' ')? item.lettering = item.lettering.replace(' ', '') : item.lettering = item.lettering; //suppression de l' espace en début de lettrage
+      item.label.startsWith(' ')? item.label = item.label.replace('  ', '') : item.label = item.label;//suppression des 2 espaces en début de ligne
+      item.label.startsWith('A ')? item.label = item.label.replace('A ', '') : item.label = item.label;//suppression de 'A ' en début de ligne
     });
-    console.log('values:', values);
+
     const query = pgp.helpers.insert(values, cs) + 'RETURNING *';
 
     try {
