@@ -8,7 +8,6 @@ class Accounts {
     try {
       const rows = await db.any(`SELECT * FROM accounts`);
       return rows;
-
     } catch (error) {
       console.error(error);
       return 'error';
@@ -65,47 +64,57 @@ class Accounts {
 
     const cs = new pgp.helpers.ColumnSet(['journal', 'date', 'number', 'label', 'debit', 'lettering', 'credit'], { table: 'accounts' });
 
-    let values = [];
+    let tempValues = [];
     csv.forEach((item) => {
       if (item.data[3] !== '') {
-        values.push({
+        tempValues.push({
           journal: item.data[0],
           date: item.data[3],
           number: item.data[4],
           label: item.data[5],
-          debit: parseInt(item.data[7], 10),
+          debit: item.data[7],
           lettering: item.data[8],
-          credit: parseInt(item.data[9], 10),
+          credit: item.data[9],
         });
       }
     });
-    values.pop(); //supprimer la dernière ligne vide
+    tempValues.pop(); //supprimer la dernière ligne vide
 
+    let values = [...tempValues];
+
+    values.forEach((item) => {
+      item.date = item.date.split('/').reverse().join('/').toString();
+      item.debit = parseFloat(item.debit.replace(',', '.'));
+      item.credit = parseFloat(item.credit.replace(',', '.'));
+      item.lettering.startsWith(' ')? item.lettering = item.lettering.replace(' ', '') : item.lettering = item.lettering;
+      item.label.startsWith(' ')? item.label = item.label.replace('  ', '') : item.label = item.label;
+    });
+    console.log('values:', values);
     const query = pgp.helpers.insert(values, cs) + 'RETURNING *';
 
-      try {
-        const response = await db.tx('upload SalesJournal', async (t) => {
-          const deleteAccounts = await t.any('DELETE FROM accounts'); //on commence par effacer le contenu de la table
-          const addAccounts = await t.any(query);
-          return { deleteAccounts, addAccounts };
-        });
+    try {
+      const response = await db.tx('upload SalesJournal', async (t) => {
+        const deleteAccounts = await t.any('DELETE FROM accounts'); //on commence par effacer le contenu de la table
+        const addAccounts = await t.any(query);
+        return { deleteAccounts, addAccounts };
+      });
 
-        if (response.addAccounts.length > 0) {
-          console.log('dans addaccounts');
-          return response.addAccounts.length;
-        } else {
-          return 'error';
-        }
-      } catch (error) {
-        console.log('upload failed');
-        console.error(error);
+      if (response.addAccounts.length > 0) {
+        console.log('dans addaccounts');
+        return response.addAccounts.length;
+      } else {
         return 'error';
       }
     } catch (error) {
+      console.log('upload failed');
       console.error(error);
       return 'error';
     }
-
+  }
+  catch(error) {
+    console.error(error);
+    return 'error';
+  }
 }
 
 module.exports = Accounts;
