@@ -12,7 +12,6 @@ import Spinner from '../../components/Spinner';
 const buttonRef = createRef();
 
 export default function UploadFile() {
-  // useEffect()
 
   const router = useRouter();
   const { upload, updateUpload } = useContext(UploadContext);
@@ -163,6 +162,14 @@ export default function UploadFile() {
               <div>
                 <input type='radio' name='file' value='sales-journal' id='sales-journal' />
                 <label htmlFor='sales-journal'>Journal des ventes (csv)</label>
+              </div>
+              <div>
+                <input type='radio' name='file' value='purchases-journal' id='purchases-journal' />
+                <label htmlFor='purchases-journal'>Journal des achats (csv)</label>
+              </div>
+              <div>
+                <input type='radio' name='file' value='OD-journal' id='OD-journal' />
+                <label htmlFor='OD-journal'>Journal des OD (csv)</label>
               </div>
             </div>
 

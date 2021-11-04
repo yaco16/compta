@@ -25,9 +25,9 @@ module.exports = {
     }
   },
 
-  uploadSalesJournal: async (req, res) => {
+  uploadJournal: async (req, res) => {
     try {
-      const response = await Accounts.uploadSalesJournal(req.body);
+      const response = await Accounts.uploadJournal(req.body);
 
       if (response === 'error') {
         console.log('upload failed')

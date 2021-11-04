@@ -4,6 +4,22 @@ const pgp = require('pg-promise')({
 const db = require('../lib/database');
 
 class Accounts {
+
+  static selectJournal(journal) {
+    switch(journal) {
+      case 'sales-journal':
+        return 'VE';
+      case 'purchases-journal':
+        return 'AC';
+      case 'OD-journal':
+        return 'OD';
+      case 'overhead-costs-journal':
+        return 'FG';
+      default:
+        return;
+
+    }
+  }
   static async getAllAccounts() {
     try {
       const rows = await db.any(`SELECT * FROM accounts`);
@@ -59,7 +75,7 @@ class Accounts {
     }
   }
 
-  static async uploadSalesJournal(csv) {
+  static async uploadJournal({csv, fileType}) {
     await csv.shift(); // supprime la 1re ligne avec les libellés
 
     const cs = new pgp.helpers.ColumnSet(['journal', 'date', 'number', 'label', 'debit', 'lettering', 'credit'], { table: 'accounts' });
@@ -94,11 +110,15 @@ class Accounts {
       item.label.startsWith('A ')? item.label = item.label.replace('A ', '') : item.label = item.label;//suppression de 'A ' en début de ligne
     });
 
+    //on récupère le nom du journal pour MAJ uniquement la table concernée
+    const journal = this.selectJournal(fileType);
+
     const query = pgp.helpers.insert(values, cs) + 'RETURNING *';
 
+    //utilisation de tx si multirequêtes qui modifient les données
     try {
       const response = await db.tx('upload SalesJournal', async (t) => {
-        const deleteAccounts = await t.any('DELETE FROM accounts'); //on commence par effacer le contenu de la table
+        const deleteAccounts = await t.any(`DELETE FROM accounts WHERE journal = $1`, journal); //on commence par effacer le contenu de la table
         const addAccounts = await t.any(query);
         return { deleteAccounts, addAccounts };
       });
