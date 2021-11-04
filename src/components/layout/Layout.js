@@ -10,7 +10,8 @@ export default function Layout({ children }) {
       <main>{children}</main>
       <style jsx global>{`
         main {
-          margin-left: 16%;
+          margin-left: 20%;
+          margin-right: 10%;
         }
 
         h1 {
@@ -24,7 +25,6 @@ export default function Layout({ children }) {
         h2 {
           text-align: center;
           font-weight: bold;
-
         }
 
         .dark {

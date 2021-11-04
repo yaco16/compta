@@ -1,9 +1,9 @@
 const Accounts = require('../models/accounts');
 
 module.exports = {
-  getAllAccounts: async (req, res) => {
-    const allAccounts = await Accounts.getAllAccounts();
-    res.status(200).json(allAccounts);
+  getAccounts: async (req, res) => {
+    const accounts = await Accounts.getAccounts(firstAccount, secondAccount, beginningDate, endDate);
+    res.status(200).json(accounts);
   },
 
   uploadTrialBalance: async (req, res) => {

@@ -1,7 +1,6 @@
 import { Bar } from 'react-chartjs-2';
 
-export default function GenerateChart({ chartData }) {
-  console.log('chartData:', chartData);
+export default function GenerateChart({ chartData, title }) {
   return (
     <div id='bar'>
       <Bar
@@ -11,8 +10,8 @@ export default function GenerateChart({ chartData }) {
           plugins: {
             title: {
               display: true,
-              position: 'bottom',
-              text: '', //titre
+              position: 'top',
+              text: title, //titre
             },
             legend: {
               display: true,
@@ -23,7 +22,7 @@ export default function GenerateChart({ chartData }) {
       />
       <style jsx>{`
         #bar {
-          width: 90%;
+          width: 100%;
           padding: 1rem;
           margin: 0 auto 0 auto;
         }

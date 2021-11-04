@@ -1,6 +1,11 @@
 const db = require('../lib/database');
 
 class Turnover {
+  static async getTurnover(beginningDate, endDate) {
+    const rows = await db.any(`SELECT SUM(credit-debit) FROM accounts WHERE number LIKE '70%' AND date BETWEEN '${beginningDate}' and '${endDate}'`); //à réécrire avec les paramètres ci-dessus
+    return rows;
+}
+
   static async getMonthlyTurnover(year) {
     const{year1, year2} = year;
     try {

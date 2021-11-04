@@ -1,6 +1,19 @@
 const Turnover = require('../models/turnover');
 
 module.exports = {
+
+  getTurnover: async (req, res) => {
+    try {
+      const response = await Turnover.getTurnover('2021/07/01', '2022/06/30');
+      console.log('response:', response);
+      res.status(200).json(response);
+
+    } catch (error) {
+      console.log(error)
+      res.status(400).json({ message: 'error' });
+    }
+  },
+
   postMonthlyTurnover: async (req, res) => {
     const year1 = req.body.year1;
     const year2 = req.body.year2;

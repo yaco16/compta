@@ -20,9 +20,10 @@ class Accounts {
 
     }
   }
-  static async getAllAccounts() {
+
+  static async getAccounts(firstAccount, secondAccount, beginningDate, endDate) {
     try {
-      const rows = await db.any(`SELECT * FROM accounts`);
+      // const rows = await db.any(`SELECT * FROM accounts`); //à réécrire avec les paramètres ci-dessus
       return rows;
     } catch (error) {
       console.error(error);
