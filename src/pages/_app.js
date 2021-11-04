@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Layout from '../components/layout/Layout';
 import ThemeContextProvider from '../context/themeContext';
 import UploadContextProvider from '../context/uploadContext';
+import FiscalYearContextProvider from '../context/fiscalYear';
 import { ToastContainer } from "react-toastify";
 
 const Toast = function() {
@@ -27,10 +28,12 @@ function MyApp({ Component, pageProps }) {
   return (
     <ThemeContextProvider>
       <UploadContextProvider>
+      <FiscalYearContextProvider>
         <Layout>
           <Component {...pageProps} />
           <Toast />
         </Layout>
+        </FiscalYearContextProvider>
       </UploadContextProvider>
     </ThemeContextProvider>
   );
