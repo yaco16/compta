@@ -43,7 +43,7 @@ export async function getServerSideProps({ query }) {
   });
   const chartData = await data.json();
 
-  const getTurnover = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'get-turnover');
+  const getTurnover = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + `get-turnover/:${query.fiscal_year}`);
   const turnover = await getTurnover.json()
   console.log('turnover:', turnover);
 

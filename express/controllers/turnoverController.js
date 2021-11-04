@@ -4,7 +4,7 @@ module.exports = {
 
   getTurnover: async (req, res) => {
     try {
-      const response = await Turnover.getTurnover('2021/07/01', '2022/06/30');
+      const response = await Turnover.getTurnover(req.params.slug);
       console.log('response:', response);
       res.status(200).json(response);
 
