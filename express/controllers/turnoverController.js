@@ -1,8 +1,9 @@
-const Turnover = require( '../models/turnover');
+const Turnover = require('../models/turnover');
 
 module.exports = {
-  getMonthlyTurnover: async (req, res) => {
-    console.log('dans le controller')
+  postMonthlyTurnover: async (req, res) => {
+    const year1 = req.body.year1;
+    const year2 = req.body.year2;
 
     const response = await Turnover.getMonthlyTurnover();
     const total07 = response.getTotal07[0].sum;
@@ -19,7 +20,20 @@ module.exports = {
     const total06 = response.getTotal06[0].sum;
 
     const chartData = {
-      labels: [`07/21`, `08/21`, `09/21`, `10/21`, `11/21`, `12/21`, `01/22`, `02/22`, `03/22`, `04/22`, `05/22`, `06/22`],
+      labels: [
+        `07/${year1}`,
+        `08/${year1}`,
+        `09/${year1}`,
+        `10/${year1}`,
+        `11/${year1}`,
+        `12/${year1}`,
+        `01/${year2}`,
+        `02/${year2}`,
+        `03/${year2}`,
+        `04/${year2}`,
+        `05/${year2}`,
+        `06/${year2}`,
+      ],
       datasets: [
         {
           label: "Chiffre d'affaires en €",
@@ -30,4 +44,5 @@ module.exports = {
     };
 
     await res.status(200).json(chartData);
-  }}
+  },
+};
