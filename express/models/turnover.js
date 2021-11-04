@@ -4,13 +4,13 @@ class Turnover {
   static async getMonthlyTurnover() {
     try {
       const response = await db.tx('get monthly turnover', async (t) => {
-        const getDebit07 = await t.any("select sum(debit) as total from accounts where number like '70%' and date like '%07/2021'");
-        const getCredit07 = await t.any("select sum(credit) as total from accounts where number like '70%' and date like '%07/2021'");
-        const getDebit08 = await t.any("select sum(debit) as total from accounts where number like '70%' and date like '%08/2021'");
-        const getCredit08 = await t.any("select sum(credit) as total from accounts where number like '70%' and date like '%08/2021'");
-        const getDebit09 = await t.any("select sum(debit) as total from accounts where number like '70%' and date like '%09/2021'");
-        const getCredit09 = await t.any("select sum(credit) as total from accounts where number like '70%' and date like '%09/2021'");
-        return { getDebit07, getCredit07, getDebit08, getCredit08, getDebit09, getCredit09 };
+        const getTotal07 = await t.any("select sum(credit-debit) from accounts where number like '70%' and date between '2021/07/01' and '2021/07/31'");
+        const getTotal08 = await t.any("select sum(credit-debit) from accounts where number like '70%' and date between '2021/08/01' and '2021/08/31'");
+        const getTotal09 = await t.any("select sum(credit-debit) from accounts where number like '70%' and date between '2021/09/01' and '2021/09/30'");
+        const getTotal10 = await t.any("select sum(credit-debit) from accounts where number like '70%' and date between '2021/10/01' and '2021/10/31'");
+        const getTotal11 = await t.any("select sum(credit-debit) from accounts where number like '70%' and date between '2021/11/01' and '2021/11/30'");
+        const getTotal12 = await t.any("select sum(credit-debit) from accounts where number like '70%' and date between '2021/12/01' and '2021/12/31'");
+        return {getTotal07, getTotal08, getTotal09, getTotal10, getTotal11, getTotal12};
       })
         return response;
      } catch (error) {
