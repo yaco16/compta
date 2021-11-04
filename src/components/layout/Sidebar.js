@@ -41,7 +41,6 @@ export default function Navbar() {
                 </Link>
               </MenuItem>
 
-              <SubMenu title='Stats' icon={<FiDollarSign />}>
               <SubMenu title="Chiffre d'affaires" icon={<FiDollarSign />}>
 
                 <MenuItem>
@@ -54,7 +53,6 @@ export default function Navbar() {
                     <a>2020-2021</a>
                   </Link>
                 </MenuItem>
-              </SubMenu>
                 <MenuItem>
                   <Link href='/dashboard/trialbalance'>
                     <a>Balance générale</a>
@@ -87,7 +85,6 @@ export default function Navbar() {
           .container {
             position: fixed;
             top: 15%;
-            background-color: #0c1e35;
           }
 
           .header-container {

@@ -21,6 +21,12 @@ export default function Layout({ children }) {
           margin-bottom: 1rem;
         }
 
+        h2 {
+          text-align: center;
+          font-weight: bold;
+
+        }
+
         .dark {
           color: #f1f1f1;
           background: #333;

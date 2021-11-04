@@ -1,9 +1,14 @@
+import { useRouter } from 'next/router';
 import BarChart from '../../../components/GenerateChart';
 
 export default function TurnOver({ chartData }) {
+  const {query} = useRouter();
+  const fiscalYear = query.fiscal_year;
+
   return (
     <div>
-      <h1>Stats chiffre d&#39;affaires</h1>
+      <h1>Chiffre d&#39;affaires</h1>
+      <h2>Exercice {fiscalYear}</h2>
       <BarChart chartData={chartData} />
     </div>
   );
@@ -16,8 +21,8 @@ export async function getServerSideProps({ query }) {
       'Content-Type': 'application/json', //il faut préciser ce contenu pour que le fichier soit envoyé au bon format
     },
     body: JSON.stringify({
-      year1: query.pid.substring(2, 4),
-      year2: query.pid.substring(7, 9),
+      year1: query.fiscal_year.substring(2, 4),
+      year2: query.fiscal_year.substring(7, 9),
     }),
   });
   const chartData = await data.json();
