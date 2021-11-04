@@ -5,7 +5,7 @@ module.exports = {
     const year1 = req.body.year1;
     const year2 = req.body.year2;
 
-    const response = await Turnover.getMonthlyTurnover();
+    const response = await Turnover.getMonthlyTurnover(req.body);
     const total07 = response.getTotal07[0].sum;
     const total08 = response.getTotal08[0].sum;
     const total09 = response.getTotal09[0].sum;
