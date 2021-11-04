@@ -23,8 +23,9 @@ export default function GenerateChart({ chartData }) {
       />
       <style jsx>{`
         #bar {
-          width: 50%;
+          width: 90%;
           padding: 1rem;
+          margin: 0 auto 0 auto;
         }
       `}</style>
     </div>
