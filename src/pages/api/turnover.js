@@ -1,7 +1,6 @@
 export default async function handler(req, res) {
   const response = await fetch('https://api.coincap.io/v2/assets/?limit=5');
   const data = await response.json();
-  console.log('data:', data);
   const chartData = {
     labels: data.data.map((crypto) => crypto.name),
     datasets: [

@@ -1,6 +1,7 @@
 import { Bar } from 'react-chartjs-2';
 
-export default function GenerateChart({ chartData, title }) {
+export default function Chart_bar({ chartData, title }) {
+  console.log('title:', title);
   return (
     <div id='bar'>
       <Bar

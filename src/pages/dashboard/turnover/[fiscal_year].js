@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useRouter } from 'next/router';
-import BarChart from '../../../components/GenerateChart';
+import BarChart from '../../../components/Chart_bar';
+import DoughnutChart from '../../../components/Chart_doughnut'
 
 export default function TurnOver({ chartData, turnover }) {
   const {query} = useRouter();
@@ -15,6 +16,8 @@ export default function TurnOver({ chartData, turnover }) {
       <div className="turnover">Chiffre d'affaires de l'exercice : <span className="turnover-total">{totalTurnover} €</span></div>
 
       <BarChart chartData={chartData} title={"Chiffre d'affaires mensuel"}/>
+      <DoughnutChart />
+
       <style jsx>{`
         .turnover {
           margin: 2.5rem 0 1rem 0;
