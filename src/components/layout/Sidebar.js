@@ -41,16 +41,21 @@ export default function Navbar() {
                 </Link>
               </MenuItem>
 
-              <SubMenu title="Chiffre d'affaires" icon={<FiDollarSign />}>
+              <SubMenu title="Exercices" icon={<FiDollarSign />}>
 
                 <MenuItem>
-                  <Link href='/dashboard/turnover/2021-2022'>
+                  <Link href='/dashboard/fiscal-year/2021-2022'>
                     <a>2021-2022</a>
                   </Link>
                 </MenuItem>
                 <MenuItem>
-                  <Link href='/dashboard/turnover/2020-2021'>
+                  <Link href='/dashboard/fiscal-year/2020-2021'>
                     <a>2020-2021</a>
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link href='/dashboard/fiscal-year/2019-2020'>
+                    <a>2019-2020</a>
                   </Link>
                 </MenuItem>
                 <MenuItem>
