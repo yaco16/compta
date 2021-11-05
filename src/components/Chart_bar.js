@@ -7,7 +7,7 @@ export default function Chart_bar({ chartData, title }) {
       title: {
         display: true,
         position: 'top',
-        text: title, //titre
+        text: title,
       },
       legend: {
         display: true,

@@ -10,8 +10,7 @@ export default function TurnOver({ chartData, turnover }) {
 
   return (
     <div>
-      <h1>Chiffre d&#39;affaires</h1>
-      <h2>Exercice {fiscalYear}</h2>
+      <h1>Exercice {fiscalYear}</h1>
 
       <div className="turnover">Chiffre d'affaires de l'exercice : <span className="turnover-total">{totalTurnover} €</span></div>
 
@@ -34,6 +33,7 @@ export default function TurnOver({ chartData, turnover }) {
 }
 
 export async function getServerSideProps({ query }) {
+  //chercher le CA mensuel
   const data = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'post-monthly-turnover', {
     method: 'POST',
     headers: {
@@ -46,6 +46,7 @@ export async function getServerSideProps({ query }) {
   });
   const chartData = await data.json();
 
+  //cherchee le CA annuel
   const getTurnover = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + `get-turnover/:${query.fiscal_year}`);
   const turnover = await getTurnover.json()
   console.log('turnover:', turnover);
