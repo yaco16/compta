@@ -2,9 +2,9 @@ const Turnover = require('../models/turnover');
 
 module.exports = {
 
-  getTurnover: async (req, res) => {
+  getAnnualTurnover: async (req, res) => {
     try {
-      const response = await Turnover.getTurnover(req.params.slug);
+      const response = await Turnover.getAnnualTurnover(req.params.slug);
       console.log('response:', response);
       res.status(200).json(response);
 
@@ -33,4 +33,10 @@ module.exports = {
 
     await res.status(200).json(result);
   },
+
+  compareFiscalYears: async (req, res) => {
+    const result = await Turnover.getLastTurnovers();
+    await res.status(200).json(result);
+
+  }
 };

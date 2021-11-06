@@ -1,53 +1,36 @@
 import MultiBarsChart from '../../../components/charts/MultiBars';
+import ChartBarHorizontal from '../../../components/charts/BarH';
 
 export default function Overview({ chartData }) {
-
+  console.log('chartData props:', chartData.fy2020);
   return (
     <>
       <h1>Comparatif</h1>
+      <ChartBarHorizontal chartData={chartData}/>
       <MultiBarsChart chartData={chartData} chartTitle={'tableau'} />
     </>
   );
 }
 
 export async function getServerSideProps() {
-  const data2020 = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'post-monthly-turnover', {
+  const fiscalYears = [2020, 2021, 2022];
+  const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'compare-fiscal-years', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json', //il faut préciser ce contenu pour que le fichier soit envoyé au bon format
     },
     body: JSON.stringify({
-      year1: 19, //2021 => 21
-      year2: 20,
+      fiscalYears,
+      category: 'turnover',
     }),
   });
 
-  const data2021 = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'post-monthly-turnover', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json', //il faut préciser ce contenu pour que le fichier soit envoyé au bon format
-    },
-    body: JSON.stringify({
-      year1: 20, //2021 => 21
-      year2: 21,
-    }),
-  });
-
-  const data2022 = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'post-monthly-turnover', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json', //il faut préciser ce contenu pour que le fichier soit envoyé au bon format
-    },
-    body: JSON.stringify({
-      year1: 21, //2021 => 21
-      year2: 22,
-    }),
-  });
+    const result = await response.json();
 
   const chartData = {
-    fy2020: await data2020.json(),
-    fy2021: await data2021.json(),
-    fy2022: await data2022.json(),
+    fy2020: await result.turnover1[0].sum,
+    fy2021: await result.turnover2[0].sum,
+    fy2022: await result.turnover3[0].sum,
   };
 
   return {

@@ -1,7 +1,7 @@
 import { Bar } from 'react-chartjs-2';
 import { months } from './variables';
 
-export default function Chart_bar({ chartData, chartTitle }) {
+export default function ChartBarVertical({ chartData, chartTitle }) {
 
   const data = {
     labels: months,
