@@ -1,12 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useRouter } from 'next/router';
-import BarChart from '../../../components/Chart_bar';
-import DoughnutChart from '../../../components/Chart_doughnut'
+import BarChart from '../../../components/charts/Bar';
+import DoughnutChart from '../../../components/charts/Doughnut'
 
 export default function TurnOver({ chartData, turnover }) {
   const {query} = useRouter();
   const fiscalYear = query.fiscal_year;
-  const totalTurnover = parseInt(turnover[0].sum).toLocaleString('fr');
+  const totalTurnover = parseInt(turnover[0].sum).toLocaleString('fr'); // affichage des nombres format FR : 12 546 €
 
   return (
     <div>
@@ -14,7 +14,7 @@ export default function TurnOver({ chartData, turnover }) {
 
       <div className="turnover">Chiffre d'affaires de l'exercice : <span className="turnover-total">{totalTurnover} €</span></div>
 
-      <BarChart chartData={chartData} title={"Chiffre d'affaires mensuel"}/>
+      <BarChart chartData={chartData} chartTitle={"Chiffre d'affaires mensuel"} />
       <DoughnutChart />
 
       <style jsx>{`
