@@ -1,5 +1,5 @@
 import { Bar } from 'react-chartjs-2';
-import { months } from './variables';
+import { months, chartColors } from './variables';
 
 export default function ChartBarVertical({ chartData, chartTitle }) {
   const data = {
@@ -8,8 +8,7 @@ export default function ChartBarVertical({ chartData, chartTitle }) {
       {
         label: "Chiffre d'affaires en €",
         data: chartData,
-        backgroundColor: '#0B84A5',
-        hoverBackgroundColor: '#1A526C',
+        backgroundColor: chartColors.n,
       },
     ],
   };

@@ -12,7 +12,7 @@ export default function Overview({ chartData }) {
       <MultiBarsChart turnoverByMonth={chartData.turnoverByMonth} chartTitle={'Récap des 3 derniers exercices'} />
       <style jsx>{`
         .barH {
-          width: 80%;
+          width: 60%;
           margin: 0 auto 0 auto;
         }
       `}</style>
