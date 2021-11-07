@@ -1,9 +1,9 @@
 import { Bar } from 'react-chartjs-2';
-import { months, chartColors } from './variables';
+import { chartMonths, chartColors } from './variables';
 
 export default function ChartBarVertical({ chartData, chartTitle }) {
   const data = {
-    labels: months,
+    labels: chartMonths,
     datasets: [
       {
         label: "Chiffre d'affaires en €",

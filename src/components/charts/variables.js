@@ -1,4 +1,4 @@
-export const months = ['juillet', 'août', 'sept', 'octobre', 'nov', 'déc', 'janvier', 'février', 'mars', 'avril', 'mai', 'juin'];
+export const chartMonths = ['juillet', 'août', 'sept', 'octobre', 'nov', 'déc', 'janvier', 'février', 'mars', 'avril', 'mai', 'juin'];
 
 export const chartColors = {
   n_2: '#1ABC9C',

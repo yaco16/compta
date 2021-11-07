@@ -2,15 +2,29 @@ import MultiBarsChart from '../../../components/charts/MultiBars';
 import ChartBarHorizontal from '../../../components/charts/BarHorizontal';
 
 export default function Overview({ chartData }) {
-  console.log('chartData:', chartData);
   return (
     <>
       <h1>Comparatif</h1>
-      <div className='barH'>
-        <ChartBarHorizontal turnover={chartData.totalTurnover} />
+      <h2 className="category">1. Chiffre d'affaires</h2>
+      <div className='container-chart'>
+        <div className='barH'>
+          <ChartBarHorizontal turnover={chartData.totalTurnover} />
+        </div>
       </div>
-      <MultiBarsChart turnoverByMonth={chartData.turnoverByMonth} chartTitle={'Récap des 3 derniers exercices'} />
+      <div className='container-chart'>
+        <MultiBarsChart turnoverByMonth={chartData.turnoverByMonth} chartTitle={'Récap des 3 derniers exercices'} />
+      </div>
+      <h2 className='category'>2. Masse salariale</h2>
       <style jsx>{`
+        .category {
+          font-size: 1.2rem;
+          font-weight: bold;
+        }
+
+        .container-chart {
+          margin-bottom: 0.3rem;
+        }
+
         .barH {
           width: 60%;
           margin: 0 auto 0 auto;

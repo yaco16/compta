@@ -1,9 +1,7 @@
 import { Bar } from 'react-chartjs-2';
 import {chartColors} from './variables';
 
-
 export default function ChartBarHorizontal({turnover}) {
-  console.log('color:', chartColors.n_2)
   const data = {
     type: 'bar',
     labels: [' '], //label axe y
@@ -25,7 +23,6 @@ export default function ChartBarHorizontal({turnover}) {
       }
     ],
   };
-  console.log('dataset:', data.datasets[0].backgroundColor)
 
   const options = {
     indexAxis: 'y',
