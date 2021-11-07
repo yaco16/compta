@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useRouter } from 'next/router';
-import BarChartVertical from '../../../components/charts/BarV';
+import BarChartVertical from '../../../components/charts/BarVertical';
 import DoughnutChart from '../../../components/charts/Doughnut'
 
 export default function TurnOver({ chartData, turnover }) {
@@ -33,6 +33,10 @@ export default function TurnOver({ chartData, turnover }) {
 }
 
 export async function getServerSideProps({ query }) {
+  //cherchee le CA annuel
+  const getTurnover = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + `get-turnover/:${query.fiscal_year}`);
+  const turnover = await getTurnover.json();
+
   //chercher le CA mensuel
   const data = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'post-monthly-turnover', {
     method: 'POST',
@@ -45,11 +49,6 @@ export async function getServerSideProps({ query }) {
     }),
   });
   const chartData = await data.json();
-
-  //cherchee le CA annuel
-  const getTurnover = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + `get-turnover/:${query.fiscal_year}`);
-  const turnover = await getTurnover.json()
-  console.log('turnover:', turnover);
 
   return {
     props: { chartData, turnover },

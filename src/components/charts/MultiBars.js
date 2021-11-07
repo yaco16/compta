@@ -1,8 +1,8 @@
 import { Bar } from 'react-chartjs-2';
 import { months } from './variables';
 
-export default function Chart_MultiBar({ chartData, chartTitle }) {
-  console.log('chartData dans MultiBars:', chartData);
+export default function Chart_MultiBar({ turnoverByMonth, chartTitle }) {
+  console.log('turnoverByMonth:', turnoverByMonth);
   const data = {
     labels: months,
     datasets: [
@@ -10,19 +10,19 @@ export default function Chart_MultiBar({ chartData, chartTitle }) {
         label: '2019/2020',
         type: 'bar',
         backgroundColor: '#5a189a',
-        data: [chartData.fy2020],
+        data: turnoverByMonth.fy2020
       },
       {
         label: '2020/2021',
         type: 'bar',
         backgroundColor: '#fb8500',
-        data: [chartData.fy2021],
+        data: turnoverByMonth.fy2021
       },
       {
         label: '2021/2022',
         type: 'bar',
         backgroundColor: '#168aad',
-        data: [chartData.fy2022],
+        data: turnoverByMonth.fy2022
       },
     ],
   };

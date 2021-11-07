@@ -10,7 +10,10 @@ class Turnover {
   }
 
   static async getMonthlyTurnover(year) {
+    console.log('dans le model')
     const { year1, year2 } = year;
+    console.log('year1:', year1);
+    console.log('year2:', year2);
     try {
       const response = await db.tx('get monthly turnover', async (t) => {
         const getTotal07 = await t.any(

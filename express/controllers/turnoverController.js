@@ -1,4 +1,4 @@
-const Turnover = require('../models/turnover');
+const Turnover = require('../models/turnoverModel');
 
 module.exports = {
 
@@ -15,6 +15,7 @@ module.exports = {
   },
 
   getMonthlyTurnover: async (req, res) => {
+    console.log('req:', req.body);
     const data = await Turnover.getMonthlyTurnover(req.body);
     const total07 = data.getTotal07[0].sum;
     const total08 = data.getTotal08[0].sum;

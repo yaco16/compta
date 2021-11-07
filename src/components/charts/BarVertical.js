@@ -2,7 +2,6 @@ import { Bar } from 'react-chartjs-2';
 import { months } from './variables';
 
 export default function ChartBarVertical({ chartData, chartTitle }) {
-
   const data = {
     labels: months,
     datasets: [
@@ -29,16 +28,5 @@ export default function ChartBarVertical({ chartData, chartTitle }) {
       },
     },
   };
-  return (
-    <div id='bar'>
-      <Bar data={data} options={options} />
-      <style jsx>{`
-        #bar {
-          width: 100%;
-          padding: 1rem;
-          margin: 0 auto 0 auto;
-        }
-      `}</style>
-    </div>
-  );
+  return <Bar data={data} options={options} />;
 }
