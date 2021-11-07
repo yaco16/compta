@@ -1,5 +1,8 @@
+'use strict';
+
 import MultiBarsChart from '../../../components/charts/MultiBars';
 import ChartBarHorizontal from '../../../components/charts/BarHorizontal';
+import cumulativeTurnover from '../../../services/cumulativeTurnover';
 
 export default function Overview({ chartData }) {
   return (
@@ -11,8 +14,14 @@ export default function Overview({ chartData }) {
           <ChartBarHorizontal turnover={chartData.totalTurnover} />
         </div>
       </div>
+
       <div className='container-chart'>
-        <MultiBarsChart turnoverByMonth={chartData.turnoverByMonth} chartTitle={'Récap des 3 derniers exercices'} />
+        <MultiBarsChart chartData={chartData.turnoverByMonth} chartTitle={'3 derniers exercices par mois'} />
+      </div>
+
+
+      <div className='container-chart'>
+        <MultiBarsChart chartData={chartData.cumulativeTurnover} chartTitle={'3 derniers exercices par mois cumulé'} />
       </div>
       <h2 className='category'>2. Masse salariale</h2>
       <style jsx>{`
@@ -103,6 +112,13 @@ export async function getServerSideProps() {
   const fetchFy2020 = await response4.json();
 
   chartData = { ...chartData, turnoverByMonth: { fy2020: fetchFy2020, fy2021: fetchFy2021, fy2022: fetchFy2022 } };
+
+  //chart 3
+  const cumulativeTurnover2020 = cumulativeTurnover(fetchFy2020);
+  const cumulativeTurnover2021 = cumulativeTurnover(fetchFy2021);
+  const cumulativeTurnover2022 = cumulativeTurnover(fetchFy2022);
+
+  chartData = { ...chartData, cumulativeTurnover: {fy2020: cumulativeTurnover2020, fy2021: cumulativeTurnover2021, fy2022: cumulativeTurnover2022}};
 
   return {
     props: { chartData },
