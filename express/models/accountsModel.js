@@ -21,6 +21,12 @@ class Accounts {
     }
   }
 
+  static parseFiscalYear(fiscal_year) {//2021-2022
+    const year1 = this.substring(2, 4); //2021 => 21
+    const year2 = this.substring(7, 9);
+    return {year1, year2};
+  }
+
   static async getAccounts(firstAccount, secondAccount, beginningDate, endDate) {
     try {
       // const rows = await db.any(`SELECT * FROM accounts`); //à réécrire avec les paramètres ci-dessus
@@ -76,7 +82,7 @@ class Accounts {
     }
   }
 
-  static async uploadJournal({csv, fileType}) {
+  static async uploadJournal({csv, fileType, fiscal_year}) {
     await csv.shift(); // supprime la 1re ligne avec les libellés
 
     const cs = new pgp.helpers.ColumnSet(['journal', 'date', 'number', 'label', 'debit', 'lettering', 'credit'], { table: 'accounts' });
@@ -118,7 +124,7 @@ class Accounts {
 
     //utilisation de tx si multirequêtes qui modifient les données
     try {
-      const response = await db.tx('upload SalesJournal', async (t) => {
+      const response = await db.tx('upload journal', async (t) => {
         const deleteAccounts = await t.any(`DELETE FROM accounts WHERE journal = $1`, journal); //on commence par effacer le contenu de la table
         const addAccounts = await t.any(query);
         return { deleteAccounts, addAccounts };

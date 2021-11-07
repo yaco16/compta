@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 'use strict';
 
 import MultiBarsChart from '../../../components/charts/MultiBars';
