@@ -21,13 +21,7 @@ class Accounts {
     }
   }
 
-  static parseFiscalYear(fiscal_year) {//2021-2022
-    const year1 = this.substring(2, 4); //2021 => 21
-    const year2 = this.substring(7, 9);
-    return {year1, year2};
-  }
-
-  static async getAccounts(firstAccount, secondAccount, beginningDate, endDate) {
+    static async getAccounts(firstAccount, secondAccount, beginningDate, endDate) {
     try {
       // const rows = await db.any(`SELECT * FROM accounts`); //à réécrire avec les paramètres ci-dessus
       return rows;
@@ -120,12 +114,17 @@ class Accounts {
     //on récupère le nom du journal pour MAJ uniquement la table concernée
     const journal = this.selectJournal(fileType);
 
+    //on parse la date 2021-2022
+    const year1 = fiscal_year.substring(0, 4); //2021 => 21
+    const year2 = fiscal_year.substring(5, 9);
+
+
     const query = pgp.helpers.insert(values, cs) + 'RETURNING *';
 
     //utilisation de tx si multirequêtes qui modifient les données
     try {
       const response = await db.tx('upload journal', async (t) => {
-        const deleteAccounts = await t.any(`DELETE FROM accounts WHERE journal = $1`, journal); //on commence par effacer le contenu de la table
+        const deleteAccounts = await t.any(`DELETE FROM accounts WHERE journal = $1 AND date BETWEEN $2'/07/01' AND $3'/06/30'`, [journal, year1, year2]); //on commence par effacer le contenu de la table
         const addAccounts = await t.any(query);
         return { deleteAccounts, addAccounts };
       });

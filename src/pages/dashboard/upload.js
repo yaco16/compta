@@ -67,10 +67,10 @@ export default function UploadFile() {
       upload.fileType = event.target.file.value; //on affecte le type de fichier dans upload
     }
 
-    if (event.target.fiscal_year.value) {
+    if (!event.target.fiscal_year.value) {
       notify('error', "L'exercice fiscal est obligatoire");
     } else {
-      upload.fileType = event.target.fiscal_year.value; //on affecte le type de fichier dans upload
+      upload.fiscal_year = event.target.fiscal_year.value; //on affecte le type de fichier dans upload
     }
 
     if (!event.target.action.value) {
@@ -84,9 +84,9 @@ export default function UploadFile() {
     const dateFr = date.split('-').reverse().join('/');
     upload.date = dateFr;
 
-    //si les 3 1res conditions sont remplies, on envoie le fichier
+    //si les 4 1res conditions sont remplies, on envoie le fichier
     //la date reste facultative
-    if (event.target.file.value && event.target.action.value && upload.csv) {
+    if (event.target.file.value && event.target.fiscal_year.value && event.target.action.value && upload.csv) {
       chooseAction(upload);
     }
   };
@@ -170,7 +170,7 @@ export default function UploadFile() {
                 <input type='radio' name='file' value='sales-journal' id='sales-journal' />
                 <label htmlFor='sales-journal'>Journal des ventes (csv)</label>
               <select name="fiscal_year" id="select-fiscal_year">
-              <option selected disabled>--Choisir l'exercice fiscal--</option>
+              <option defaultValue='' disabled>--Choisir l'exercice fiscal--</option>
               <option value="2021-2022">2021-2022</option>
               <option value="2020-2021">2020-2021</option>
               <option value="2019-2020">2019-2020</option>

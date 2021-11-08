@@ -26,7 +26,6 @@ module.exports = {
   },
 
   uploadJournal: async (req, res) => {
-    console.log('req:', req.body);
     try {
       const response = await Accounts.uploadJournal(req.body);
 
