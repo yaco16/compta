@@ -106,7 +106,8 @@ class Accounts {
       item.date = item.date.split('/').reverse().join('/').toString(); //conversion en format étranger pour respecter la contrainte Date
       item.debit = parseFloat(item.debit.replace(',', '.')); //125,13 => 125.13
       item.credit = parseFloat(item.credit.replace(',', '.')); //idem
-      item.lettering.startsWith(' ')? item.lettering = item.lettering.replace(' ', '') : item.lettering = item.lettering; //suppression de l' espace en début de lettrage
+      // item.lettering.startsWith(' ')? item.lettering = item.lettering.replace(' ', '') : item.lettering = item.lettering; //suppression de l' espace en début de lettrage
+      item.lettering.startsWith(' ')? item.lettering = item.lettering.replace(/\s/g, '') : item.lettering = item.lettering; //suppression de l' espace en début de lettrage
       item.label.startsWith(' ')? item.label = item.label.replace('  ', '') : item.label = item.label;//suppression des 2 espaces en début de ligne
       item.label.startsWith('A ')? item.label = item.label.replace('A ', '') : item.label = item.label;//suppression de 'A ' en début de ligne
     });
