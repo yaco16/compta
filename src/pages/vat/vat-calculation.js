@@ -1,5 +1,3 @@
-export default function vatCalculation() {
-return(
-  <div>VAT</div>
-)
+export default function VatCalculation() {
+  return <div>VAT</div>;
 }
