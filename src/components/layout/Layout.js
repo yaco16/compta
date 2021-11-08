@@ -29,7 +29,7 @@ export default function Layout({ children }) {
 
         .light {
           color: #333;
-          background: #f1f1f1;
+          background: white;
         }
       `}</style>
     </div>
