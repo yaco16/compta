@@ -71,10 +71,17 @@ export default function Navbar() {
               </SubMenu>
 
               <MenuItem active={true} icon={<FiUpload />}>
+                <Link href='/vat/vat-calculation'>
+                  <a>Calcul TVA</a>
+                </Link>
+              </MenuItem>
+              
+              <MenuItem active={true} icon={<FiUpload />}>
                 <Link href='/dashboard/upload'>
                   <a>Import</a>
                 </Link>
               </MenuItem>
+
             </Menu>
           </SidebarContent>
 
