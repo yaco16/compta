@@ -1,5 +1,5 @@
 import { Bar } from 'react-chartjs-2';
-import {chartColors} from './variables';
+import {chartColors, chartOptions} from './variables';
 
 export default function ChartBarHorizontal({turnover}) {
   const data = {
@@ -40,6 +40,9 @@ export default function ChartBarHorizontal({turnover}) {
       title: {
         display: true,
         text: 'CA Annuel',
+        font: {
+          size: chartOptions.titleSize,
+      },
       },
     },
   };

@@ -32,7 +32,7 @@ export default function Overview({ chartData }) {
         }
 
         .container-chart {
-          margin-bottom: 1rem;
+          margin-bottom: 1.5rem;
         }
 
         .barH {

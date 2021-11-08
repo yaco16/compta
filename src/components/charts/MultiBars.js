@@ -1,5 +1,5 @@
 import { Bar } from 'react-chartjs-2';
-import { chartMonths, chartColors } from './variables';
+import { chartMonths, chartColors, chartOptions } from './variables';
 
 export default function Chart_MultiBar({ chartData, chartTitle }) {
   const data = {
@@ -34,6 +34,9 @@ export default function Chart_MultiBar({ chartData, chartTitle }) {
       title: {
         display: true,
         text: chartTitle,
+        font: {
+          size: chartOptions.titleSize,
+      },
       },
     },
   };
@@ -43,7 +46,6 @@ export default function Chart_MultiBar({ chartData, chartTitle }) {
       <style jsx>{`
         #bar {
           width: 100%;
-          padding: 1rem;
           margin: 0 auto 0 auto;
         }
       `}</style>

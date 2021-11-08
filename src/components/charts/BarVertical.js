@@ -1,5 +1,5 @@
 import { Bar } from 'react-chartjs-2';
-import { chartMonths, chartColors } from './variables';
+import { chartMonths, chartColors, chartOptions } from './variables';
 
 export default function ChartBarVertical({ chartData, chartTitle }) {
   const data = {
@@ -20,6 +20,9 @@ export default function ChartBarVertical({ chartData, chartTitle }) {
         display: true,
         position: 'top',
         text: chartTitle,
+        font: {
+          size: chartOptions.titleSize,
+      },
       },
       legend: {
         display: true,

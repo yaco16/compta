@@ -1,25 +1,35 @@
 /* eslint-disable react/no-unescaped-entities */
+'use strict';
+
 import { useRouter } from 'next/router';
 import BarChartVertical from '../../../components/charts/BarVertical';
-import DoughnutChart from '../../../components/charts/Doughnut'
+import DoughnutChart from '../../../components/charts/Doughnut';
 
-export default function TurnOver({ chartData, turnover }) {
-  const {query} = useRouter();
+export default function TurnOver({ chartData, turnover, activities }) {
+  const { query } = useRouter();
   const fiscalYear = query.fiscal_year;
   const totalTurnover = parseInt(turnover[0].sum).toLocaleString('fr'); // affichage des nombres format FR : 12 546 €
 
   return (
     <div>
       <h1>Exercice {fiscalYear}</h1>
-
-      <div className="turnover">Chiffre d'affaires de l'exercice : <span className="turnover-total">{totalTurnover} €</span></div>
-
-      <BarChartVertical chartData={chartData} chartTitle={"Chiffre d'affaires mensuel"} />
-      <DoughnutChart />
+      <div className='container-chart'>
+        <div className='turnover'>
+          Chiffre d'affaires de l'exercice : <span className='turnover-total'>{totalTurnover} €</span>
+        </div>
+      </div>
+      <div className='container-chart'>
+        <BarChartVertical chartData={chartData} chartTitle={"Chiffre d'affaires mensuel"} />
+      </div>
+      <div className='container-chart'>
+        <DoughnutChart activities={activities} chartTitle={'Répartition du CA par activité'} />
+      </div>
 
       <style jsx>{`
+        .container-chart {
+          margin-bottom: 1.5rem;
+        }
         .turnover {
-          margin: 2.5rem 0 1rem 0;
           font-size: 1.2rem;
         }
 
@@ -33,7 +43,7 @@ export default function TurnOver({ chartData, turnover }) {
 }
 
 export async function getServerSideProps({ query }) {
-  //cherchee le CA annuel
+  //chercher le CA annuel
   const getTurnover = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + `get-turnover/:${query.fiscal_year}`);
   const turnover = await getTurnover.json();
 
@@ -43,12 +53,24 @@ export async function getServerSideProps({ query }) {
     headers: {
       'Content-Type': 'application/json', //il faut préciser ce contenu pour que le fichier soit envoyé au bon format
     },
-    body: JSON.stringify({fiscal_year: query.fiscal_year}),
+    body: JSON.stringify({ fiscal_year: query.fiscal_year }),
   });
-
   const chartData = await data.json();
+  console.log('chartData:', chartData);
+
+  //chercher les activités
+  const fetchActivities = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'turnover-by-activities', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json', //il faut préciser ce contenu pour que le fichier soit envoyé au bon format
+    },
+    body: JSON.stringify({ fiscal_year: query.fiscal_year }),
+  });
+  const fetchedActivities = await fetchActivities.json();
+  let activities = [];
+  Object.keys(fetchedActivities).forEach((key) => activities.push(fetchedActivities[key][0].sum));
 
   return {
-    props: { chartData, turnover },
+    props: { chartData, turnover, activities },
   };
 }
