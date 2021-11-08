@@ -32,7 +32,7 @@ export default function Overview({ chartData }) {
         }
 
         .container-chart {
-          margin-bottom: 0.3rem;
+          margin-bottom: 1rem;
         }
 
         .barH {
@@ -79,8 +79,8 @@ export async function getServerSideProps() {
       'Content-Type': 'application/json', //il faut préciser ce contenu pour que le fichier soit envoyé au bon format
     },
     body: JSON.stringify({
-      year1: '21',
-      year2: '22',
+      fiscal_year: '2021-2022'
+
     }),
   });
 
@@ -92,8 +92,7 @@ export async function getServerSideProps() {
       'Content-Type': 'application/json', //il faut préciser ce contenu pour que le fichier soit envoyé au bon format
     },
     body: JSON.stringify({
-      year1: '20',
-      year2: '21',
+      fiscal_year: '2020-2021'
     }),
   });
 
@@ -105,8 +104,8 @@ export async function getServerSideProps() {
       'Content-Type': 'application/json', //il faut préciser ce contenu pour que le fichier soit envoyé au bon format
     },
     body: JSON.stringify({
-      year1: '19',
-      year2: '20',
+      fiscal_year: '2019-2020'
+
     }),
   });
 

@@ -9,48 +9,47 @@ class Turnover {
     return rows;
   }
 
-  static async getMonthlyTurnover(year) {
-    console.log('dans le model')
-    const { year1, year2 } = year;
-    console.log('year1:', year1);
-    console.log('year2:', year2);
-    try {
+  static async getMonthlyTurnover(fiscal_year) {
+    const year1 = fiscal_year.substring(0, 4); //2021-2022 => 2021
+    const year2 = fiscal_year.substring(5, 9); //2021-2022 => 2022
+
+        try {
       const response = await db.tx('get monthly turnover', async (t) => {
         const getTotal07 = await t.any(
-          `select sum(credit-debit) from accounts where number like '70%' and date between '20${year1}/07/01' and '20${year1}/07/31'`
+          `select sum(credit-debit) from accounts where number like '70%' and date between $1'/07/01' and $1'/07/31'`, [year1]
         );
         const getTotal08 = await t.any(
-          `select sum(credit-debit) from accounts where number like '70%' and date between '20${year1}/08/01' and '20${year1}/08/31'`
+          `select sum(credit-debit) from accounts where number like '70%' and date between $1'/08/01' and $1'/08/31'`, [year1]
         );
         const getTotal09 = await t.any(
-          `select sum(credit-debit) from accounts where number like '70%' and date between '20${year1}/09/01' and '20${year1}/09/30'`
+          `select sum(credit-debit) from accounts where number like '70%' and date between $1'/09/01' and $1'/09/30'`, [year1]
         );
         const getTotal10 = await t.any(
-          `select sum(credit-debit) from accounts where number like '70%' and date between '20${year1}/10/01' and '20${year1}/10/31'`
+          `select sum(credit-debit) from accounts where number like '70%' and date between $1'/10/01' and $1'/10/31'`, [year1]
         );
         const getTotal11 = await t.any(
-          `select sum(credit-debit) from accounts where number like '70%' and date between '20${year1}/11/01' and '20${year1}/11/30'`
+          `select sum(credit-debit) from accounts where number like '70%' and date between $1'/11/01' and $1'/11/30'`, [year1]
         );
         const getTotal12 = await t.any(
-          `select sum(credit-debit) from accounts where number like '70%' and date between '20${year1}/12/01' and '20${year1}/12/31'`
+          `select sum(credit-debit) from accounts where number like '70%' and date between $1'/12/01' and $1'/12/31'`, [year1]
         );
         const getTotal01 = await t.any(
-          `select sum(credit-debit) from accounts where number like '70%' and date between '20${year2}/01/01' and '20${year2}/01/31'`
+          `select sum(credit-debit) from accounts where number like '70%' and date between $1'/01/01' and $1'/01/31'`, [year2]
         );
         const getTotal02 = await t.any(
-          `select sum(credit-debit) from accounts where number like '70%' and date between '20${year2}/02/01' and '20${year2}/02/28'`
+          `select sum(credit-debit) from accounts where number like '70%' and date between $1'/02/01' and $1'/02/28'`, [year2]
         );
         const getTotal03 = await t.any(
-          `select sum(credit-debit) from accounts where number like '70%' and date between '20${year2}/03/01' and '20${year2}/03/31'`
+          `select sum(credit-debit) from accounts where number like '70%' and date between $1'/03/01' and $1'/03/31'`, [year2]
         );
         const getTotal04 = await t.any(
-          `select sum(credit-debit) from accounts where number like '70%' and date between '20${year2}/04/01' and '20${year2}/04/30'`
+          `select sum(credit-debit) from accounts where number like '70%' and date between $1'/04/01' and $1'/04/30'`, [year2]
         );
         const getTotal05 = await t.any(
-          `select sum(credit-debit) from accounts where number like '70%' and date between '20${year2}/05/01' and '20${year2}/05/31'`
+          `select sum(credit-debit) from accounts where number like '70%' and date between $1'/05/01' and $1'/05/31'`, [year2]
         );
         const getTotal06 = await t.any(
-          `select sum(credit-debit) from accounts where number like '70%' and date between '20${year2}/06/01' and '20${year2}/06/30'`
+          `select sum(credit-debit) from accounts where number like '70%' and date between $1'/06/01' and $1'/06/30'`, [year2]
         );
         return {
           getTotal07,
@@ -81,69 +80,7 @@ class Turnover {
     return rows;
   }
 
-  static async getMonthlyTurnover(year) {
-    const { year1, year2 } = year;
-    try {
-      const response = await db.tx('get monthly turnover', async (t) => {
-        const getTotal07 = await t.any(
-          `select sum(credit-debit) from accounts where number like '70%' and date between '20${year1}/07/01' and '20${year1}/07/31'`
-        );
-        const getTotal08 = await t.any(
-          `select sum(credit-debit) from accounts where number like '70%' and date between '20${year1}/08/01' and '20${year1}/08/31'`
-        );
-        const getTotal09 = await t.any(
-          `select sum(credit-debit) from accounts where number like '70%' and date between '20${year1}/09/01' and '20${year1}/09/30'`
-        );
-        const getTotal10 = await t.any(
-          `select sum(credit-debit) from accounts where number like '70%' and date between '20${year1}/10/01' and '20${year1}/10/31'`
-        );
-        const getTotal11 = await t.any(
-          `select sum(credit-debit) from accounts where number like '70%' and date between '20${year1}/11/01' and '20${year1}/11/30'`
-        );
-        const getTotal12 = await t.any(
-          `select sum(credit-debit) from accounts where number like '70%' and date between '20${year1}/12/01' and '20${year1}/12/31'`
-        );
-        const getTotal01 = await t.any(
-          `select sum(credit-debit) from accounts where number like '70%' and date between '20${year2}/01/01' and '20${year2}/01/31'`
-        );
-        const getTotal02 = await t.any(
-          `select sum(credit-debit) from accounts where number like '70%' and date between '20${year2}/02/01' and '20${year2}/02/28'`
-        );
-        const getTotal03 = await t.any(
-          `select sum(credit-debit) from accounts where number like '70%' and date between '20${year2}/03/01' and '20${year2}/03/31'`
-        );
-        const getTotal04 = await t.any(
-          `select sum(credit-debit) from accounts where number like '70%' and date between '20${year2}/04/01' and '20${year2}/04/30'`
-        );
-        const getTotal05 = await t.any(
-          `select sum(credit-debit) from accounts where number like '70%' and date between '20${year2}/05/01' and '20${year2}/05/31'`
-        );
-        const getTotal06 = await t.any(
-          `select sum(credit-debit) from accounts where number like '70%' and date between '20${year2}/06/01' and '20${year2}/06/30'`
-        );
-        return {
-          getTotal07,
-          getTotal08,
-          getTotal09,
-          getTotal10,
-          getTotal11,
-          getTotal12,
-          getTotal01,
-          getTotal02,
-          getTotal03,
-          getTotal04,
-          getTotal05,
-          getTotal06,
-        };
-      });
-      return response;
-    } catch (error) {
-      console.error(error);
-      return 'error';
-    }
-  }
-
-  static async getLastTurnovers(fiscalYears) {
+  static async getLastTurnovers() {
     try {
       const response = await db.tx('get last turnovers', async (t) => {
         const turnover1 = await db.any(

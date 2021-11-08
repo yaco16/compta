@@ -59,6 +59,11 @@ export default function Navbar() {
                   </Link>
                 </MenuItem>
                 <MenuItem>
+                  <Link href='/dashboard/fiscal-year/overview'>
+                    <a>Comparatif</a>
+                  </Link>
+                </MenuItem>
+                <MenuItem>
                   <Link href='/dashboard/trialbalance'>
                     <a>Balance générale</a>
                   </Link>

@@ -43,11 +43,9 @@ export async function getServerSideProps({ query }) {
     headers: {
       'Content-Type': 'application/json', //il faut préciser ce contenu pour que le fichier soit envoyé au bon format
     },
-    body: JSON.stringify({
-      year1: query.fiscal_year.substring(2, 4), //2021 => 21
-      year2: query.fiscal_year.substring(7, 9),
-    }),
+    body: JSON.stringify({fiscal_year: query.fiscal_year}),
   });
+
   const chartData = await data.json();
 
   return {

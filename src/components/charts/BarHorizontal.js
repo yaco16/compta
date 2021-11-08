@@ -35,7 +35,7 @@ export default function ChartBarHorizontal({turnover}) {
     responsive: true,
     plugins: {
       legend: {
-        position: 'right',
+        position: 'bottom',
       },
       title: {
         display: true,
