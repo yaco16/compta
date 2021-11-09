@@ -75,7 +75,7 @@ export default function Navbar() {
                   <a>Calcul TVA</a>
                 </Link>
               </MenuItem>
-              
+
               <MenuItem active={true} icon={<FiUpload />}>
                 <Link href='/dashboard/upload'>
                   <a>Import</a>
