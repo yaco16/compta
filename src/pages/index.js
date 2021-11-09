@@ -1,30 +1,11 @@
-import Contenu from '../components/Contenu';
-
-import { useState } from 'react';
-import Spinner from '../components/Spinner'
+import Chart_stackedBars from '../components/charts/StackedBars';
 
 export default function Home() {
-  const [loading, setLoading] = useState(false);
-
-  const fetchData = async() => {
-    setLoading(true);
-    await fetch('/').then(() => {})
-setTimeout(() => {
-  setLoading(false)
-}, 5000);
-
-
-  }
-
   return (
-  <div>
-
-  <button onClick={fetchData}></button>
-    {loading? <Spinner />  : <div>Fetch data</div>}
-  </div>
-  )
-
-
+    <div>
+      <Chart_stackedBars chartTitle={'CA mensuel avec surcoms et cut-off'} />
+    </div>
+  );
 }
 
 // export async function getServerSideProps() {
