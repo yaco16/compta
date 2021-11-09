@@ -17,6 +17,7 @@ export async function getServerSideProps() {
     body: JSON.stringify({ fiscal_year: '2019-2020' }),
   });
   const StackedTurnover = await getStackedTurnover.json();
+  console.log('StackedTurnover:', StackedTurnover);
   return {
     props: { StackedTurnover },
   };

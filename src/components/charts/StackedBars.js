@@ -11,17 +11,17 @@ export default function Chart_stackedBars({ chartData, chartTitle }) {
     datasets: [
       {
         label: 'Surcoms',
-        data: chartData.turnoverSurcoms,
+        data: chartData.surcomsData,
         backgroundColor: chartColors[0],
       },
       {
         label: 'Cut-off',
-        data: chartData.turnoverCutoff,
+        data: chartData.cutoffData,
         backgroundColor: chartColors[1],
       },
       {
         label: 'CA',
-        data: [8, 12],
+        data: chartData.monthlyTurnoverData,
         backgroundColor: chartColors[2],
       },
     ],

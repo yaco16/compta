@@ -1,11 +1,9 @@
-function parseSurcoms(surcoms) {
+function stackedTurnover(monthlyTurnover, cutoff, surcoms) {
   //array dont on va remplacer les valeurs
   let surcomsData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
   surcoms.forEach((item) => {
-    switch (
-      JSON.stringify(item.date).substring(6, 8) //on ne garde que 09
-    ) {
+    switch (JSON.stringify(item.date).substring(6, 8)) {
       case '07':
         surcomsData[0] = item.total;
         break;
@@ -46,15 +44,26 @@ function parseSurcoms(surcoms) {
         break;
     }
   });
-  return surcomsData;
-}
 
-function parseCutoff(cutoff) {
   let cutoffData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  cutoffData[0] = cutoff.openingCutoff[0].sum;
+  cutoffData[11] = cutoff.closingCutoff[0].sum;
 
-  cutoffData[0] = (cutoff.openingCutoff[0].sum);
-  cutoffData[11] = (cutoff.closingCutoff[0].sum);
-  return cutoffData;
+  console.log('monthlyTurnover:', monthlyTurnover);
+  let monthlyTurnoverData = [];
+
+  // for (let i = 0; i < 12; i++) {
+  //   monthlyTurnoverData[i] = monthlyTurnover.getTotal07[i].sum - surcomsData[i] - cutoffData[i];
+  // }
+
+  let i = 0;
+  for (const [key, value] of Object.entries(monthlyTurnover)) {
+    let data = value[0].sum - surcomsData[i] - cutoffData[i];
+    monthlyTurnoverData.push(data.toFixed(2));
+    i += i;
+  }
+
+  return {monthlyTurnoverData, cutoffData, surcomsData};
 }
 
-module.exports = { parseSurcoms, parseCutoff };
+module.exports = stackedTurnover;
