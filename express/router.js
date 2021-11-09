@@ -10,5 +10,6 @@ router.post('/turnover-by-activities', turnoverController.getTurnoverByActivitie
 router.post('/compare-fiscal-years', turnoverController.compareFiscalYears);
 router.post('/upload-trial-balance', accountsController.uploadTrialBalance);
 router.post('/upload-journal', accountsController.uploadJournal);
+router.post('/stacked-turnover', turnoverController.getStackedTurnover);
 
 module.exports = router;

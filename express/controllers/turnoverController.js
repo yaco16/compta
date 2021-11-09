@@ -40,4 +40,13 @@ module.exports = {
     const result = await Turnover.getTurnoverByActivities(req.body.fiscal_year);
     await res.status(200).json(result);
   },
+
+  getStackedTurnover: async (req, res) => {
+    const monthlyTurnover = await Turnover.getMonthlyTurnover(req.body.fiscal_year);
+    const turnoverCutoff = await Turnover.getTurnoverCutoff(req.body.fiscal_year);
+    const turnoverSurcoms = await Turnover.getTurnoverSurcoms(req.body.fiscal_year);
+    const result = {monthlyTurnover, turnoverCutoff, turnoverSurcoms}
+    await res.status(200).json(result);
+  }
 };
+

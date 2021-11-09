@@ -8,11 +8,17 @@ export default function Home() {
   );
 }
 
-// export async function getServerSideProps() {
-//   console.log('dans getserver')
-//   const data = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + '/api/getAllAccounts'); //serverless
-//   const test = await data.json();
-//   return {
-//     props: { test: test.message },
-//   };
-// }
+export async function getServerSideProps() {
+  const getStackedTurnover = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'stacked-turnover', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ fiscal_year: '2021-2022' }),
+  });
+  const StackedTurnover = await getStackedTurnover.json();
+  console.log('StackedTurnover:', StackedTurnover);
+  return {
+    props: { StackedTurnover },
+  };
+}

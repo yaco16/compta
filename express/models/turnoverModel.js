@@ -99,31 +99,35 @@ class Turnover {
     const year2 = fiscal_year.substring(5, 9); //2021-2022 => 2022
     try {
       const response = await db.tx('get last turnovers', async (t) => {
-        const get7061 = await t.any(`select sum(credit-debit) from accounts where number like '70610%' and date between $1'/06/01' and $2'/06/30'`, [
+        const get7061 = await t.any(
+          `SELECT sum(credit-debit)
+        FROM accounts WHERE
+        number LIKE '70610%'
+        AND date BETWEEN $1'/06/01'
+        AND $2'/06/30'`,
+          [year1, year2]
+        );
+        const get70611 = await t.any(`SELECT sum(credit-debit) FROM accounts WHERE number LIKE '70611%' AND date BETWEEN $1'/06/01' and $2'/06/30'`, [
           year1,
           year2,
         ]);
-        const get70611 = await t.any(`select sum(credit-debit) from accounts where number like '70611%' and date between $1'/06/01' and $2'/06/30'`, [
+        const get7062 = await t.any(`SELECT sum(credit-debit) FROM accounts WHERE number LIKE '7062%' AND date BETWEEN $1'/06/01' AND $2'/06/30'`, [
           year1,
           year2,
         ]);
-        const get7062 = await t.any(`select sum(credit-debit) from accounts where number like '7062%' and date between $1'/06/01' and $2'/06/30'`, [
+        const get7063 = await t.any(`SELECT sum(credit-debit) FROM accounts WHERE number LIKE '70630%' AND date BETWEEN $1'/06/01' AND $2'/06/30'`, [
           year1,
           year2,
         ]);
-        const get7063 = await t.any(`select sum(credit-debit) from accounts where number like '70630%' and date between $1'/06/01' and $2'/06/30'`, [
+        const get70631 = await t.any(`SELECT sum(credit-debit) FROM accounts WHERE number LIKE '70631%' AND date BETWEEN $1'/06/01' AND $2'/06/30'`, [
           year1,
           year2,
         ]);
-        const get70631 = await t.any(`select sum(credit-debit) from accounts where number like '70631%' and date between $1'/06/01' and $2'/06/30'`, [
+        const get70641 = await t.any(`SELECT sum(credit-debit) FROM accounts WHERE number LIKE '70641%' AND date BETWEEN $1'/06/01' AND $2'/06/30'`, [
           year1,
           year2,
         ]);
-        const get70641 = await t.any(`select sum(credit-debit) from accounts where number like '70641%' and date between $1'/06/01' and $2'/06/30'`, [
-          year1,
-          year2,
-        ]);
-        const get709 = await t.any(`select sum(credit-debit) from accounts where number like '709%' and date between $1'/06/01' and $2'/06/30'`, [
+        const get709 = await t.any(`SELECT sum(credit-debit) FROM accounts WHERE number LIKE '709%' AND date BETWEEN $1'/06/01' and $2'/06/30'`, [
           year1,
           year2,
         ]);
@@ -131,6 +135,48 @@ class Turnover {
         return { get7061, get70611, get7062, get7063, get70631, get70641, get709 };
       });
       return response;
+    } catch (error) {
+      console.error(error);
+      return 'error';
+    }
+  }
+
+  static async getTurnoverCutoff(fiscal_year) {
+    const year1 = fiscal_year.substring(0, 4); //2021-2022 => 2021
+    const year2 = fiscal_year.substring(5, 9); //2021-2022 => 2022
+    try {
+      const data = await db.any(
+        `SELECT SUM(credit-debit)
+        FROM accounts WHERE
+        label LIKE 'EXT%'
+        AND date BETWEEN $1'/07/01' AND $2'/06/30'
+        AND number LIKE '70%'`,
+        [year1, year2]
+      );
+      return data;
+    } catch (error) {
+      console.error(error);
+      return 'error';
+    }
+  }
+
+  static async getTurnoverSurcoms(fiscal_year) {
+    const year1 = fiscal_year.substring(0, 4); //2021-2022 => 2021
+    const year2 = fiscal_year.substring(5, 9); //2021-2022 => 2022
+    try {
+      const data = await db.any(
+        `SELECT
+        DATE_TRUNC('month', date) as date,
+        SUM(credit-debit) as total
+        FROM accounts WHERE
+        label LIKE '%SURCOM%'
+        AND number like '70%'
+        AND date between $1'/07/01'
+        AND $2'/06/30'
+        GROUP BY DATE_TRUNC('month', date)`,
+        [year1, year2]
+      );
+      return data;
     } catch (error) {
       console.error(error);
       return 'error';
