@@ -144,15 +144,29 @@ class Turnover {
   static async getTurnoverCutoff(fiscal_year) {
     const year1 = fiscal_year.substring(0, 4); //2021-2022 => 2021
     const year2 = fiscal_year.substring(5, 9); //2021-2022 => 2022
+
     try {
-      const data = await db.any(
-        `SELECT SUM(credit-debit)
-        FROM accounts WHERE
-        label LIKE 'EXT%'
-        AND date BETWEEN $1'/07/01' AND $2'/06/30'
-        AND number LIKE '70%'`,
-        [year1, year2]
-      );
+      const data = await db.tx('getCutoff', async (t) => {
+        const openingCutoff = await db.any(
+          `SELECT SUM(credit-debit)
+          FROM accounts WHERE
+          label LIKE 'EXT%'
+          AND date BETWEEN $1'/07/01' AND $2'/06/30'
+          AND number LIKE '70%'`,
+          [year1, year2]
+          );
+
+          const closingCutoff = await db.any(
+          `SELECT SUM(credit-debit)
+          FROM accounts WHERE
+          label SIMILAR TO '(PCA | FAE | AAE | PAR)%'
+          AND date BETWEEN $1'/07/01' AND $2'/06/30'
+          AND number LIKE '70%'`,
+          [year1, year2]
+        );
+        return [openingCutoff, closingCutoff]
+
+      })
       return data;
     } catch (error) {
       console.error(error);

@@ -4,13 +4,13 @@ import { Bar } from 'react-chartjs-2';
 const chartColors = ['#336699', '#99CCFF', '#999933', '#666699', '#CC9933', '#006666', '#3399FF', '#993300', '#CCCC99', '#666666'];
 
 
-export default function Chart_stackedBars({ activities, chartTitle }) {
+export default function Chart_stackedBars({ chartData, chartTitle }) {
   const data = {
     labels: chartMonths,
     datasets: [
       {
         label: 'Surcoms',
-        data: [-10, 20],
+        data: chartData.turnoverSurcoms,
         backgroundColor: chartColors[0],
       },
       {

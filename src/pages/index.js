@@ -1,9 +1,9 @@
 import Chart_stackedBars from '../components/charts/StackedBars';
 
-export default function Home() {
+export default function Home({StackedTurnover}) {
   return (
     <div>
-      <Chart_stackedBars chartTitle={'CA mensuel avec surcoms et cut-off'} />
+      <Chart_stackedBars chartData={StackedTurnover} chartTitle={'CA mensuel avec surcoms et cut-off'} />
     </div>
   );
 }
@@ -14,10 +14,9 @@ export async function getServerSideProps() {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ fiscal_year: '2021-2022' }),
+    body: JSON.stringify({ fiscal_year: '2019-2020' }),
   });
   const StackedTurnover = await getStackedTurnover.json();
-  console.log('StackedTurnover:', StackedTurnover);
   return {
     props: { StackedTurnover },
   };
