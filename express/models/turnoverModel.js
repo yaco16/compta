@@ -164,7 +164,7 @@ class Turnover {
           AND number LIKE '70%'`,
           [year1, year2]
         );
-        return [openingCutoff, closingCutoff]
+        return {openingCutoff, closingCutoff}
 
       })
       return data;

@@ -5,6 +5,7 @@ const chartColors = ['#336699', '#99CCFF', '#999933', '#666699', '#CC9933', '#00
 
 
 export default function Chart_stackedBars({ chartData, chartTitle }) {
+  console.log('chartData:', chartData);
   const data = {
     labels: chartMonths,
     datasets: [
@@ -15,7 +16,7 @@ export default function Chart_stackedBars({ chartData, chartTitle }) {
       },
       {
         label: 'Cut-off',
-        data: [20, 10],
+        data: chartData.turnoverCutoff,
         backgroundColor: chartColors[1],
       },
       {

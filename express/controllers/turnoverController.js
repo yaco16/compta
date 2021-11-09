@@ -1,5 +1,5 @@
 const Turnover = require('../models/turnoverModel');
-const {parseSurcoms} = require('../services/parseDbResults')
+const {parseSurcoms, parseCutoff} = require('../services/parseDbResults')
 
 module.exports = {
   getAnnualTurnover: async (req, res) => {
@@ -47,10 +47,11 @@ module.exports = {
     const fetchTurnoverCutoff = await Turnover.getTurnoverCutoff(req.body.fiscal_year);
     const fetchTurnoverSurcoms = await Turnover.getTurnoverSurcoms(req.body.fiscal_year);
 
-    const turnoverSurcoms = await parseSurcoms(fetchTurnoverSurcoms);
+    const turnoverCutoff = parseCutoff(fetchTurnoverCutoff)
+    const turnoverSurcoms = parseSurcoms(fetchTurnoverSurcoms);
 
-    // monthlyTurnover, turnoverCutoff,
-    const result = {  turnoverSurcoms };
+    // monthlyTurnover,
+    const result = {  turnoverSurcoms, turnoverCutoff };
     await res.status(200).json(result);
   },
 };
