@@ -37,8 +37,8 @@ module.exports = {
     await res.status(200).json(result);
   },
 
-  getTurnoverByActivities: async (req, res) => {
-    const result = await Turnover.getTurnoverByActivities(req.body.fiscal_year);
+  getTurnoverByDestinations: async (req, res) => {
+    const result = await Turnover.getTurnoverByDestinations(req.body.fiscal_year);
     await res.status(200).json(result);
   },
 

@@ -1,14 +1,14 @@
 import { Doughnut } from 'react-chartjs-2';
-import { activityLabels, chartOptions } from './variables';
+import { destinationLabels, chartOptions } from './variables';
 
 const chartColors = ['#336699', '#99CCFF', '#999933', '#666699', '#CC9933', '#006666', '#3399FF', '#993300', '#CCCC99', '#666666'];
 
-export default function Chart_doughnut({ activities, chartTitle }) {
+export default function Chart_doughnut({ destinations, chartTitle }) {
   const data = {
-    labels: activityLabels,
+    labels: destinationLabels,
     datasets: [
       {
-        data: activities,
+        data: destinations,
         backgroundColor: chartColors,
         hoverOffset: 15,
       },

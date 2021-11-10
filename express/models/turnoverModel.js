@@ -103,7 +103,7 @@ class Turnover {
     }
   }
 
-  static async getTurnoverByActivities(fiscal_year) {
+  static async getTurnoverByDestinations(fiscal_year) {
     const year1 = fiscal_year.substring(0, 4); //2021-2022 => 2021
     const year2 = fiscal_year.substring(5, 9); //2021-2022 => 2022
     try {

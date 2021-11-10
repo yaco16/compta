@@ -6,7 +6,7 @@ import BarChartVertical from '../../../components/charts/BarVertical';
 import DoughnutChart from '../../../components/charts/Doughnut';
 import Chart_stackedBars from '../../../components/charts/StackedBars';
 
-export default function TurnOver({ chartData, turnover, activities, stackedTurnover }) {
+export default function TurnOver({ chartData, turnover, destinations, stackedTurnover }) {
   const { query } = useRouter();
   const fiscalYear = query.fiscal_year;
   const totalTurnover = parseInt(turnover[0].sum).toLocaleString('fr'); // affichage des nombres format FR : 12 546 €
@@ -26,7 +26,7 @@ export default function TurnOver({ chartData, turnover, activities, stackedTurno
       <Chart_stackedBars chartData={stackedTurnover} chartTitle={'CA mensuel avec surcoms et cut-off'} />
     </div>
       <div className='container-chart'>
-        <DoughnutChart activities={activities} chartTitle={'Répartition du CA par activité'} />
+        <DoughnutChart destinations={destinations} chartTitle={'Répartition du CA par destination'} />
       </div>
 
       <style jsx>{`
@@ -63,16 +63,16 @@ export async function getServerSideProps({ query }) {
   console.log('chartData:', chartData);
 
   //chercher les activités
-  const fetchActivities = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'turnover-by-activities', {
+  const fetchDestinations = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'turnover-by-destinations', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json', //il faut préciser ce contenu pour que le fichier soit envoyé au bon format
     },
     body: JSON.stringify({ fiscal_year: query.fiscal_year }),
   });
-  const fetchedActivities = await fetchActivities.json();
-  let activities = [];
-  Object.keys(fetchedActivities).forEach((key) => activities.push(fetchedActivities[key][0].sum));
+  const fetchedDestinations = await fetchDestinations.json();
+  let destinations = [];
+  Object.keys(fetchedDestinations).forEach((key) => destinations.push(fetchedDestinations[key][0].sum));
 
   //stacked bars component
   const getStackedTurnover = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'stacked-turnover', {
@@ -85,6 +85,6 @@ export async function getServerSideProps({ query }) {
   const stackedTurnover = await getStackedTurnover.json();
 
   return {
-    props: { chartData, turnover, activities, stackedTurnover },
+    props: { chartData, turnover, destinations, stackedTurnover },
   };
 }
