@@ -1,5 +1,5 @@
 import { Bar } from 'react-chartjs-2';
-import {chartColors, chartOptions} from './variables';
+import {chartColors3fy, chartOptions} from './variables';
 
 export default function ChartBarHorizontal({turnover}) {
   const data = {
@@ -9,17 +9,17 @@ export default function ChartBarHorizontal({turnover}) {
       {
         label: ['Exercice 2019/2020'],
         data: [turnover.fy2020],
-        backgroundColor: chartColors.n_2,
+        backgroundColor: chartColors3fy.n_2,
       },
       {
         label: 'Exercice 2020/2021',
         data: [turnover.fy2021],
-        backgroundColor: chartColors.n_1,
+        backgroundColor: chartColors3fy.n_1,
       },
       {
         label: 'Exercice 2021/2022',
         data: [turnover.fy2022],
-        backgroundColor: chartColors.n,
+        backgroundColor: chartColors3fy.n,
       }
     ],
   };

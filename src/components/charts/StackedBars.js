@@ -1,8 +1,5 @@
-import {chartMonths, chartOptions} from './variables';
+import {chartMonths, chartOptions, chartColors} from './variables';
 import { Bar } from 'react-chartjs-2';
-
-const chartColors = ['#00799E', '#99CCFF', '#6C3483', '#666699', '#CC9933', '#006666', '#3399FF', '#993300', '#CCCC99', '#666666'];
-
 
 export default function Chart_stackedBars({ chartData, chartTitle }) {
   const data = {
