@@ -77,13 +77,22 @@ class Turnover {
     try {
       const response = await db.tx('get last turnovers', async (t) => {
         const turnover1 = await db.any(
-          `SELECT SUM(credit-debit) FROM accounts WHERE number LIKE '70%' AND date BETWEEN '2019/07/01' and '2020/06/30'`
+          `SELECT SUM(credit-debit)
+          FROM accounts
+          WHERE number LIKE '70%'
+          AND date BETWEEN '2019/07/01' and '2020/06/30'`
         ); //à réécrire avec les paramètres ci-dessus
         const turnover2 = await db.any(
-          `SELECT SUM(credit-debit) FROM accounts WHERE number LIKE '70%' AND date BETWEEN '2020/07/01' and '2021/06/30'`
+          `SELECT SUM(credit-debit)
+          FROM accounts
+          WHERE number LIKE '70%'
+          AND date BETWEEN '2020/07/01' AND '2021/06/30'`
         ); //à réécrire avec les paramètres ci-dessus
         const turnover3 = await db.any(
-          `SELECT SUM(credit-debit) FROM accounts WHERE number LIKE '70%' AND date BETWEEN '2021/07/01' and '2022/06/30'`
+          `SELECT SUM(credit-debit)
+          FROM accounts
+          WHERE number LIKE '70%'
+          AND date BETWEEN '2021/07/01' AND '2022/06/30'`
         ); //à réécrire avec les paramètres ci-dessus
         return { turnover1, turnover2, turnover3 };
       });
@@ -101,13 +110,16 @@ class Turnover {
       const response = await db.tx('get last turnovers', async (t) => {
         const get7061 = await t.any(
           `SELECT sum(credit-debit)
-        FROM accounts WHERE
-        number LIKE '70610%'
+        FROM accounts
+        WHERE number LIKE '70610%'
         AND date BETWEEN $1'/06/01'
         AND $2'/06/30'`,
           [year1, year2]
         );
-        const get70611 = await t.any(`SELECT sum(credit-debit) FROM accounts WHERE number LIKE '70611%' AND date BETWEEN $1'/06/01' and $2'/06/30'`, [
+        const get70611 = await t.any(`SELECT sum(credit-debit)
+        FROM accounts
+        WHERE number LIKE '70611%'
+        AND date BETWEEN $1'/06/01' AND $2'/06/30'`, [
           year1,
           year2,
         ]);
@@ -149,20 +161,20 @@ class Turnover {
       const data = await db.tx('getCutoff', async (t) => {
         const openingCutoff = await db.any(
           `SELECT SUM(credit-debit)
-          FROM accounts WHERE
-          label LIKE 'EXT%'
-          AND date BETWEEN $1'/07/01' AND $2'/06/30'
+          FROM accounts
+          WHERE label LIKE 'EXT%'
+          AND date BETWEEN $1'/07/01' AND $1'/07/31'
           AND number LIKE '70%'`,
-          [year1, year2]
+          [year1]
           );
 
           const closingCutoff = await db.any(
           `SELECT SUM(credit-debit)
-          FROM accounts WHERE
-          label SIMILAR TO '(PCA | FAE | AAE | PAR)%'
-          AND date BETWEEN $1'/07/01' AND $2'/06/30'
+          FROM accounts
+          WHERE label SIMILAR TO '(PCA|FAE|AAE|PAR|AVOI)%'
+          AND date BETWEEN $1'/06/30' AND $1'/06/30'
           AND number LIKE '70%'`,
-          [year1, year2]
+          [year2]
         );
         return {openingCutoff, closingCutoff}
 
@@ -182,8 +194,8 @@ class Turnover {
         `SELECT
         DATE_TRUNC('month', date) as date,
         SUM(credit-debit) as total
-        FROM accounts WHERE
-        label LIKE '%SURCOM%'
+        FROM accounts
+        WHERE label LIKE '%SURCOM%'
         AND number like '70%'
         AND date between $1'/07/01'
         AND $2'/06/30'

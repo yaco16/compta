@@ -4,8 +4,9 @@
 import { useRouter } from 'next/router';
 import BarChartVertical from '../../../components/charts/BarVertical';
 import DoughnutChart from '../../../components/charts/Doughnut';
+import Chart_stackedBars from '../../../components/charts/StackedBars';
 
-export default function TurnOver({ chartData, turnover, activities }) {
+export default function TurnOver({ chartData, turnover, activities, stackedTurnover }) {
   const { query } = useRouter();
   const fiscalYear = query.fiscal_year;
   const totalTurnover = parseInt(turnover[0].sum).toLocaleString('fr'); // affichage des nombres format FR : 12 546 €
@@ -21,6 +22,9 @@ export default function TurnOver({ chartData, turnover, activities }) {
       <div className='container-chart'>
         <BarChartVertical chartData={chartData} chartTitle={"Chiffre d'affaires mensuel"} />
       </div>
+      <div className='container-chart'>
+      <Chart_stackedBars chartData={stackedTurnover} chartTitle={'CA mensuel avec surcoms et cut-off'} />
+    </div>
       <div className='container-chart'>
         <DoughnutChart activities={activities} chartTitle={'Répartition du CA par activité'} />
       </div>
@@ -70,7 +74,17 @@ export async function getServerSideProps({ query }) {
   let activities = [];
   Object.keys(fetchedActivities).forEach((key) => activities.push(fetchedActivities[key][0].sum));
 
+  //stacked bars component
+  const getStackedTurnover = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'stacked-turnover', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ fiscal_year: query.fiscal_year }),
+  });
+  const stackedTurnover = await getStackedTurnover.json();
+
   return {
-    props: { chartData, turnover, activities },
+    props: { chartData, turnover, activities, stackedTurnover },
   };
 }

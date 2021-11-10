@@ -1,4 +1,5 @@
 function stackedTurnover(monthlyTurnover, cutoff, surcoms) {
+  //création des données de surcom
   //array dont on va remplacer les valeurs
   let surcomsData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
@@ -45,25 +46,25 @@ function stackedTurnover(monthlyTurnover, cutoff, surcoms) {
     }
   });
 
+  //création des données de cutoff
   let cutoffData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   cutoffData[0] = cutoff.openingCutoff[0].sum;
   cutoffData[11] = cutoff.closingCutoff[0].sum;
 
-  console.log('monthlyTurnover:', monthlyTurnover);
+  //création des données de CA retravaillées
   let monthlyTurnoverData = [];
-
-  // for (let i = 0; i < 12; i++) {
-  //   monthlyTurnoverData[i] = monthlyTurnover.getTotal07[i].sum - surcomsData[i] - cutoffData[i];
-  // }
 
   let i = 0;
   for (const [key, value] of Object.entries(monthlyTurnover)) {
-    let data = value[0].sum - surcomsData[i] - cutoffData[i];
-    monthlyTurnoverData.push(data.toFixed(2));
-    i += i;
+    let turnover = parseFloat(value[0].sum);
+    let surcom = surcomsData[i];
+    let cutoff = parseFloat(cutoffData[i]);
+    let data = turnover - surcom - cutoff;
+    console.log('parseFloat(cutoffData[i]):', parseFloat(cutoffData[i]));
+    monthlyTurnoverData.push(data);
+    i++;
   }
-
-  return {monthlyTurnoverData, cutoffData, surcomsData};
+  return { monthlyTurnoverData, cutoffData, surcomsData };
 }
 
 module.exports = stackedTurnover;

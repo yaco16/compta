@@ -3,8 +3,7 @@ import Chart_stackedBars from '../components/charts/StackedBars';
 export default function Home({StackedTurnover}) {
   return (
     <div>
-      <Chart_stackedBars chartData={StackedTurnover} chartTitle={'CA mensuel avec surcoms et cut-off'} />
-    </div>
+hello    </div>
   );
 }
 
