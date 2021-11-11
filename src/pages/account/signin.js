@@ -37,12 +37,15 @@ SignIn.getInitialProps = async (context) => {
   const session = await getSession({ req });
 
   if (session && res && session.accessToken) {
-    //si le user est déjà connecté, redirection vers la home
+    //si le user est déjà connecté, redirection vers le dashboard
     res.writeHead(302, {
-      Location: '/',
+      Location: '/dashboard',
     });
     res.end();
     return;
+  }
+  else {
+signOut()
   }
   return {
     session: undefined,
