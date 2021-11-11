@@ -3,11 +3,11 @@ import React, { createRef, useContext, useCallback, useState, useEffect } from '
 import { useRouter } from 'next/router';
 import { CSVReader } from 'react-papaparse';
 
-import { UploadContext } from '../../context/uploadContext';
-import toast from '../../components/Toast';
-import { importInDb } from '../../services/queries';
+import { UploadContext } from '../../../context/uploadContext';
+import toast from '../../../components/Toast';
+import { importInDb } from '../../../services/queries';
 
-import Spinner from '../../components/Spinner';
+import Spinner from '../../../components/Spinner';
 
 
 const buttonRef = createRef();

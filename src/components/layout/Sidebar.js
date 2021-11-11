@@ -1,24 +1,40 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useState } from 'react';
 import Link from 'next/link';
+import { useSession, signIn, signOut } from 'next-auth/react';
+
 import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader, SidebarFooter, SidebarContent } from 'react-pro-sidebar';
 
 import ToggleDarkMode from '../ToggleDarkMode';
+import Spinner from '../Spinner';
 
 import { FaGithub, FaCaretLeft, FaCaretRight } from 'react-icons/fa';
-import { FiLogOut, FiHome, FiDollarSign, FiUpload } from 'react-icons/fi';
+import { FiLogOut, FiLogIn, FiHome, FiDollarSign, FiUpload } from 'react-icons/fi';
 
 export default function Navbar() {
   const [menuCollapse, setMenuCollapse] = useState(false);
+
   const menuIconClick = () => {
     menuCollapse ? setMenuCollapse(false) : setMenuCollapse(true);
   };
+
+const { status } = useSession()
+
+  function logIn(e) {
+    e.preventDefault();
+    signIn('google');
+  }
+
+  function logOut(e) {
+    e.preventDefault();
+    signOut();
+  }
 
   return (
     <>
       <div className='container'>
         <ProSidebar collapsed={menuCollapse}>
-          <SidebarHeader>
+          <SidebarHeader >
             <div className='header-container'>
               <ToggleDarkMode />
               <div className='closeMenu-container'>
@@ -28,8 +44,16 @@ export default function Navbar() {
               </div>
             </div>
 
-            <Menu iconShape='square'>
-              <MenuItem icon={<FiLogOut />}>Déconnexion</MenuItem>
+            <Menu iconShape='square' >
+              {status === 'authenticated' ? (
+                <div onClick={(e) => logOut(e)}>
+                  <MenuItem icon={<FiLogOut />}>Déconnexion</MenuItem>
+                </div>
+              ) : (
+                <div onClick={(e) => logIn(e)}>
+                  <MenuItem icon={<FiLogIn />}>Connexion</MenuItem>
+                </div>
+              )}
             </Menu>
           </SidebarHeader>
 
@@ -41,8 +65,13 @@ export default function Navbar() {
                 </Link>
               </MenuItem>
 
-              <SubMenu title="Exercices" icon={<FiDollarSign />}>
+              <MenuItem active={true} icon={<FiHome />}>
+                <Link href='/dashboard'>
+                  <a>Dashboard</a>
+                </Link>
+              </MenuItem>
 
+              <SubMenu title='Exercices' icon={<FiDollarSign />}>
                 <MenuItem>
                   <Link href='/dashboard/fiscal-year/2021-2022'>
                     <a>2021-2022</a>
@@ -82,7 +111,7 @@ export default function Navbar() {
             <div>
               <Link href='https://github.com/yaco16/compta'>
                 <a>
-                  <div className='github'>
+                  <div className='github-footer'>
                     <FaGithub />
                     {menuCollapse ? <></> : <span>GitHub</span>}
                   </div>
@@ -107,7 +136,7 @@ export default function Navbar() {
             right: 1px;
           }
 
-          .github {
+          .github-footer {
             width: 80%;
             color: #8b8a88;
             display: flex;
@@ -119,11 +148,11 @@ export default function Navbar() {
             margin: 0.8rem auto 0.8rem auto;
           }
 
-          .github span {
+          .github-footer span {
             margin-left: 0.2rem;
           }
 
-          .github:hover {
+          .github-footer:hover {
             color: #d8d8d8;
           }
         `}</style>

@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
-import { UploadContext } from '../../context/uploadContext';
-import Table from '../../components/GenerateGrid';
-import Spinner from '../../components/Spinner';
+import { UploadContext } from '../../../context/uploadContext';
+import Table from '../../../components/GenerateGrid';
+import Spinner from '../../../components/Spinner';
 
 export default function Result() {
   const { upload } = useContext(UploadContext);
