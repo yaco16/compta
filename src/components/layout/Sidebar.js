@@ -100,8 +100,8 @@ const { status } = useSession()
               </SubMenu>
 
               <MenuItem active={true} icon={<FiUpload />}>
-                <Link href='/dashboard/upload'>
-                  <a>Import</a>
+                <Link href='/dashboard/tools/upload'>
+                  <a>Upload</a>
                 </Link>
               </MenuItem>
             </Menu>
