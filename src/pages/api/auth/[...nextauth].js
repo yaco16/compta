@@ -20,7 +20,6 @@ export default NextAuth({
   // The secret should be set to a reasonably long random string.
   // It is used to sign cookies and to sign and encrypt JSON Web Tokens, unless
   // a separate secret is defined explicitly for encrypting the JWT.
-  secret: process.env.SECRET,
 
   session: {
     // Use JSON Web Tokens for session instead of database sessions.
@@ -29,7 +28,7 @@ export default NextAuth({
     jwt: true,
 
     // Seconds - How long until an idle session expires and is no longer valid.
-    // maxAge: 30 * 24 * 60 * 60, // 30 days
+    maxAge:  60 * 60, //1heure
 
     // Seconds - Throttle how frequently to write to database to extend a session.
     // Use it to limit write operations. Set to 0 to always update the database.
@@ -42,9 +41,9 @@ export default NextAuth({
   // https://next-auth.js.org/configuration/options#jwt
   jwt: {
     // A secret to use for key generation (you should set this explicitly)
-    // secret: 'INp8IvdIyeMcoGAgFGoA61DdBglwwSqnXJZkgz8PSnw',
+    secret: process.env.SECRET,
     // Set to true to use encryption (default: false)
-    // encryption: true,
+    encryption: true,
     // You can define your own encode/decode functions for signing and encryption
     // if you want to override the default behaviour.
     // encode: async ({ secret, token, maxAge }) => {},
@@ -57,7 +56,7 @@ export default NextAuth({
   // pages is not specified for that route.
   // https://next-auth.js.org/configuration/pages
   pages: {
-    // signIn: '/auth/signin',  // Displays signin buttons
+    signIn: '/account/signin',  // Displays signin buttons
     // signOut: '/auth/signout', // Displays form with sign out button
     // error: '/auth/error', // Error code passed in query string as ?error=
     // verifyRequest: '/auth/verify-request', // Used for check email page
@@ -72,6 +71,19 @@ export default NextAuth({
     // async redirect(url, baseUrl) { return baseUrl },
     // async session(session, user) { return session },
     // async jwt(token, user, account, profile, isNewUser) { return token }
+    async session({ session, token, user }) {
+			// Send properties to the client, like an access_token from a provider.
+			session.accessToken = token.accessToken;
+			return session;
+		},
+
+		async jwt({ token, account }) {
+			// Persist the OAuth access_token to the token right after signin
+			if (account) {
+				token.accessToken = account.access_token;
+			}
+			return token;
+		},
   },
 
   // Events are useful for logging

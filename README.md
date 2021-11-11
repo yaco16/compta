@@ -16,7 +16,7 @@ Present these datas graphicly with various charts
 - add categories  to dashboard page : turnover, salary mass. What else ?
 - add a toggle to change the language
 - find how to protect routes with prefix
-- create a custom login and logout page
+- create a custom signin and signout page
 - create a form to add user in database
 - add tests
 - create tva automatic calculation

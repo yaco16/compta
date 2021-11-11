@@ -2,7 +2,6 @@ import { useSession, signIn, signOut } from 'next-auth/react';
 
 export default function Home({ StackedTurnover }) {
   const { data: session } = useSession();
-  console.log('session:', session);
   if (session) {
     return (
       <>
@@ -14,7 +13,7 @@ export default function Home({ StackedTurnover }) {
   return (
     <>
       Not signed in <br />
-      <button onClick={() => signIn('google')}>Sign in</button>
+      <button onClick={() => signIn('')}>Sign in</button>
     </>
   );
 }

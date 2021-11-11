@@ -20,12 +20,12 @@ export default function Navbar() {
 
 const { status } = useSession()
 
-  function logIn(e) {
+  function signin(e) {
     e.preventDefault();
-    signIn('google');
+    signIn('');
   }
 
-  function logOut(e) {
+  function signout(e) {
     e.preventDefault();
     signOut();
   }
@@ -46,11 +46,11 @@ const { status } = useSession()
 
             <Menu iconShape='square' >
               {status === 'authenticated' ? (
-                <div onClick={(e) => logOut(e)}>
+                <div onClick={(e) => signout(e)}>
                   <MenuItem icon={<FiLogOut />}>Déconnexion</MenuItem>
                 </div>
               ) : (
-                <div onClick={(e) => logIn(e)}>
+                <div onClick={(e) => signin(e)}>
                   <MenuItem icon={<FiLogIn />}>Connexion</MenuItem>
                 </div>
               )}
