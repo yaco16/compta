@@ -60,7 +60,6 @@ export async function getServerSideProps({ query }) {
     body: JSON.stringify({ fiscal_year: query.fiscal_year }),
   });
   const chartData = await data.json();
-  console.log('chartData:', chartData);
 
   //chercher les activités
   const fetchDestinations = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'turnover-by-destinations', {

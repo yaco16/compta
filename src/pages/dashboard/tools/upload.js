@@ -116,7 +116,7 @@ export default function UploadFile() {
 
   // ouverture du csv dans un nouvel onglet
   const openPageResults = function () {
-    router.push('/dashboard/upload-result');
+    router.push('/dashboard/tools/upload-result');
   };
 
   //import en DB : sélection de la query

@@ -9,6 +9,7 @@ Present these datas graphicly with various charts
 - use different kinds of charts (bars, doughnut)
 - use a cool sidebar (not a top nav bar)
 - use a toggle button to switch between light and dark theme
+- use a spinner during data are aimporting in database
 - authentificate with Google account serverless (thanks to NextJS)
 
 # Features desired
@@ -31,6 +32,7 @@ Present these datas graphicly with various charts
 - refactore upload component
 - replace original datas with fake datas
 - add spinner while loading charts pages
+- change default value in upload form (select fiscal year)
 
 
 # Tech specs
@@ -42,6 +44,7 @@ Present these datas graphicly with various charts
 - Toastify : for handling the alert messages (success, error)
 - Next-auth : for managing the user's session and the protected routes
 - Sass : for managing a few CSS variables
+- Nprogress : for loading a spinner each time a new page has to be opened
 
 ## Back
 - Express

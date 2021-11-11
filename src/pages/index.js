@@ -19,6 +19,13 @@ export default function Home({ StackedTurnover }) {
   );
 }
 
+export async function getServerSideProps() {
+  await new Promise((resolve) => {
+    setTimeout(resolve, 3000)
+  })
+  return { props: {} }
+}
+
 // export async function getServerSideProps() {
 //   const getStackedTurnover = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'stacked-turnover', {
 //     method: 'POST',
