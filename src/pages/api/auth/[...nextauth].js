@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
+import GithubProvider from 'next-auth/providers/github';
 
 export default NextAuth({
   providers: [
@@ -7,6 +8,10 @@ export default NextAuth({
     GoogleProvider({
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
+    }),
+    GithubProvider({
+      clientId: '',
+      clientSecret: '',
     }),
   ],
   // Database optional. MySQL, Maria DB, Postgres and MongoDB are supported.
@@ -56,7 +61,7 @@ export default NextAuth({
   // pages is not specified for that route.
   // https://next-auth.js.org/configuration/pages
   pages: {
-    signIn: '/account/signin',  // Displays signin buttons
+    signIn: '/account/login',  // Displays signin buttons
     signOut: '/account/signout', // Displays form with sign out button
     // error: '/auth/error', // Error code passed in query string as ?error=
     // verifyRequest: '/auth/verify-request', // Used for check email page

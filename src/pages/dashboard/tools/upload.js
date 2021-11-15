@@ -216,7 +216,6 @@ export default function UploadFile() {
             </form>
           </div>
         </div>
-        {/* {loading? <Spinner /> : null} */}
         <style jsx>{`
           .opacity {
             transition: all 0.3s ease-in-out;

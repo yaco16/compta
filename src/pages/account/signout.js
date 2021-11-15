@@ -1,6 +1,6 @@
-import { getProviders, signIn, signOut, getSession, getCsrfToken } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 
-export default function SignOut({ providers, csrfToken }) {
+export default function SignOut() {
   return (
     <div>
 Confirmer la déconnexion

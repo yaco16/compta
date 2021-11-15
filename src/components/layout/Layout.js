@@ -5,14 +5,19 @@ import { ThemeContext } from '../../context/themeContext';
 export default function Layout({ children }) {
   const { theme } = useContext(ThemeContext);
   return (
-    <body className={theme ? 'lightTheme' : 'darkTheme'}>
+    <div className={theme ? 'lightTheme' : 'darkTheme'}>
       <Navbar />
       <main>{children}</main>
       <style jsx global>{`
+      body {
+        background-color: #E7EEF2;
+      }
 
         main {
-          margin-left: 20%;
-          margin-right: 10%;
+          padding-left: 20%;
+          padding-right: 10%;
+          background-color: #E7EEF2;
+
         }
 
         h1 {
@@ -33,6 +38,6 @@ export default function Layout({ children }) {
           background-color: white;
         }
       `}</style>
-    </body>
+    </div>
   );
 }
