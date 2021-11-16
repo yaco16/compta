@@ -34,7 +34,7 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
       router.events.off('routeChangeError', handleStop)
     }
   }, [router])
-  
+
   return (
     <SessionProvider session={session}>
       <ThemeContextProvider>
