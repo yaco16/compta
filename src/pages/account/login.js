@@ -20,7 +20,7 @@ export default function SignIn({ providers, csrfToken }) {
                 Keep me signed in
               </label>
               <div className='forgot-password'>
-                <Link href=''>
+                <Link href='#'>
                   <a>Forgot your password</a>
                 </Link>
               </div>
@@ -200,6 +200,7 @@ export default function SignIn({ providers, csrfToken }) {
 SignIn.getInitialProps = async (context) => {
   const { req, res } = context;
   const session = await getSession({ req });
+  console.log('session:', session);
 
   if (session && res && session.accessToken) {
     //si le user est déjà connecté, redirection vers le dashboard
@@ -208,9 +209,8 @@ SignIn.getInitialProps = async (context) => {
     });
     res.end();
     return;
-  } else {
-    signOut();
   }
+  
   return {
     session: undefined,
     providers: await getProviders(context),
