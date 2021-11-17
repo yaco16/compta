@@ -9,6 +9,7 @@ import { importInDb } from '../../../services/queries';
 
 // import Spinner from '../../../components/Spinner';
 import NProgress from 'nprogress';
+import SpinnerButton from '../../../components/SpinnerButton';
 
 const buttonRef = createRef();
 
@@ -134,92 +135,85 @@ export default function UploadFile() {
 
   return (
     <>
-      <div className={loading && 'opacity'}>
-        <h1>Importer un fichier</h1>
-        <div className='container-2-colums'>
-          <div className='chooseFile'>
-            <div>Sélectionner le fichier à importer :</div>
-            <CSVReader ref={buttonRef} onFileLoad={handleOnFileLoad} onError={handleOnError} noClick noDrag onRemoveFile={handleOnRemoveFile}>
-              {({ file }) => (
-                <>
-                  <button className='button_browse' type='button' onClick={handleOpenDialog}>
-                    Choisir le fichier
-                  </button>
-                  {file && (
-                    <>
-                      <div>Fichier sélectionné : </div>
-                      <div className='fileName'>{file && file.name}</div>
-                      <button className='button_remove' onClick={handleRemoveFile}>
-                        Supprimer
-                      </button>
-                    </>
-                  )}
-                </>
-              )}
-            </CSVReader>
-          </div>
-          <div>
-            <form onSubmit={getFormEntries}>
-              <div className='subtitle-container'>
-                <div className='form-subtitle'>Type de fichier :</div>
-                <div>
-                  <input type='radio' name='file' value='trial-balance' id='trial-balance' />
-                  <label htmlFor='trial-balance'>Balance générale (csv)</label>
-                </div>
-                <div>
-                  <input type='radio' name='file' value='sales-journal' id='sales-journal' />
-                  <label htmlFor='sales-journal'>Journal des ventes (csv)</label>
-                  <select name='fiscal_year' id='select-fiscal_year' defaultValue=''>
-                    <option value='' disabled >--Choisir l'exercice fiscal--</option>
-                    <option value='2021-2022'>2021-2022</option>
-                    <option value='2020-2021'>2020-2021</option>
-                    <option value='2019-2020'>2019-2020</option>
-                  </select>
-                </div>
-                <div>
-                  <input type='radio' name='file' value='purchases-journal' id='purchases-journal' />
-                  <label htmlFor='purchases-journal'>Journal des achats (csv)</label>
-                </div>
-                <div>
-                  <input type='radio' name='file' value='OD-journal' id='OD-journal' />
-                  <label htmlFor='OD-journal'>Journal des OD (csv)</label>
-                </div>
-              </div>
-
-              <div className='subtitle-container'>
-                <div className='form-subtitle'>Action à effectuer :</div>
-                <div>
-                  <div>
-                    <input type='radio' id='tab' name='action' value='tab'></input>
-                    <label htmlFor='tab'> Ouvrir dans un nouvel onglet</label>
-                  </div>
-
-                  <div>
-                    <input type='radio' id='db' name='action' value='db'></input>
-                    <label htmlFor='db'> Importer en base de données</label>
-                  </div>
-                </div>
-              </div>
-
-              <div className='subtitle-container'>
-                <div className='form-subtitle'>Date du document :</div>
-                <input type='date' name='date' id='form-date' defaultValue={today} />
-              </div>
-
-              <div className='container-sendForm'>
-                <button className='submitBtn' name='tab'>
-                  Envoyer
+      <h1>Importer un fichier</h1>
+      <div className='container-2-colums'>
+        <div className='chooseFile'>
+          <div>Sélectionner le fichier à importer :</div>
+          <CSVReader ref={buttonRef} onFileLoad={handleOnFileLoad} onError={handleOnError} noClick noDrag onRemoveFile={handleOnRemoveFile}>
+            {({ file }) => (
+              <>
+                <button className='button_browse' type='button' onClick={handleOpenDialog}>
+                  Choisir le fichier
                 </button>
+                {file && (
+                  <>
+                    <div>Fichier sélectionné : </div>
+                    <div className='fileName'>{file && file.name}</div>
+                    <button className='button_remove' onClick={handleRemoveFile}>
+                      Supprimer
+                    </button>
+                  </>
+                )}
+              </>
+            )}
+          </CSVReader>
+        </div>
+        <div>
+          <form onSubmit={getFormEntries}>
+            <div className='subtitle-container'>
+              <div className='form-subtitle'>Type de fichier :</div>
+              <div>
+                <input type='radio' name='file' value='trial-balance' id='trial-balance' />
+                <label htmlFor='trial-balance'>Balance générale (csv)</label>
               </div>
-            </form>
-          </div>
+              <div>
+                <input type='radio' name='file' value='sales-journal' id='sales-journal' />
+                <label htmlFor='sales-journal'>Journal des ventes (csv)</label>
+                <select name='fiscal_year' id='select-fiscal_year' defaultValue=''>
+                  <option value='' disabled>
+                    --Choisir l'exercice fiscal--
+                  </option>
+                  <option value='2021-2022'>2021-2022</option>
+                  <option value='2020-2021'>2020-2021</option>
+                  <option value='2019-2020'>2019-2020</option>
+                </select>
+              </div>
+              <div>
+                <input type='radio' name='file' value='purchases-journal' id='purchases-journal' />
+                <label htmlFor='purchases-journal'>Journal des achats (csv)</label>
+              </div>
+              <div>
+                <input type='radio' name='file' value='OD-journal' id='OD-journal' />
+                <label htmlFor='OD-journal'>Journal des OD (csv)</label>
+              </div>
+            </div>
+
+            <div className='subtitle-container'>
+              <div className='form-subtitle'>Action à effectuer :</div>
+              <div>
+                <div>
+                  <input type='radio' id='tab' name='action' value='tab'></input>
+                  <label htmlFor='tab'> Ouvrir dans un nouvel onglet</label>
+                </div>
+
+                <div>
+                  <input type='radio' id='db' name='action' value='db'></input>
+                  <label htmlFor='db'> Importer en base de données</label>
+                </div>
+              </div>
+            </div>
+
+            <div className='subtitle-container'>
+              <div className='form-subtitle'>Date du document :</div>
+              <input type='date' name='date' id='form-date' defaultValue={today} />
+            </div>
+
+              <button className='submitBtn'>
+                <SpinnerButton loading={loading ? true : false} />
+              </button>
+          </form>
         </div>
         <style jsx>{`
-          .opacity {
-            transition: all 0.3s ease-in-out;
-            opacity: 0.2;
-          }
-
           .container-2-colums {
             display: flex;
             justify-content: space-around;
@@ -267,22 +261,9 @@ export default function UploadFile() {
             margin-bottom: 0.3rem;
           }
 
-          .container-sendForm {
-            display: flex;
-            justify-content: center;
-          }
-
           .submitBtn {
-            display: block;
-            color: white;
-            font-size: 1rem;
-            background-color: rgb(34, 194, 34);
             border: none;
-            border-radius: 15px;
-            padding: 0.5rem;
-            margin-bottom: 0.5rem;
-            margin-top: 1rem;
-            cursor: pointer;
+            padding: 0;
           }
         `}</style>
       </div>
