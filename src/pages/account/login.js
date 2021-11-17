@@ -8,12 +8,12 @@ export default function SignIn({ providers, csrfToken }) {
     <div>
       <h1 className='trademark'>Accountancy</h1>
       <div className='form-container'>
-        <div className='title'>Welcome back !</div>
+        <div className='title'>Welcome back!</div>
         <form method='post ' action='/api/auth/signin/email'>
-          <div className='input-container'>
+          <div className='field-container'>
             <input type='hidden' name='csrfToken' defaultValue={csrfToken} id='' />
-            <input type='text' name='email' id='email' placeholder='E-mail' />
-            <input type='text' name='password' id='password' placeholder='Password' />
+            <input type='email' name='email' placeholder='E-mail' className='field'/>
+            <input type='password' name='password' placeholder='Password' className='field' />
             <div className='forgot-password-container'>
               <label>
                 <input type='checkbox' name='keepSignedIn' className='keep-signed-in' id='' />
@@ -25,7 +25,7 @@ export default function SignIn({ providers, csrfToken }) {
                 </Link>
               </div>
             </div>
-            <button type='submit' id='submit'>
+            <button type='submit' className='submit'>
               Log in
             </button>
           </div>
@@ -53,7 +53,7 @@ export default function SignIn({ providers, csrfToken }) {
       </div>
       <div className='signup-container'>
         <div className='signup-text'>
-          <Link href='/account/signup'><a>Don't have an account? <span className='signup-span'>Sign up</span></a></Link>
+          <Link href='/account/register'><a>Don't have an account? <span className='signup-span'>Sign up</span></a></Link>
         </div>
       </div>
 
@@ -83,13 +83,12 @@ export default function SignIn({ providers, csrfToken }) {
             padding: 3rem 0;
           }
 
-          .input-container {
+          .field-container {
             padding-left: 1rem;
             padding-right: 1rem;
           }
 
-          #email,
-          #password {
+          .field {
             display: block;
             width: 100%;
             height: 2rem;
@@ -98,17 +97,14 @@ export default function SignIn({ providers, csrfToken }) {
             padding: 1.3rem 1rem;
             border: solid #ced4da 1px;
             border-radius: 4px;
-            transition: all 0.05s ease-in-out
+            margin-bottom: 0.5rem;
+            transition: all 0.05s ease-in-out;
           }
 
-          #email:focus, #password:focus {
+          .field:focus {
             outline: solid  #C2DBFE 4px;
             border: solid #3b6b96 1px;
             border-radius: 6px;
-          }
-
-          #email {
-            margin-bottom: 0.5rem;
           }
 
           .forgot-password-container {
@@ -123,7 +119,7 @@ export default function SignIn({ providers, csrfToken }) {
             color: #2962ae;
           }
 
-          #submit {
+          .submit {
             width: 100%;
             background-color: #4ca659;
             font-size: 1.1rem;
@@ -134,7 +130,7 @@ export default function SignIn({ providers, csrfToken }) {
             cursor: pointer;
           }
 
-          #submit:hover {
+          .submit:hover {
             background-color: #449550;
           }
 
@@ -210,7 +206,7 @@ SignIn.getInitialProps = async (context) => {
     res.end();
     return;
   }
-  
+
   return {
     session: undefined,
     providers: await getProviders(context),
