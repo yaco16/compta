@@ -169,10 +169,8 @@ export default function UploadFile() {
                 <div>
                   <input type='radio' name='file' value='sales-journal' id='sales-journal' />
                   <label htmlFor='sales-journal'>Journal des ventes (csv)</label>
-                  <select name='fiscal_year' id='select-fiscal_year'>
-                    <option defaultValue='' disabled>
-                      --Choisir l'exercice fiscal--
-                    </option>
+                  <select name='fiscal_year' id='select-fiscal_year' defaultValue=''>
+                    <option value='' disabled >--Choisir l'exercice fiscal--</option>
                     <option value='2021-2022'>2021-2022</option>
                     <option value='2020-2021'>2020-2021</option>
                     <option value='2019-2020'>2019-2020</option>
