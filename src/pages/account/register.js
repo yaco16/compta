@@ -2,14 +2,37 @@
 import { getProviders, signIn, getSession, getCsrfToken } from 'next-auth/react';
 import Link from 'next/link';
 import Image from 'next/image';
+import toast from '../../services/toast';
+import { useCallback } from 'react';
+import CheckRegisterForm from '../../services/checkRegisterForm';
 
 export default function SignIn({ providers, csrfToken }) {
+  //TOAST MESSAGES
+  const notify = useCallback((type, message) => {
+    toast({ type, message });
+  }, []);
+
+  const checkFields = (event) => {
+    event.preventDefault();
+
+    //Vérifier si les champs sont vides
+    const emptyFields = CheckRegisterForm.checkFields(event);
+    console.log('emptyFields:', emptyFields);
+    emptyFields && emptyFields.forEach((item) => notify(item.type, item.message));
+  };
+
   return (
     <div>
       <h1 className='trademark'>Accountancy</h1>
       <div className='form-container'>
         <div className='title'>Create your account</div>
-        <form method='post ' action='/api/auth/signin/email'>
+        <form
+          method='post '
+          action='/api/auth/signin/email'
+          onSubmit={(event) => {
+            checkFields(event);
+          }}
+        >
           <div className='field-container'>
             <input type='hidden' name='csrfToken' defaultValue={csrfToken} className='field' />
             <input type='text' name='firstname' placeholder='Firstname' className='field' />
@@ -22,7 +45,7 @@ export default function SignIn({ providers, csrfToken }) {
               Sign up
             </button>
           </div>
-      <div className="third-party-info">or use a third-party service</div>
+          <div className='third-party-info'>or use a third-party service</div>
         </form>
         <div className='providers-container'>
           {Object.values(providers).map((provider, key) => {
@@ -46,13 +69,18 @@ export default function SignIn({ providers, csrfToken }) {
       </div>
       <div className='login-container'>
         <div className='login-text'>
-          <Link href='/account/login'><a>Already have an account? <span className='login-span'>Login</span></a></Link>
+          <Link href='/account/login'>
+            <a>
+              Already have an account? <span className='login-span'>Login</span>
+            </a>
+          </Link>
         </div>
       </div>
 
       <style jsx>
         {`
-          .form-container, .login-container {
+          .form-container,
+          .login-container {
             width: 60%;
             margin: 0 auto;
             border: solid #bfc9db 1px;
@@ -95,9 +123,10 @@ export default function SignIn({ providers, csrfToken }) {
           }
 
           .field:focus {
-            outline: solid  #C2DBFE 4px;
+            outline: solid #c2dbfe 4px;
             border: solid #3b6b96 1px;
             border-radius: 6px;
+            color: black;
           }
 
           .submit {
@@ -148,7 +177,6 @@ export default function SignIn({ providers, csrfToken }) {
             margin: 2rem auto;
             color: #877070;
             font-size: 0.9rem;
-
           }
 
           .login-container {

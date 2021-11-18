@@ -105,6 +105,7 @@ export default function SignIn({ providers, csrfToken }) {
             outline: solid  #C2DBFE 4px;
             border: solid #3b6b96 1px;
             border-radius: 6px;
+            color: black;
           }
 
           .forgot-password-container {

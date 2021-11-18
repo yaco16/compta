@@ -6,7 +6,7 @@ import Layout from '../components/layout/Layout';
 import ThemeContextProvider from '../context/themeContext';
 import UploadContextProvider from '../context/uploadContext';
 import { SessionProvider } from 'next-auth/react';
-import { Toast } from '../components/Toast';
+import { Toast } from '../services/toast';
 import { useRouter } from 'next/router'
 import { useEffect } from 'react';
 import NProgress from 'nprogress'
