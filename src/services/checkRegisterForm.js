@@ -8,11 +8,9 @@ export default class CheckRegisterForm {
 
   static checkForm = async (event) => {
     const checkEmptyFields = this.checkIfFieldsAreFilled(event);
-    if (checkEmptyFields.length > 0) {
-      return;
-    } else {
-      this.checkContentFields(event);
-      this.createUser(event);
+    if (checkEmptyFields.length === 0)  {
+      const checkedFields = this.checkContentFields(event);
+      checkedFields && this.createUser(checkedFields);
     }
   };
 
@@ -23,27 +21,46 @@ export default class CheckRegisterForm {
     !event.target.email.value && errors.push({ type: 'error', message: 'Please enter your email' });
     !event.target.password.value && errors.push({ type: 'error', message: 'Please enter your password' });
     !event.target.confirmPassword.value && errors.push({ type: 'error', message: 'Please enter your password verification' });
+    //verifier que les 2 passwords sont les mêmes
+    event.target.password.value !== event.target.confirmPassword.value && errors.push({ type: 'error', message: 'Your password does not match' });
 
     errors.forEach((item) => this.notify(item.type, item.message));
     return errors;
   };
 
   static checkContentFields = (event) => {
-    console.log('tous les champs sont remplis');
+    const firstname = event.target.firstname.value;
+    const lastname = event.target.lastname.value;
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+
+    const isFirstnameValid = this.checkName(firstname);
+    const isLastnameValid = this.checkName(lastname);
+
+    if (isFirstnameValid && isLastnameValid) {
+      const formData = {
+        firstname: firstname.toLowerCase(),
+        lastname: lastname.toLowerCase(),
+        email,
+        password,
+      };
+      return formData;
+    }
+  };
+
+  static checkName = (name) => {
+    if (typeof name !== 'string' || /[0-9]+/g.test(name)) {
+      this.notify('error', `${name}: please enter a valid value` );
+      return false;
+    }
+    return true;
   };
 
   static hashPassword = (event) => {
     //code
   };
 
-  static createUser = async (event) => {
-    const formData = {
-      firstname: event.target.firstname.value,
-      lastname: event.target.lastname.value,
-      email: event.target.email.value,
-      password: event.target.password.value,
-    };
-
+  static createUser = async (formData) => {
     const request = await createUser(formData);
     const response = await request.json();
 
@@ -59,11 +76,15 @@ export default class CheckRegisterForm {
         break;
       case 'success':
         type = 'success';
-        message = `Success : new user ${firstname} ${lastname} created`;
+        message = `Success : new user ${this.capitalizeFirstLetter(firstname)} ${this.capitalizeFirstLetter(lastname)} created`;
         break;
       default:
         break;
     }
     this.notify(type, message);
   };
+
+  static capitalizeFirstLetter = (name) => {
+    return (name+'').charAt(0).toUpperCase()+name.substr(1);
+  }
 }
