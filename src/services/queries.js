@@ -14,9 +14,21 @@ export async function importInDb(upload) {
 };
 
 //Liste des comptes
-export default async function getAllAccounts() {
+export  async function getAllAccounts() {
   const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + '/api/get-all-accounts');
   const allAccounts = await response.json();
   return allAccounts;
 }
+
+//créer un nouvel utilisateur
+export async function createUser(formData) {
+  const request = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'create-user', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(formData),
+  });
+  return request;
+};
 

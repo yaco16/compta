@@ -17,8 +17,7 @@ export default function SignIn({ providers, csrfToken }) {
 
     //Vérifier si les champs sont vides
     const emptyFields = CheckRegisterForm.checkFields(event);
-    console.log('emptyFields:', emptyFields);
-    emptyFields && emptyFields.forEach((item) => notify(item.type, item.message));
+    // emptyFields && emptyFields.forEach((item) => notify(item.type, item.message));
   };
 
   return (
@@ -27,8 +26,6 @@ export default function SignIn({ providers, csrfToken }) {
       <div className='form-container'>
         <div className='title'>Create your account</div>
         <form
-          method='post '
-          action='/api/auth/signin/email'
           onSubmit={(event) => {
             checkFields(event);
           }}
