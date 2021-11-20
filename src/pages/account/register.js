@@ -2,22 +2,14 @@
 import { getProviders, signIn, getSession, getCsrfToken } from 'next-auth/react';
 import Link from 'next/link';
 import Image from 'next/image';
-import toast from '../../services/toast';
-import { useCallback } from 'react';
+// import toast from '../../services/toast';
+// import { useCallback } from 'react';
 import CheckRegisterForm from '../../services/checkRegisterForm';
 
 export default function SignIn({ providers, csrfToken }) {
-  //TOAST MESSAGES
-  const notify = useCallback((type, message) => {
-    toast({ type, message });
-  }, []);
-
   const checkFields = (event) => {
     event.preventDefault();
-
-    //Vérifier si les champs sont vides
-    const emptyFields = CheckRegisterForm.checkFields(event);
-    // emptyFields && emptyFields.forEach((item) => notify(item.type, item.message));
+    CheckRegisterForm.checkForm(event);
   };
 
   return (

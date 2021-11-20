@@ -2,13 +2,18 @@ import { createUser } from './queries';
 import toast from './toast';
 
 export default class CheckRegisterForm {
-  static checkFields = (event) => {
-    const emptyFields = this.checkIfFieldsAreFilled(event);
-    if (emptyFields.length !== 0) {
-      return emptyFields;
+  static notify = (type, message) => {
+    toast({ type, message });
+  };
+
+  static checkForm = async (event) => {
+    const checkEmptyFields = this.checkIfFieldsAreFilled(event);
+    if (checkEmptyFields.length > 0) {
+      return;
+    } else {
+      this.checkContentFields(event);
+      this.createUser(event);
     }
-    // this.checkContentFields(event);
-    this.createUser(event);
   };
 
   static checkIfFieldsAreFilled = (event) => {
@@ -18,6 +23,8 @@ export default class CheckRegisterForm {
     !event.target.email.value && errors.push({ type: 'error', message: 'Please enter your email' });
     !event.target.password.value && errors.push({ type: 'error', message: 'Please enter your password' });
     !event.target.confirmPassword.value && errors.push({ type: 'error', message: 'Please enter your password verification' });
+
+    errors.forEach((item) => this.notify(item.type, item.message));
     return errors;
   };
 
@@ -40,7 +47,7 @@ export default class CheckRegisterForm {
     const request = await createUser(formData);
     const response = await request.json();
 
-    const {firstname, lastname} = response.newUser[0];
+    const { firstname, lastname } = response.newUser[0];
 
     let type;
     let message;
@@ -48,19 +55,15 @@ export default class CheckRegisterForm {
     switch (response.message) {
       case 'error':
         type = 'error';
-        message = 'error while creating your account : try again';
+        message = 'Error while creating your account : try again';
         break;
       case 'success':
         type = 'success';
-        message = `New user ${firstname} ${lastname} created successfully`;
+        message = `Success : new user ${firstname} ${lastname} created`;
         break;
       default:
         break;
     }
     this.notify(type, message);
   };
-
-  static notify = (type, message) => {
-    toast({ type: type, message: message });
-  }
 }
