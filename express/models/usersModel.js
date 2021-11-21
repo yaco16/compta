@@ -7,7 +7,6 @@ const db = require('../lib/database');
 class Users {
   static async createUser(formData) {
     const { firstname, lastname, email, password } = formData;
-    console.log('password:', typeof password);
 
     const hashedPassword = await this.hashPassword(password);
     try {
@@ -37,22 +36,22 @@ class Users {
   static async checkLogin(formData) {
     const { email, password } = formData;
     const emailExists = await this.findEmail(email);
-    console.log('emailExists:', emailExists);
 
-    if (emailExists) {
+    if (emailExists.length !== 0) {
+      console.log('email exists')
       const passwordIsConfirmed = await this.compareEmails(password, emailExists[0].password);
       if (passwordIsConfirmed) {
-        return true
+        return {errorCode: 0, user: emailExists[0]};
       } else {
-        return false
+        return {errorCode: 2};
       }
     } else {
-      return false
+      console.log('email does not exist')
+      return {errorCode: 1};
     }
-
   }
 
-  static findEmail = async(email) => {
+  static findEmail = async (email) => {
     try {
       const rows = await db.any(
         `
@@ -60,20 +59,18 @@ class Users {
         WHERE email = $1
         `,
         [email.toLowerCase()]
-        );
-        return rows;
-      } catch (error) {
-        console.error(error);
-        return 'error';
-      }
-  }
+      );
+      return rows;
+    } catch (error) {
+      console.error(error);
+      return 'error';
+    }
+  };
 
   static compareEmails = async (passwordForm, passwordStored) => {
-    console.log('passwordStored:', passwordStored);
     const result = await bcrypt.compare(passwordForm, passwordStored);
-    console.log('result:', result);
     return result;
-  }
+  };
 }
 
 module.exports = Users;

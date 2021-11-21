@@ -25,12 +25,11 @@ export default class CheckLoginForm {
   static getUser = async (event) => {
     const email = event.target.email.value.toLowerCase();
     const password = event.target.password.value;
+
     const request = await getUser({email, password});
     const response = await request.json();
-    console.log('response:', response.result);
+    const {result, message} = response;
 
-
-
-    this.notify(response.result, response.message);
+    this.notify(result, message);
   }
 }
