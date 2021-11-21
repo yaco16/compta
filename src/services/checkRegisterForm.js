@@ -1,6 +1,7 @@
 import { createUser } from './queries';
 import toast from './toast';
 
+
 export default class CheckRegisterForm {
   static notify = (type, message) => {
     toast({ type, message });
@@ -35,29 +36,29 @@ export default class CheckRegisterForm {
     const password = event.target.password.value;
 
     const isFirstnameValid = this.checkName(firstname);
+    console.log('isFirstnameValid:', isFirstnameValid);
     const isLastnameValid = this.checkName(lastname);
+    console.log('isLastnameValid:', isLastnameValid);
 
     if (isFirstnameValid && isLastnameValid) {
       const formData = {
         firstname: firstname.toLowerCase(),
         lastname: lastname.toLowerCase(),
-        email,
-        password,
+        email: email.toLowerCase(),
+        password
       };
       return formData;
     }
   };
 
   static checkName = (name) => {
-    if (typeof name !== 'string' || /[0-9]+/g.test(name)) {
+    console.log('name:', name);
+    if (typeof name !== 'string' || !/^[^0-9_!¡?÷?¿\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,}$/g.test(name)) {
       this.notify('error', `${name}: please enter a valid value` );
+      console.log('ici')
       return false;
     }
     return true;
-  };
-
-  static hashPassword = (event) => {
-    //code
   };
 
   static createUser = async (formData) => {
