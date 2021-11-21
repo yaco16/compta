@@ -36,9 +36,7 @@ export default class CheckRegisterForm {
     const password = event.target.password.value;
 
     const isFirstnameValid = this.checkName(firstname);
-    console.log('isFirstnameValid:', isFirstnameValid);
     const isLastnameValid = this.checkName(lastname);
-    console.log('isLastnameValid:', isLastnameValid);
 
     if (isFirstnameValid && isLastnameValid) {
       const formData = {
@@ -52,10 +50,8 @@ export default class CheckRegisterForm {
   };
 
   static checkName = (name) => {
-    console.log('name:', name);
     if (typeof name !== 'string' || !/^[^0-9_!¡?÷?¿\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,}$/g.test(name)) {
       this.notify('error', `${name}: please enter a valid value` );
-      console.log('ici')
       return false;
     }
     return true;
@@ -64,18 +60,16 @@ export default class CheckRegisterForm {
   static createUser = async (formData) => {
     const request = await createUser(formData);
     const response = await request.json();
-
-    const { firstname, lastname } = response.newUser[0];
-
     let type;
     let message;
 
-    switch (response.message) {
+    switch (response.result) {
       case 'error':
         type = 'error';
-        message = 'Error while creating your account : try again';
+        message = response.message;
         break;
-      case 'success':
+        case 'success':
+        const { firstname, lastname } = response.newUser[0];
         type = 'success';
         message = `Success : new user ${this.capitalizeFirstLetter(firstname)} ${this.capitalizeFirstLetter(lastname)} created`;
         break;

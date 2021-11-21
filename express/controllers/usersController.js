@@ -4,11 +4,14 @@ module.exports = {
   createUser: async (req, res) => {
     try {
      const newUser =  await Users.createUser(req.body);
-      console.log('success : new user created')
-      res.status(200).json({message: 'success', newUser});
+     console.log('newUser:', newUser);
+     newUser.length > 0 && res.status(200).json({result: 'success', newUser});
+     newUser.length === 0 && res.status(400).json({result: 'error', message: 'Error: this email already exists'});
+
+
     } catch (error) {
       console.log(error);
-      res.status(400).json({ message: 'error' });
+      res.status(400).json({ result: 'Error while creating your account : try again' });
     }
   },
 };

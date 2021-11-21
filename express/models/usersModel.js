@@ -5,6 +5,7 @@ const pgp = require('pg-promise')({
 const db = require('../lib/database');
 
 class Users {
+
   static async createUser(formData) {
     const { firstname, lastname, email, password } = formData;
 
@@ -15,6 +16,8 @@ class Users {
       INSERT INTO users
       (firstname, lastname, email, password)
       VALUES ($1, $2, $3, $4)
+      ON CONFLICT(email)
+      DO NOTHING
       RETURNING *`,
         [firstname, lastname, email, hashedPassword]
       );
