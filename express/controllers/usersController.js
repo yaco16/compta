@@ -14,4 +14,18 @@ module.exports = {
       res.status(400).json({ result: 'Error while creating your account : try again' });
     }
   },
+
+  getUser: async (req, res) => {
+    try {
+     const userSearched =  await Users.checkLogin(req.body);
+     console.log('userSearched:', userSearched);
+     userSearched && res.status(200).json({result: 'success', message: 'You are connected'});
+     userSearched === false && res.status(400).json({result: 'error', message: 'Error: this email does not exist'});
+
+
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({ result: 'Error while getting your account : try again' });
+    }
+  },
 };

@@ -1,18 +1,23 @@
 /* eslint-disable react/no-unescaped-entities */
-import { getProviders, signIn, signOut, getSession, getCsrfToken } from 'next-auth/react';
+import { getProviders, signIn, getSession, getCsrfToken } from 'next-auth/react';
 import Link from 'next/link';
 import Image from 'next/image';
+import CheckLoginForm from '../../services/checkLoginForm';
 
 export default function SignIn({ providers, csrfToken }) {
+  function handleSubmit(event) {
+    event.preventDefault();
+    CheckLoginForm.checkForm(event);
+  }
   return (
     <div>
       <h1 className='trademark'>Accountancy</h1>
       <div className='form-container'>
         <div className='title'>Welcome back!</div>
-        <form method='post ' action='/api/auth/signin/email'>
+        <form method='post ' onSubmit={(event) => handleSubmit(event)}>
           <div className='field-container'>
             <input type='hidden' name='csrfToken' defaultValue={csrfToken} id='' />
-            <input type='email' name='email' placeholder='E-mail' className='field'/>
+            <input type='email' name='email' placeholder='E-mail' className='field' />
             <input type='password' name='password' placeholder='Password' className='field' />
             <div className='forgot-password-container'>
               <label>
@@ -29,7 +34,7 @@ export default function SignIn({ providers, csrfToken }) {
               Log in
             </button>
           </div>
-      <div className="third-party-info">or use a third-party service</div>
+          <div className='third-party-info'>or use a third-party service</div>
         </form>
         <div className='providers-container'>
           {Object.values(providers).map((provider, key) => {
@@ -53,13 +58,18 @@ export default function SignIn({ providers, csrfToken }) {
       </div>
       <div className='signup-container'>
         <div className='signup-text'>
-          <Link href='/account/register'><a>Don't have an account? <span className='signup-span'>Sign up</span></a></Link>
+          <Link href='/account/register'>
+            <a>
+              Don't have an account? <span className='signup-span'>Sign up</span>
+            </a>
+          </Link>
         </div>
       </div>
 
       <style jsx>
         {`
-          .form-container, .signup-container {
+          .form-container,
+          .signup-container {
             width: 60%;
             margin: 0 auto;
             border: solid #bfc9db 1px;
@@ -102,7 +112,7 @@ export default function SignIn({ providers, csrfToken }) {
           }
 
           .field:focus {
-            outline: solid  #C2DBFE 4px;
+            outline: solid #c2dbfe 4px;
             border: solid #3b6b96 1px;
             border-radius: 6px;
             color: black;
@@ -168,7 +178,6 @@ export default function SignIn({ providers, csrfToken }) {
             margin: 2rem auto;
             color: #877070;
             font-size: 0.9rem;
-
           }
 
           .signup-container {

@@ -13,6 +13,7 @@ router.post('/upload-trial-balance', accountsController.uploadTrialBalance);
 router.post('/upload-journal', accountsController.uploadJournal);
 router.post('/stacked-turnover', turnoverController.getStackedTurnover);
 
-router.post('/create-user', usersController.createUser);
+router.post('/accounts/create-user', usersController.createUser);
+router.post('/accounts/get-user', usersController.getUser);
 
 module.exports = router;
