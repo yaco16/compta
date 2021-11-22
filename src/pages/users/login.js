@@ -58,7 +58,7 @@ export default function SignIn({ providers, csrfToken }) {
       </div>
       <div className='signup-container'>
         <div className='signup-text'>
-          <Link href='/account/register'>
+          <Link href='/users/register'>
             <a>
               Don't have an account? <span className='signup-span'>Sign up</span>
             </a>
