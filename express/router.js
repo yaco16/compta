@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const authorization = require('./middlewares/authorization');
 const router = Router();
 const accountsController = require('./controllers/accountsController')
 const turnoverController = require('./controllers/turnoverController')
@@ -13,7 +14,9 @@ router.post('/upload-trial-balance', accountsController.uploadTrialBalance);
 router.post('/upload-journal', accountsController.uploadJournal);
 router.post('/stacked-turnover', turnoverController.getStackedTurnover);
 
-router.post('/users/create-user', usersController.createUser);
-router.post('/users/get-user', usersController.getUser);
+//USERS
+router.post('/users/create-user', usersController.signup);
+router.post('/users/login', usersController.login);
+router.get('/users/logout', authorization, usersController.logout);
 
 module.exports = router;
