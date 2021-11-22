@@ -7,22 +7,21 @@ export async function importInDb(upload) {
     headers: {
       'Content-Type': 'application/json', //il faut préciser ce contenu pour que le fichier soit envoyé au bon format
     },
-    body: JSON.stringify(upload
-      ),
+    body: JSON.stringify(upload),
   });
   return request;
-};
+}
 
 //Liste des comptes
-export  async function getAllAccounts() {
+export async function getAllAccounts() {
   const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + '/api/get-all-accounts');
   const allAccounts = await response.json();
   return allAccounts;
 }
 
-//créer un nouvel utilisateur
+//SIGNIN
 export async function createUser(formData) {
-  const request = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'users/create-user', {
+  const request = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'users/signup', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -30,11 +29,11 @@ export async function createUser(formData) {
     body: JSON.stringify(formData),
   });
   return request;
-};
+}
 
-//chercher un  utilisateur
-export async function getUser(formData) {
-  const request = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'users/get-user', {
+//LOGIN
+export async function login(formData) {
+  const request = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'users/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -42,5 +41,10 @@ export async function getUser(formData) {
     body: JSON.stringify(formData),
   });
   return request;
-};
+}
 
+//LOGOUT
+export async function logout() {
+  const request = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'users/logout');
+  return request;
+}
