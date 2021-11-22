@@ -1,8 +1,9 @@
 const bcrypt = require('bcrypt');
-const pgp = require('pg-promise')({
-  capSQL: true,
-});
+// const pgp = require('pg-promise')({
+//   capSQL: true,
+// });
 const db = require('../lib/database');
+const jwtTokens = require('../services/jwt-helpers');
 
 class Users {
   static async createUser(formData) {
@@ -35,13 +36,15 @@ class Users {
 
   static async checkLogin(formData) {
     const { email, password } = formData;
-    const emailExists = await this.findEmail(email);
+    const user = await this.findEmail(email);
 
-    if (emailExists.length !== 0) {
+    if (user.length !== 0) {
       console.log('email exists')
-      const passwordIsConfirmed = await this.compareEmails(password, emailExists[0].password);
+      const passwordIsConfirmed = await this.compareEmails(password, user[0].password);
       if (passwordIsConfirmed) {
-        return {errorCode: 0, user: emailExists[0]};
+        user[0].tokens = jwtTokens(user[0].id, user[0].firstname, user[0].lastname, user[0].email);
+
+        return {errorCode: 0, user: user[0]};
       } else {
         return {errorCode: 2};
       }
@@ -71,6 +74,7 @@ class Users {
     const result = await bcrypt.compare(passwordForm, passwordStored);
     return result;
   };
+
 }
 
 module.exports = Users;

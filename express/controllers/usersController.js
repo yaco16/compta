@@ -1,7 +1,7 @@
 const Users = require('../models/usersModel');
 
 module.exports = {
-  createUser: async (req, res) => {
+  signup: async (req, res) => {
     try {
       const newUser = await Users.createUser(req.body);
       console.log('newUser:', newUser);
@@ -13,21 +13,28 @@ module.exports = {
     }
   },
 
-  getUser: async (req, res) => {
+  login: async (req, res) => {
     try {
-      const userSearched = await Users.checkLogin(req.body);
-      console.log('userSearched:', userSearched);
+      const user = await Users.checkLogin(req.body);
 
-      switch (userSearched.errorCode) {
+      switch (user.errorCode){
         case 0:
           console.log('connected');
-          res.status(200).json({ result: 'success', message: 'You are connected' });
+          let accessToken = user.user.tokens.accessToken;
+          res
+          .cookie('access_token', accessToken, {httpOnly: true})
+          .status(200)
+          .json({ result: 'success', message: 'You are connected' });
           break;
         case 1:
-          res.status(400).json({ result: 'error', message: 'Error: this email does not exist' });
+          res
+          .status(400)
+          .json({ result: 'error', message: 'Error: this email does not exist' });
           break;
         case 2:
-          res.status(400).json({ result: 'error', message: 'Error: password does not match' });
+          res
+          .status(400)
+          .json({ result: 'error', message: 'Error: password does not match' });
           break;
         default:
           break;
@@ -37,4 +44,11 @@ module.exports = {
       res.status(400).json({ result: 'Error while getting your account : try again' });
     }
   },
+
+  logout: async (req, res) => {
+    return res
+    .clearCookie("access_token")
+    .status(200)
+    .json({ message: "Successfully logged out" });
+  }
 };
