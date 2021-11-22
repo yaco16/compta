@@ -50,7 +50,7 @@ const { status } = useSession()
                   <MenuItem icon={<FiLogOut />}>Déconnexion</MenuItem>
                 </div>
               ) : (
-                  <MenuItem icon={<FiLogIn />}><Link href='/account/login'><a>Connexion</a></Link></MenuItem>
+                  <MenuItem icon={<FiLogIn />}><Link href='/users/login'><a>Connexion</a></Link></MenuItem>
               )}
             </Menu>
           </SidebarHeader>

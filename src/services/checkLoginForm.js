@@ -1,4 +1,4 @@
-import { getUser } from './queries';
+import { login } from './queries';
 import toast from './toast';
 
 export default class CheckLoginForm {
@@ -8,7 +8,7 @@ export default class CheckLoginForm {
 
   static checkForm = async (event) => {
     const checkEmptyFields = this.checkIfFieldsAreFilled(event);
-    if (checkEmptyFields.length === 0)  {
+    if (checkEmptyFields.length === 0) {
       this.getUser(event);
     }
   };
@@ -26,10 +26,11 @@ export default class CheckLoginForm {
     const email = event.target.email.value.toLowerCase();
     const password = event.target.password.value;
 
-    const request = await getUser({email, password});
+    const request = await login({ email, password });
     const response = await request.json();
-    const {result, message} = response;
+    const { result, message } = response;
+    console.log('response:', response);
 
     this.notify(result, message);
-  }
+  };
 }
