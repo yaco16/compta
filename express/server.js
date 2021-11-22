@@ -1,5 +1,8 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 const port = 2222
@@ -10,9 +13,12 @@ app
   origin: '*',
 }))
 
-// .use(express.json())
-.use(express.json({limit: '25mb'}))
+.use(cookieParser())
 
+.use(express.json({limit: '25mb'}))
+.use(bodyParser.urlencoded({
+  extended: true
+}))
 
 .use('/api', router)
 
