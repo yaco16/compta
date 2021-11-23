@@ -1,12 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useState } from 'react';
 import Link from 'next/link';
-import { useSession, signIn, signOut } from 'next-auth/react';
+// import { useSession, signIn, signOut } from 'next-auth/react';
 
 import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader, SidebarFooter, SidebarContent } from 'react-pro-sidebar';
 
 import ToggleDarkMode from '../ToggleDarkMode';
-import Spinner from '../Spinner';
+// import Spinner from '../Spinner';
 
 import { FaGithub, FaCaretLeft, FaCaretRight } from 'react-icons/fa';
 import { FiLogOut, FiLogIn, FiHome, FiDollarSign, FiUpload } from 'react-icons/fi';
@@ -18,16 +18,16 @@ export default function Navbar() {
     menuCollapse ? setMenuCollapse(false) : setMenuCollapse(true);
   };
 
-const { status } = useSession()
+// const { status } = useSession()
 
   function signin(e) {
     e.preventDefault();
-    signIn('');
+    // signIn('');
   }
 
   function signout(e) {
     e.preventDefault();
-    signOut();
+    // signOut();
   }
 
   return (
@@ -45,13 +45,13 @@ const { status } = useSession()
             </div>
 
             <Menu iconShape='square' >
-              {status === 'authenticated' ? (
+              {/* {status === 'authenticated' ? (
                 <div onClick={(e) => signout(e)}>
                   <MenuItem icon={<FiLogOut />}>Déconnexion</MenuItem>
                 </div>
-              ) : (
+              ) : ( */}
                   <MenuItem icon={<FiLogIn />}><Link href='/users/login'><a>Connexion</a></Link></MenuItem>
-              )}
+              {/* )} */}
             </Menu>
           </SidebarHeader>
 
@@ -100,6 +100,11 @@ const { status } = useSession()
               <MenuItem active={true} icon={<FiUpload />}>
                 <Link href='/dashboard/tools/upload'>
                   <a>Upload</a>
+                </Link>
+              </MenuItem>
+              <MenuItem active={true} icon={<FiUpload />}>
+                <Link href='/test'>
+                  <a>Test</a>
                 </Link>
               </MenuItem>
             </Menu>

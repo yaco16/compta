@@ -1,40 +1,30 @@
-import { useSession, signIn, signOut } from 'next-auth/react';
+// import { useSession, signIn, signOut } from 'next-auth/react';
+import Cookies from 'js-cookie'
 
-export default function Home({ StackedTurnover }) {
-  const { data: session } = useSession();
-  if (session) {
-    return (
-      <>
-        Bonjour {session.user.name} <br />
-        <button onClick={() => signOut()}>Sign out</button>
-      </>
-    );
+
+export default function Home() {
+  const handler = async () => {
+    console.log('dans handler')
+    const request = await fetch('http://localhost:2222/api/' + 'setcookie', {credentials: 'include',});
+    // const test = Cookies.get('token')
+    // console.log('test:', test);
+    const response = await request.json();
   }
-  return (
-    <>
-      Not signed in <br />
-      <button onClick={() => signIn('')}>Sign in</button>
-    </>
-  );
+
+  return <button onClick={handler} >Home</button>
+
 }
 
-export async function getServerSideProps() {
-  await new Promise((resolve) => {
-    setTimeout(resolve, 3000)
-  })
-  return { props: {} }
-}
+// export async function getServerSideProps(context) {
+//   console.log('context:', context);
+//   const request = await fetch('http://localhost:2222/api/' + 'setcookie', {credentials: 'include',});
+//   const response = await request.json();
+//   console.log('response:', response);
+//   const cookies = context.req?.headers.cookie;
+//   console.log('cookies:', cookies);
 
-// export async function getServerSideProps() {
-//   const getStackedTurnover = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'stacked-turnover', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify({ fiscal_year: '2019-2020' }),
-//   });
-//   const StackedTurnover = await getStackedTurnover.json();
 //   return {
-//     props: { StackedTurnover },
-//   };
+//     props: {}, // will be passed to the page component as props
+//   }
 // }
+

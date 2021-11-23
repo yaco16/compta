@@ -14,16 +14,18 @@ module.exports = {
   },
 
   login: async (req, res) => {
-    try {
-      const user = await Users.checkLogin(req.body);
 
-      switch (user.errorCode){
+    try {
+      const request = await Users.checkLogin(req.body);
+      const {errorCode, user} = request;
+
+      switch (errorCode){
         case 0:
           console.log('connected');
-          let accessToken = user.user.tokens.accessToken;
+          let accessToken = user.tokens.accessToken;
           res
-          .cookie('access_token', accessToken, {httpOnly: true})
           .status(200)
+          .cookie('access_token', accessToken, {httpOnly: true, secure: false, maxAge: 55*60*1000}) //55mn
           .json({ result: 'success', message: 'You are connected' });
           break;
         case 1:
@@ -46,6 +48,7 @@ module.exports = {
   },
 
   logout: async (req, res) => {
+    console.log('dans logout controller');
     return res
     .clearCookie("access_token")
     .status(200)

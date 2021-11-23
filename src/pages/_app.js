@@ -5,7 +5,7 @@ import '../styles/nprogress.css';
 import Layout from '../components/layout/Layout';
 import ThemeContextProvider from '../context/themeContext';
 import UploadContextProvider from '../context/uploadContext';
-import { SessionProvider } from 'next-auth/react';
+// import { SessionProvider } from 'next-auth/react';
 import { Toast } from '../services/toast';
 import { useRouter } from 'next/router'
 import { useEffect } from 'react';
@@ -36,7 +36,7 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
   }, [router])
 
   return (
-    <SessionProvider session={session}>
+    // <SessionProvider session={session}>
       <ThemeContextProvider>
         <UploadContextProvider>
           <Layout>
@@ -45,6 +45,6 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
           </Layout>
         </UploadContextProvider>
       </ThemeContextProvider>
-    </SessionProvider>
+    // </SessionProvider>
   );
 }

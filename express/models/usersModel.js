@@ -37,14 +37,15 @@ class Users {
   static async checkLogin(formData) {
     const { email, password } = formData;
     const user = await this.findEmail(email);
+    console.log('user:', user);
 
-    if (user.length !== 0) {
-      console.log('email exists')
-      const passwordIsConfirmed = await this.compareEmails(password, user[0].password);
+    if (user.id) {
+      console.log('user exists')
+      const passwordIsConfirmed = await this.compareEmails(password, user.password);
       if (passwordIsConfirmed) {
-        user[0].tokens = jwtTokens(user[0].id, user[0].firstname, user[0].lastname, user[0].email);
+        user.tokens = jwtTokens(user);
 
-        return {errorCode: 0, user: user[0]};
+        return {errorCode: 0, user};
       } else {
         return {errorCode: 2};
       }
@@ -63,7 +64,7 @@ class Users {
         `,
         [email.toLowerCase()]
       );
-      return rows;
+      return rows[0];
     } catch (error) {
       console.error(error);
       return 'error';

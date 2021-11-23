@@ -1,14 +1,15 @@
 /* eslint-disable react/no-unescaped-entities */
-import { getProviders, signIn, getSession, getCsrfToken } from 'next-auth/react';
+// import { getProviders, signIn, getSession, getCsrfToken } from 'next-auth/react';
 import Link from 'next/link';
 import Image from 'next/image';
 import CheckLoginForm from '../../services/checkLoginForm';
 
 export default function SignIn({ providers, csrfToken }) {
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    CheckLoginForm.checkForm(event);
+    await CheckLoginForm.checkForm(event);
   }
+
   return (
     <div>
       <h1 className='trademark'>Accountancy</h1>
@@ -16,7 +17,7 @@ export default function SignIn({ providers, csrfToken }) {
         <div className='title'>Welcome back!</div>
         <form method='post ' onSubmit={(event) => handleSubmit(event)}>
           <div className='field-container'>
-            <input type='hidden' name='csrfToken' defaultValue={csrfToken} id='' />
+            {/* <input type='hidden' name='csrfToken' defaultValue={csrfToken} id='' /> */}
             <input type='email' name='email' placeholder='E-mail' className='field' />
             <input type='password' name='password' placeholder='Password' className='field' />
             <div className='forgot-password-container'>
@@ -36,7 +37,7 @@ export default function SignIn({ providers, csrfToken }) {
           </div>
           <div className='third-party-info'>or use a third-party service</div>
         </form>
-        <div className='providers-container'>
+        {/* <div className='providers-container'>
           {Object.values(providers).map((provider, key) => {
             if (provider.name === 'Email') {
               return;
@@ -54,7 +55,7 @@ export default function SignIn({ providers, csrfToken }) {
               );
             }
           })}
-        </div>
+        </div> */}
       </div>
       <div className='signup-container'>
         <div className='signup-text'>
@@ -203,23 +204,23 @@ export default function SignIn({ providers, csrfToken }) {
   );
 }
 
-SignIn.getInitialProps = async (context) => {
-  const { req, res } = context;
-  const session = await getSession({ req });
-  console.log('session:', session);
+// SignIn.getInitialProps = async (context) => {
+//   const { req, res } = context;
+//   const session = await getSession({ req });
+//   console.log('session:', session);
 
-  if (session && res && session.accessToken) {
-    //si le user est déjà connecté, redirection vers le dashboard
-    res.writeHead(302, {
-      Location: '/dashboard',
-    });
-    res.end();
-    return;
-  }
+//   if (session && res && session.accessToken) {
+//     //si le user est déjà connecté, redirection vers le dashboard
+//     res.writeHead(302, {
+//       Location: '/dashboard',
+//     });
+//     res.end();
+//     return;
+//   }
 
-  return {
-    session: undefined,
-    providers: await getProviders(context),
-    csrfToken: await getCsrfToken(context), //si signin avec adresse mail
-  };
-};
+//   return {
+//     session: undefined,
+//     providers: await getProviders(context),
+//     csrfToken: await getCsrfToken(context), //si signin avec adresse mail
+//   };
+// };

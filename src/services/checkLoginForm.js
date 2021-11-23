@@ -23,6 +23,7 @@ export default class CheckLoginForm {
   };
 
   static getUser = async (event) => {
+
     const email = event.target.email.value.toLowerCase();
     const password = event.target.password.value;
 
