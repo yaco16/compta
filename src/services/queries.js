@@ -23,6 +23,7 @@ export async function getAllAccounts() {
 export async function createUser(formData) {
   const request = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'users/signup', {
     method: 'POST',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
     },
@@ -35,6 +36,7 @@ export async function createUser(formData) {
 export async function login(formData) {
   const request = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'users/login', {
     method: 'POST',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
     },
