@@ -43,7 +43,9 @@ class Users {
       console.log('user exists')
       const passwordIsConfirmed = await this.compareEmails(password, user.password);
       if (passwordIsConfirmed) {
+        user.isConnected = true;
         user.tokens = jwtTokens(user);
+        console.log('user:', user);
 
         return {errorCode: 0, user};
       } else {
