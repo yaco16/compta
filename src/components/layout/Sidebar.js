@@ -50,7 +50,7 @@ export default function Navbar() {
                   <MenuItem icon={<FiLogOut />}>Déconnexion</MenuItem>
                 </div>
               ) : ( */}
-                  <MenuItem icon={<FiLogIn />}><Link href='/users/login'><a>Connexion</a></Link></MenuItem>
+                  <MenuItem icon={<FiLogIn />}><Link href='/users/signin'><a>Connexion</a></Link></MenuItem>
               {/* )} */}
             </Menu>
           </SidebarHeader>

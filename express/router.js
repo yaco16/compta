@@ -15,11 +15,11 @@ router.post('/upload-journal', accountsController.uploadJournal);
 router.post('/stacked-turnover', turnoverController.getStackedTurnover);
 
 //USERS
-router.post('/users/create-user', usersController.signup);
-router.post('/users/login', usersController.login);
-router.get('/users/logout', authorization, usersController.logout);
+router.post('/users/signup', usersController.signUp);
+router.post('/users/signin', usersController.signIn);
+router.get('/users/signout', authorization, usersController.signOut);
 
 //TEST
-router.post('/setcookie', usersController.login)
+router.post('/setcookie', usersController.signIn)
 
 module.exports = router;

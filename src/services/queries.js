@@ -20,7 +20,7 @@ export async function getAllAccounts() {
 }
 
 //SIGNIN
-export async function createUser(formData) {
+export async function signUp(formData) {
   const request = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'users/signup', {
     method: 'POST',
     credentials: 'include',
@@ -32,9 +32,9 @@ export async function createUser(formData) {
   return request;
 }
 
-//LOGIN
-export async function login(formData) {
-  const request = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'users/login', {
+//SIGN IN
+export async function signIn(formData) {
+  const request = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'users/signin', {
     method: 'POST',
     credentials: 'include',
     headers: {
@@ -46,7 +46,7 @@ export async function login(formData) {
 }
 
 //LOGOUT
-export async function logout() {
-  const request = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'users/logout');
+export async function signOut() {
+  const request = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'users/signout');
   return request;
 }

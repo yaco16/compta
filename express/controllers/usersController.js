@@ -1,7 +1,7 @@
 const Users = require('../models/usersModel');
 
 module.exports = {
-  signup: async (req, res) => {
+  signUp: async (req, res) => {
     try {
       const newUser = await Users.createUser(req.body);
       console.log('newUser:', newUser);
@@ -13,10 +13,10 @@ module.exports = {
     }
   },
 
-  login: async (req, res) => {
+  signIn: async (req, res) => {
 
     try {
-      const request = await Users.checkLogin(req.body);
+      const request = await Users.checkSignIn(req.body);
       const {errorCode, user} = request;
 
       switch (errorCode){
@@ -47,11 +47,11 @@ module.exports = {
     }
   },
 
-  logout: async (req, res) => {
-    console.log('dans logout controller');
+  signOut: async (req, res) => {
+    console.log('user deconnected');
     return res
     .clearCookie("access_token")
     .status(200)
-    .json({ message: "Successfully logged out" });
+    .json({ message: "Successfully signed out" });
   }
 };

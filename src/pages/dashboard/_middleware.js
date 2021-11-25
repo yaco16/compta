@@ -14,7 +14,7 @@ export function middleware(req, event) {
   if (userDetails && userDetails.isConnected) {
     return NextResponse.next();
   } else {
-    return NextResponse.redirect('/users/login');
+    return NextResponse.redirect('/users/signin');
   }
 }
 

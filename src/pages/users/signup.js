@@ -1,38 +1,37 @@
 /* eslint-disable react/no-unescaped-entities */
-// import { getProviders, signIn, getSession, getCsrfToken } from 'next-auth/react';
+import { getProviders, signIn, getSession, getCsrfToken } from 'next-auth/react';
 import Link from 'next/link';
 import Image from 'next/image';
-import CheckLoginForm from '../../services/checkLoginForm';
+// import toast from '../../services/toast';
+// import { useCallback } from 'react';
+import CheckSignUpForm from '../../services/checkSignUpForm';
 
-export default function SignIn({ providers, csrfToken }) {
-  async function handleSubmit(event) {
+export default function SignUp({ providers, csrfToken }) {
+  const checkFields = (event) => {
     event.preventDefault();
-    await CheckLoginForm.checkForm(event);
-  }
+    CheckSignUpForm.checkForm(event);
+  };
 
   return (
     <div>
       <h1 className='trademark'>Accountancy</h1>
       <div className='form-container'>
-        <div className='title'>Welcome back!</div>
-        <form method='post ' onSubmit={(event) => handleSubmit(event)}>
+        <div className='title'>Create your account</div>
+        <form
+          onSubmit={(event) => {
+            checkFields(event);
+          }}
+        >
           <div className='field-container'>
-            {/* <input type='hidden' name='csrfToken' defaultValue={csrfToken} id='' /> */}
+            {/* <input type='hidden' name='csrfToken' defaultValue={csrfToken} className='field' /> */}
+            <input type='text' name='firstname' placeholder='Firstname' className='field' />
+            <input type='text' name='lastname' placeholder='Lastname' className='field' />
             <input type='email' name='email' placeholder='E-mail' className='field' />
             <input type='password' name='password' placeholder='Password' className='field' />
-            <div className='forgot-password-container'>
-              <label>
-                <input type='checkbox' name='keepSignedIn' className='keep-signed-in' id='' />
-                Keep me signed in
-              </label>
-              <div className='forgot-password'>
-                <Link href='#'>
-                  <a>Forgot your password</a>
-                </Link>
-              </div>
-            </div>
+            <input type='password' name='confirmPassword' id='confirmPassword' placeholder='Password verification' className='field' />
+
             <button type='submit' className='submit'>
-              Log in
+              Sign up
             </button>
           </div>
           <div className='third-party-info'>or use a third-party service</div>
@@ -50,18 +49,18 @@ export default function SignIn({ providers, csrfToken }) {
                     width={18}
                     height={18}
                   />
-                  <div className='provider-name'>Sign in with {provider.name}</div>
+                  <div className='provider-name'>Sign up with {provider.name}</div>
                 </div>
               );
             }
           })}
         </div> */}
       </div>
-      <div className='signup-container'>
-        <div className='signup-text'>
-          <Link href='/users/register'>
+      <div className='signIn-container'>
+        <div className='signIn-text'>
+          <Link href='/users/signin'>
             <a>
-              Don't have an account? <span className='signup-span'>Sign up</span>
+              Already have an account? <span className='signIn-span'>Sign in</span>
             </a>
           </Link>
         </div>
@@ -70,7 +69,7 @@ export default function SignIn({ providers, csrfToken }) {
       <style jsx>
         {`
           .form-container,
-          .signup-container {
+          .signIn-container {
             width: 60%;
             margin: 0 auto;
             border: solid #bfc9db 1px;
@@ -117,18 +116,6 @@ export default function SignIn({ providers, csrfToken }) {
             border: solid #3b6b96 1px;
             border-radius: 6px;
             color: black;
-          }
-
-          .forgot-password-container {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.9rem;
-            align-items: center;
-            margin: 0.8rem 0;
-          }
-
-          .forgot-password {
-            color: #2962ae;
           }
 
           .submit {
@@ -181,21 +168,21 @@ export default function SignIn({ providers, csrfToken }) {
             font-size: 0.9rem;
           }
 
-          .signup-container {
+          .signIn-container {
             margin-top: 2rem;
             padding: 1rem 0;
             text-align: center;
           }
 
-          .signup-text {
+          .signIn-text {
             color: #898f9a;
           }
 
-          .signup-span {
+          .signIn-span {
             color: black;
           }
 
-          .signup-text:hover .signup-span {
+          .signIn-text:hover .signIn-span {
             text-decoration: underline;
           }
         `}
@@ -204,23 +191,23 @@ export default function SignIn({ providers, csrfToken }) {
   );
 }
 
-// SignIn.getInitialProps = async (context) => {
-//   const { req, res } = context;
-//   const session = await getSession({ req });
-//   console.log('session:', session);
+SignUp.getInitialProps = async (context) => {
+  const { req, res } = context;
+  const session = await getSession({ req });
+  console.log('session:', session);
 
-//   if (session && res && session.accessToken) {
-//     //si le user est déjà connecté, redirection vers le dashboard
-//     res.writeHead(302, {
-//       Location: '/dashboard',
-//     });
-//     res.end();
-//     return;
-//   }
+  if (session && res && session.accessToken) {
+    //si le user est déjà connecté, redirection vers le dashboard
+    res.writeHead(302, {
+      Location: '/dashboard',
+    });
+    res.end();
+    return;
+  }
 
-//   return {
-//     session: undefined,
-//     providers: await getProviders(context),
-//     csrfToken: await getCsrfToken(context), //si signin avec adresse mail
-//   };
-// };
+  return {
+    session: undefined,
+    providers: await getProviders(context),
+    csrfToken: await getCsrfToken(context), //si signin avec adresse mail
+  };
+};

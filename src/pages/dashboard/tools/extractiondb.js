@@ -7,7 +7,7 @@ export default function TestDB(props) {
   const [fetchedAccounts, setFetchedAccounts] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
-  const registerUser = async (event) => {
+  const signUpUser = async (event) => {
     event.preventDefault();
     setIsLoading(true);
     const response = await fetch('http://localhost:3000/api/gettotal70', {
@@ -40,7 +40,7 @@ export default function TestDB(props) {
   return (
     <div>
       <h1>Extraction</h1>
-      <form onSubmit={registerUser}>
+      <form onSubmit={signUpUser}>
         du compte
         <select name='account1' defaultValue=''>
           <option value='' disabled>

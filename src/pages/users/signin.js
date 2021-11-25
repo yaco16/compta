@@ -1,42 +1,43 @@
 /* eslint-disable react/no-unescaped-entities */
-import { getProviders, signIn, getSession, getCsrfToken } from 'next-auth/react';
+// import { getProviders, signIn, getSession, getCsrfToken } from 'next-auth/react';
 import Link from 'next/link';
 import Image from 'next/image';
-// import toast from '../../services/toast';
-// import { useCallback } from 'react';
-import CheckRegisterForm from '../../services/checkRegisterForm';
+import CheckSignInForm from '../../services/checkSignInForm';
 
 export default function SignIn({ providers, csrfToken }) {
-  const checkFields = (event) => {
+  async function handleSubmit(event) {
     event.preventDefault();
-    CheckRegisterForm.checkForm(event);
-  };
+    await CheckSignInForm.checkForm(event);
+  }
 
   return (
     <div>
       <h1 className='trademark'>Accountancy</h1>
       <div className='form-container'>
-        <div className='title'>Create your account</div>
-        <form
-          onSubmit={(event) => {
-            checkFields(event);
-          }}
-        >
+        <div className='title'>Welcome back!</div>
+        <form method='post ' onSubmit={(event) => handleSubmit(event)}>
           <div className='field-container'>
-            <input type='hidden' name='csrfToken' defaultValue={csrfToken} className='field' />
-            <input type='text' name='firstname' placeholder='Firstname' className='field' />
-            <input type='text' name='lastname' placeholder='Lastname' className='field' />
+            {/* <input type='hidden' name='csrfToken' defaultValue={csrfToken} id='' /> */}
             <input type='email' name='email' placeholder='E-mail' className='field' />
             <input type='password' name='password' placeholder='Password' className='field' />
-            <input type='password' name='confirmPassword' id='confirmPassword' placeholder='Password verification' className='field' />
-
+            <div className='forgot-password-container'>
+              <label>
+                <input type='checkbox' name='keepSignedIn' className='keep-signed-in' id='' />
+                Keep me signed in
+              </label>
+              <div className='forgot-password'>
+                <Link href='#'>
+                  <a>Forgot your password</a>
+                </Link>
+              </div>
+            </div>
             <button type='submit' className='submit'>
-              Sign up
+              Log in
             </button>
           </div>
           <div className='third-party-info'>or use a third-party service</div>
         </form>
-        <div className='providers-container'>
+        {/* <div className='providers-container'>
           {Object.values(providers).map((provider, key) => {
             if (provider.name === 'Email') {
               return;
@@ -49,18 +50,18 @@ export default function SignIn({ providers, csrfToken }) {
                     width={18}
                     height={18}
                   />
-                  <div className='provider-name'>Sign up with {provider.name}</div>
+                  <div className='provider-name'>Sign in with {provider.name}</div>
                 </div>
               );
             }
           })}
-        </div>
+        </div> */}
       </div>
-      <div className='login-container'>
-        <div className='login-text'>
-          <Link href='/users/login'>
+      <div className='signup-container'>
+        <div className='signup-text'>
+          <Link href='/users/signup'>
             <a>
-              Already have an account? <span className='login-span'>Login</span>
+              Don't have an account? <span className='signup-span'>Sign up</span>
             </a>
           </Link>
         </div>
@@ -69,7 +70,7 @@ export default function SignIn({ providers, csrfToken }) {
       <style jsx>
         {`
           .form-container,
-          .login-container {
+          .signup-container {
             width: 60%;
             margin: 0 auto;
             border: solid #bfc9db 1px;
@@ -116,6 +117,18 @@ export default function SignIn({ providers, csrfToken }) {
             border: solid #3b6b96 1px;
             border-radius: 6px;
             color: black;
+          }
+
+          .forgot-password-container {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            align-items: center;
+            margin: 0.8rem 0;
+          }
+
+          .forgot-password {
+            color: #2962ae;
           }
 
           .submit {
@@ -168,21 +181,21 @@ export default function SignIn({ providers, csrfToken }) {
             font-size: 0.9rem;
           }
 
-          .login-container {
+          .signup-container {
             margin-top: 2rem;
             padding: 1rem 0;
             text-align: center;
           }
 
-          .login-text {
+          .signup-text {
             color: #898f9a;
           }
 
-          .login-span {
+          .signup-span {
             color: black;
           }
 
-          .login-text:hover .login-span {
+          .signup-text:hover .signup-span {
             text-decoration: underline;
           }
         `}
@@ -191,23 +204,23 @@ export default function SignIn({ providers, csrfToken }) {
   );
 }
 
-SignIn.getInitialProps = async (context) => {
-  const { req, res } = context;
-  const session = await getSession({ req });
-  console.log('session:', session);
+// SignIn.getInitialProps = async (context) => {
+//   const { req, res } = context;
+//   const session = await getSession({ req });
+//   console.log('session:', session);
 
-  if (session && res && session.accessToken) {
-    //si le user est déjà connecté, redirection vers le dashboard
-    res.writeHead(302, {
-      Location: '/dashboard',
-    });
-    res.end();
-    return;
-  }
+//   if (session && res && session.accessToken) {
+//     //si le user est déjà connecté, redirection vers le dashboard
+//     res.writeHead(302, {
+//       Location: '/dashboard',
+//     });
+//     res.end();
+//     return;
+//   }
 
-  return {
-    session: undefined,
-    providers: await getProviders(context),
-    csrfToken: await getCsrfToken(context), //si signin avec adresse mail
-  };
-};
+//   return {
+//     session: undefined,
+//     providers: await getProviders(context),
+//     csrfToken: await getCsrfToken(context), //si signin avec adresse mail
+//   };
+// };

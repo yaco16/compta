@@ -34,7 +34,7 @@ class Users {
     return hashedPassword;
   };
 
-  static async checkLogin(formData) {
+  static async checkSignIn(formData) {
     const { email, password } = formData;
     const user = await this.findEmail(email);
     console.log('user:', user);

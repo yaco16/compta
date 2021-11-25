@@ -1,8 +1,8 @@
-import { createUser } from './queries';
+import { signUp } from './queries';
 import toast from './toast';
 
 
-export default class CheckRegisterForm {
+export default class CheckSignUpForm {
   static notify = (type, message) => {
     toast({ type, message });
   };
@@ -11,7 +11,7 @@ export default class CheckRegisterForm {
     const checkEmptyFields = this.checkIfFieldsAreFilled(event);
     if (checkEmptyFields.length === 0)  {
       const checkedFields = this.checkContentFields(event);
-      checkedFields && this.createUser(checkedFields);
+      checkedFields && this.createUserInDB(checkedFields);
     }
   };
 
@@ -49,6 +49,7 @@ export default class CheckRegisterForm {
     }
   };
 
+  //vérifier firstname et lastname : pas de caractères bizarres
   static checkName = (name) => {
     if (typeof name !== 'string' || !/^[^0-9_!¡?÷?¿\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,}$/g.test(name)) {
       this.notify('error', `${name}: please enter a valid value` );
@@ -57,8 +58,8 @@ export default class CheckRegisterForm {
     return true;
   };
 
-  static createUser = async (formData) => {
-    const request = await createUser(formData);
+  static createUserInDB = async (formData) => {
+    const request = await signUp(formData);
     const response = await request.json();
     let type;
     let message;
@@ -79,6 +80,7 @@ export default class CheckRegisterForm {
     this.notify(type, message);
   };
 
+  //Ajouter une majuscule à firstname et lastname pour le message de succès
   static capitalizeFirstLetter = (name) => {
     return (name+'').charAt(0).toUpperCase()+name.substr(1);
   }

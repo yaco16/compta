@@ -61,7 +61,7 @@
 //   // pages is not specified for that route.
 //   // https://next-auth.js.org/configuration/pages
 //   pages: {
-//     signIn: '/users/login',  // Displays signin buttons
+//     signIn: '/users/signin',  // Displays signin buttons
 //     signOut: '/users/signout', // Displays form with sign out button
 //     // error: '/auth/error', // Error code passed in query string as ?error=
 //     // verifyRequest: '/auth/verify-request', // Used for check email page
